@@ -14,6 +14,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+
+//Last updated: 1/27/20
 public class Main extends Application {
 
     @Override
