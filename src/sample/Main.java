@@ -2,6 +2,7 @@ package sample;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -17,43 +18,41 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-//        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-//        primaryStage.setTitle("Hello World");
-//        primaryStage.setScene(new Scene(root, 300, 275));
-//        primaryStage.show();
         primaryStage.setTitle("Space Trader");
 
+        //The welcome page.
         Group root = new Group();
-        Scene theScene = new Scene(root);
-        primaryStage.setScene(theScene);
+        Scene welcomeScene = new Scene(root);
+        primaryStage.setScene(welcomeScene);
 
+        //Add canvas to the scene so we have the graphic.
         Canvas canvas = new Canvas( 512, 512 );
         root.getChildren().add(canvas);
 
+        //Create graphic in the canvas.
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         Image earth = new Image("earth.png", 150, 150, false, false);
         Image spaceShip = new Image("spaceship.png", 100, 100, false, false);
         Image space = new Image("space.png");
 
-        final long startNanoTime = System.nanoTime();
+        canvas.setOnMouseMoved(e -> {
+            double x = 512 - e.getX();
+            double y = 512 - e.getY();
+            gc.drawImage(space, 0, 0);
+            gc.drawImage(earth, 196, 196);
+            gc.drawImage(spaceShip, x, y);
+        });
 
-        new AnimationTimer()
-        {
-            public void handle(long currentNanoTime)
-            {
-                double t = (currentNanoTime - startNanoTime) / 1000000000.0;
-
-                double x = 232 + 128 * Math.cos(t);
-                double y = 232 + 128 * Math.sin(t);
-
-
-                // background image clears canvas
-                gc.drawImage(space, 0, 0);
-                gc.drawImage(spaceShip, x, y);
-                gc.drawImage(earth, 196, 196);
+        //Switch to player config.
+        canvas.setOnMouseClicked(e -> {
+            double x = e.getX();
+            double y = e.getY();
+            if ((x < canvas.getWidth() / 2 + earth.getWidth() / 2 && x > canvas.getWidth() / 2 - earth.getWidth() / 2) && (y < canvas.getHeight() / 2 + earth.getHeight()  / 2 && y > canvas.getHeight()  / 2 - earth.getHeight()  / 2)) {
+                System.out.println("Start");
+                //primaryStage.setScene(configScene);
             }
-        }.start();
+        });
 
         primaryStage.show();
     }
