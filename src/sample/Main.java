@@ -32,23 +32,28 @@ public class Main extends Application {
         //Create graphic in the canvas.
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        Image earth = new Image("earth.png", 150, 150, false, false);
-        Image spaceShip = new Image("spaceship.png", 100, 100, false, false);
-        Image space = new Image("space.png");
+        Image play = new Image("playButton.png", 150, 150, false, false);
+        Image magic = new Image("sparkle.gif", 100, 100, true, false);
+        //space dimensions: 1150 x 864 px
+        Image space = new Image("space.png", 1150, 864, true, true);
+        Image title = new Image("WizardsOfTheCaribbeanTitle.png", 450, 95, true,false);
 
         canvas.setOnMouseMoved(e -> {
             double x = 512 - e.getX();
             double y = 512 - e.getY();
+
             gc.drawImage(space, 0, 0);
-            gc.drawImage(earth, 196, 196);
-            gc.drawImage(spaceShip, x, y);
+            gc.drawImage(play, 196, 196);
+            gc.drawImage(magic, x, y);
+            gc.drawImage(title, 0,0);
         });
 
         //Switch to player config.
         canvas.setOnMouseClicked(e -> {
             double x = e.getX();
             double y = e.getY();
-            if ((x < canvas.getWidth() / 2 + earth.getWidth() / 2 && x > canvas.getWidth() / 2 - earth.getWidth() / 2) && (y < canvas.getHeight() / 2 + earth.getHeight()  / 2 && y > canvas.getHeight()  / 2 - earth.getHeight()  / 2)) {
+            if ((x < canvas.getWidth() / 2 + play.getWidth() / 2 && x > canvas.getWidth() / 2 - play.getWidth() / 2) &&
+                    (y < canvas.getHeight() / 2 + play.getHeight()  / 2 && y > canvas.getHeight()  / 2 - play.getHeight()  / 2)) {
                 System.out.println("Start");
                 //primaryStage.setScene(configScene);
             }
