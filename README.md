@@ -28,14 +28,18 @@ Step:
 16. git push origin jiawei:master
 
 
+TO DO LIST: [THINGS NEED HELP WITH/ THINGS NEED TO BE DONE]
+-Description at line 30 in Main.java.
+-SkillAllocate in the configSkillSubScene.
+-connection between player class and main/configpage java file.
+-Validate name when submit
+-calculate skill points and display on the configSkillSubScene.
+
+
 Jiawei 1/29/20:
 [What I've done:]
 -Organize the src folder.
 -Create the structures for three scene.
-
-[What I need help with]
--Description at line 30 in Main.java.
-
 
 Jiawei 1/29/20:
 [What I've done:]
@@ -43,16 +47,11 @@ Jiawei 1/29/20:
 -Organize more in the src folder.
 -Create YellowButton,java so that you can use the same style button later.
 
-[What needs to be done]
--Description at line 30 in Main.java.
--SkillAllocate in the configSkillSubScene.
--connection between player class and main/configpage java file.
-
 Vivian 1/30/20:
 [What I've done:]
 -Created text field and label on the configSkillSubScene
 
-[What needs to be done]
--Validate name when submit
--calculate skill points and display on the configSkillSubScene
+Jiawei 1/30/20:
+[what I've done:]
+-Created skillAllocating subscene and finished some of the functionality.
 

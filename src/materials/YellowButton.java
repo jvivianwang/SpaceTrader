@@ -53,7 +53,13 @@ public class YellowButton extends Button {
     }
 
     private void initializeButtonListeners() {
-        setOnMouseEntered(event -> setEffect(new DropShadow()));
-        setOnMouseExited(event -> setEffect(null));
+        setOnMouseEntered(event -> {
+            setEffect(new DropShadow());
+            setStyle(BUTTON_PRESSED_STYLE);
+        });
+        setOnMouseExited(event -> {
+            setEffect(null);
+            setStyle(BUTTON_FREE_STYLE);
+        });
     }
 }

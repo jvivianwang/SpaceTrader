@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import materials.ConfigSkillSubscene;
+import materials.InfoLabel;
 import materials.YellowButton;
 
 public class ConfigPage {
@@ -47,10 +48,11 @@ public class ConfigPage {
     }
 
     private void createSubScenes() {
-        easySubScene = new ConfigSkillSubscene();
-        medSubScene = new ConfigSkillSubscene();
-        hardSubScene = new ConfigSkillSubscene();
+        easySubScene = new ConfigSkillSubscene("Easy");
+        medSubScene = new ConfigSkillSubscene("Medium");
+        hardSubScene = new ConfigSkillSubscene("Hard");
         mainPane.getChildren().addAll(easySubScene, medSubScene, hardSubScene);
+
     }
 
     public Scene getMainScene() {
@@ -60,36 +62,30 @@ public class ConfigPage {
     private void createYellowButtons() {
         YellowButton btnEasy = new YellowButton("Easy");
         btnEasy.setLayoutX(500);
-        btnEasy.setLayoutY(600);
+        btnEasy.setLayoutY(700);
         YellowButton btnMed = new YellowButton("Medium");
         btnMed.setLayoutX(700);
-        btnMed.setLayoutY(600);
+        btnMed.setLayoutY(700);
         YellowButton btnHard = new YellowButton("Hard");
         btnHard.setLayoutX(900);
-        btnHard.setLayoutY(600);
+        btnHard.setLayoutY(700);
 
         btnEasy.setOnMousePressed(event -> {
             if(event.getButton().equals(MouseButton.PRIMARY)) {
                 difficultyButtonPressed(btnEasy);
                 showSubScene(easySubScene);
-                //player.setCredits(1000);
-                //player.setSkillPoints(16);
             }
         });
         btnMed.setOnMousePressed(event -> {
             if(event.getButton().equals(MouseButton.PRIMARY)) {
                 difficultyButtonPressed(btnMed);
                 showSubScene(medSubScene);
-                //player.setCredits(500);
-                //player.setSkillPoints(12);
             }
         });
         btnHard.setOnMousePressed(event -> {
             if(event.getButton().equals(MouseButton.PRIMARY)) {
                 difficultyButtonPressed(btnHard);
                 showSubScene(hardSubScene);
-                //player.setCredits(100);
-                //player.setSkillPoints(8);
             }
         });
 
