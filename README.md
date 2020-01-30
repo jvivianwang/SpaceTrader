@@ -32,6 +32,19 @@ Jiawei 1/29/20:
 [What I've done:]
 -Organize the src folder.
 -Create the structures for three scene.
+
 [What I need help with]
--Description at line 30 in Main.java
+-Description at line 30 in Main.java.
+
+
+Jiawei 1/29/20:
+[What I've done:]
+-Create button so that you can select difficulty and animation for the skill panel droping down.
+-Organize more in the src folder.
+-Create YellowButton,java so that you can use the same style button later.
+
+[What needs to be done]
+-Description at line 30 in Main.java.
+-SkillAllocate in the configSkillSubScene.
+-connection between player class and main/configpage java file.
 

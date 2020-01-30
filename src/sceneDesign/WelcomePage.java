@@ -35,11 +35,11 @@ public class WelcomePage {
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        play = new Image("materials/playButton.png", HEIGHT / 3, HEIGHT / 3, false, false);
-        Image magic = new Image("materials/sparkle.gif", WIDTH / 8, WIDTH / 8, true, false);
+        play = new Image("materials/image/playButton.png", HEIGHT / 3, HEIGHT / 3, false, false);
+        Image magic = new Image("materials/image/sparkle.gif", WIDTH / 8, WIDTH / 8, true, false);
         //space dimensions: 1600 x 900 px
-        Image space = new Image("materials/space.jpg", WIDTH, HEIGHT, true, true);
-        Image title = new Image("materials/WizardsOfTheCaribbeanTitle.png", WIDTH / 2, WIDTH / 8, true,false);
+        Image space = new Image("materials/image/space.jpg", WIDTH, HEIGHT, true, true);
+        Image title = new Image("materials/image/WizardsOfTheCaribbeanTitle.png", WIDTH / 2, WIDTH / 8, true,false);
 
         canvas.setOnMouseMoved(e -> {
             double x = 1400 - e.getX();
