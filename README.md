@@ -1,4 +1,4 @@
-﻿Instruction
+Instruction
 Requirement:
 -have a empty javafx project in a folder other than inside the branch folder
 
@@ -47,4 +47,12 @@ Jiawei 1/29/20:
 -Description at line 30 in Main.java.
 -SkillAllocate in the configSkillSubScene.
 -connection between player class and main/configpage java file.
+
+Vivian 1/30/20:
+[What I've done:]
+-Created text field and label on the configSkillSubScene
+
+[What needs to be done]
+-Validate name when submit
+-calculate skill points and display on the configSkillSubScene
 
