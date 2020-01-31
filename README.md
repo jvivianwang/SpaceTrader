@@ -31,7 +31,7 @@ Step:
 TO DO LIST: [THINGS NEED HELP WITH/ THINGS NEED TO BE DONE]
 -Description at line 30 in Main.java.
 -Validate name when submit [lettersOnly length between 3 and 8]
--PlayerSheetPage design.
+-PlayerSheetPage design (needs improvement but player sheet is created).
 
 
 Jiawei 1/29/20:
@@ -65,3 +65,8 @@ Jiawei 1/31/20:
 -connect three scenes in Main.java.
 -Player created while press confirmbutton.
 
+Rylie 1/21/20:
+[What I've done:]
+-Linked PlayerSheetPage 
+-Display skills that update once player is created 
+-Minor change on ConfigPage and the Main.java

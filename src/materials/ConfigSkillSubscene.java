@@ -75,6 +75,7 @@ public class ConfigSkillSubscene extends SubScene {
         skills = new int[]{ 0, 0, 0, 0 };
         creditsStat = displayInfo("Credits", credits, 800, 200);
         skillPointsStat = displayInfo("Skill Points", skillPoints, 800, 300);
+        this.getPane().getChildren().addAll(creditsStat, skillPointsStat);
     }
 
     //Create layout for skill bar and buttons.
@@ -219,7 +220,6 @@ public class ConfigSkillSubscene extends SubScene {
         temp.setPrefHeight(100);
         temp.setLayoutX(x);
         temp.setLayoutY(y);
-        this.getPane().getChildren().add(temp);
         return temp;
     }
 

@@ -27,11 +27,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         stage = primaryStage;
         stage.setTitle("Space Trader");
-
+        player = new Player();
         //All scenes initialized.
         wp = new WelcomePage();
         cp = new ConfigPage();
-        psp = new PlayerSheetPage();
 
         //set first scene to WelcomePage.
         stage.setScene(wp.getMainScene());
@@ -65,9 +64,11 @@ public class Main extends Application {
             } else {
                 player = new Player();
                 player.setCredits( subscene.getCredits());
-                player.setSkillPoints(subscene.getCredits());
+                player.setSkillPoints(subscene.getSkillPoints());
                 player.setSkills(subscene.getSkills());
+                player.setName(subscene.nameValue.getText());
                 System.out.println("Created");
+                psp = new PlayerSheetPage();
                 stage.setScene(psp.getMainScene());
             }
         });

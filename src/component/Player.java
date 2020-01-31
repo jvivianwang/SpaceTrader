@@ -5,6 +5,7 @@ public class Player {
     private int skillPoints;
     private int credits;
     private int[] skills;
+    private String name;
 
     public Player() {
         skillPoints = 0;
@@ -34,5 +35,13 @@ public class Player {
 
     public void setSkills(int[] skills) {
         this.skills = skills;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
