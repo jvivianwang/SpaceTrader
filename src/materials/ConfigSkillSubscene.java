@@ -193,7 +193,6 @@ public class ConfigSkillSubscene extends SubScene {
     }
 
     // player enter name here
-    // todo: make sure to check VALIDATION when submit
     public void enterName(AnchorPane anchorPane){
         Label nameLabel = new Label("Name");
         nameLabel.setFont(new Font(20));

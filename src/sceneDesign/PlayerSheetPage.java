@@ -41,13 +41,13 @@ public class PlayerSheetPage {
     }
 
     private void createInfo() {
-        Label name = displayInfo("Player Name: " + Main.player.getName(), 100, 100);
-        Label credits = displayInfo("Player Credits: " + Main.player.getCredits(), 100, 150);
-        Label skillPointsLeft = displayInfo("Player Skills: " + Main.player.getSkillPoints(), 100, 200);
-        Label pilot = displayInfo("Pilot Skill Level: " + Main.player.getSkills()[0], 100, 250);
-        Label fighter = displayInfo("Fighter Skill Level: " + Main.player.getSkills()[1], 100, 300);
-        Label merchant = displayInfo("Merchant Skill Level: " + Main.player.getSkills()[2], 100, 350);
-        Label engineer = displayInfo("Engineer Skill Level: " + Main.player.getSkills()[3], 100, 400);
+        Label name = displayInfo("Player Name: " + Main.getPlayer().getName(), 100, 100);
+        Label credits = displayInfo("Player Credits: " + Main.getPlayer().getCredits(), 100, 150);
+        Label skillPointsLeft = displayInfo("Player Skills: " + Main.getPlayer().getSkillPoints(), 100, 200);
+        Label pilot = displayInfo("Pilot Skill Level: " + Main.getPlayer().getSkills()[0], 100, 250);
+        Label fighter = displayInfo("Fighter Skill Level: " + Main.getPlayer().getSkills()[1], 100, 300);
+        Label merchant = displayInfo("Merchant Skill Level: " + Main.getPlayer().getSkills()[2], 100, 350);
+        Label engineer = displayInfo("Engineer Skill Level: " + Main.getPlayer().getSkills()[3], 100, 400);
 
         mainPane.getChildren().addAll(name, credits, skillPointsLeft, pilot, fighter, merchant, engineer);
     }

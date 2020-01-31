@@ -3,10 +3,14 @@ package application;
 import component.Player;
 import javafx.application.Application;
 import javafx.embed.swing.JFXPanel;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import materials.ConfigSkillSubscene;
@@ -16,7 +20,7 @@ import sceneDesign.WelcomePage;
 
 public class Main extends Application {
 
-    public static Player player;
+    private static Player player;
 
     private WelcomePage wp;
     private ConfigPage cp;
@@ -58,9 +62,15 @@ public class Main extends Application {
     }
 
     private void sceneSwitchToPSP(ConfigSkillSubscene subscene) {
+
         subscene.btnConfirm.setOnMouseClicked(e -> {
             if (subscene.nameValue.getText().trim().isEmpty()) {
-                subscene.nameValue.setStyle("-fx-border-color: red");
+                //subscene.nameValue.setStyle("-fx-border-color: red");
+                Alert a = new Alert(Alert.AlertType.NONE,
+                        "Please enter your name", ButtonType.OK);
+
+                a.show();
+
             } else {
                 player = new Player();
                 player.setCredits( subscene.getCredits());
@@ -74,6 +84,9 @@ public class Main extends Application {
         });
     }
 
+    public static Player getPlayer() {
+        return player;
+    }
 
     public static void main(String[] args) {
         launch(args);
