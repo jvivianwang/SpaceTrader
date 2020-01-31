@@ -18,9 +18,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class InfoLabel extends Label {
-    private BackgroundImage backgroundImageReleased;
-    private BackgroundImage backgroundImagePressed;
-    private BackgroundImage backgroundImageFulled;
+
+    private boolean hasSkillPoints;
+
+    public static BackgroundImage backgroundImageReleased;
+    public static BackgroundImage backgroundImagePressed;
+    public static BackgroundImage backgroundImageFulled;
 
     public final static String FONT_PATH = "src/materials/font/SEASRN__.ttf";
 
@@ -36,6 +39,7 @@ public class InfoLabel extends Label {
         setLabelFont();
         setAlignment(Pos.CENTER);
 
+        hasSkillPoints = true;
         initializeButtonListeners();
 
         backgroundImageReleased = new BackgroundImage(new Image(BACKGROUND_IMAGE_RELEASED, 150,
@@ -50,6 +54,10 @@ public class InfoLabel extends Label {
         setBackground(new Background(backgroundImageReleased));
     }
 
+    public void setHasSkillPoints(boolean hasSkillPoints) {
+        this.hasSkillPoints = hasSkillPoints;
+    }
+
     private void setLabelFont() {
         try {
             setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
@@ -62,9 +70,13 @@ public class InfoLabel extends Label {
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
                     setLayoutY(getLayoutY() + 10);
-                    setBackground(new Background(backgroundImagePressed));
+                    if (hasSkillPoints) {
+                        setBackground(new Background(backgroundImagePressed));
+                    } else {
+                        setBackground(new Background(backgroundImageFulled));
+                    }
                 }
             }
         });

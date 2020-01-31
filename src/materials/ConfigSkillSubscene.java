@@ -28,8 +28,13 @@ public class ConfigSkillSubscene extends SubScene {
     private int[] skills;
     private int skillPoints;
     private int credits;
+    private Label skillPointsStat;
+    private Label creditsStat;
     private String name;
-    private TextField nameValue;
+    private String difficulty;
+    public TextField nameValue;
+
+    public YellowButton btnConfirm;
 
     public ConfigSkillSubscene(String difficulty) {
         super(new AnchorPane(), 1200, 600);
@@ -47,7 +52,8 @@ public class ConfigSkillSubscene extends SubScene {
 
         isHidden = true;
 
-        difficultyMode(difficulty, root2);
+        this.difficulty = difficulty;
+        difficultyMode(difficulty);
         //Create layout for skill bar and buttons.
         createSkillAllocate(root2);
 
@@ -55,119 +61,100 @@ public class ConfigSkillSubscene extends SubScene {
         setLayoutY(-700);
     }
 
-    private void difficultyMode(String difficulty, AnchorPane root) {
+    private void difficultyMode(String difficulty) {
         if(difficulty.equals("Easy")) {
             credits = 1000;
             skillPoints = 16;
-            displayPoints(root);
         } else if(difficulty.equals("Medium")) {
             credits = 500;
             skillPoints = 12;
-            displayPoints(root);
         } else {
             credits = 100;
             skillPoints = 8;
-            displayPoints(root);
         }
         skills = new int[]{ 0, 0, 0, 0 };
+        creditsStat = displayInfo("Credits", credits, 800, 200);
+        skillPointsStat = displayInfo("Skill Points", skillPoints, 800, 300);
     }
 
     //Create layout for skill bar and buttons.
     private void createSkillAllocate(AnchorPane root) {
-        InfoLabel pilotLabel = new InfoLabel("Pilot");
-        pilotLabel.setLayoutX(75);
-        pilotLabel.setLayoutY(400);
-        InfoLabel fighterLabel = new InfoLabel("Fighter");
-        fighterLabel.setLayoutX(250);
-        fighterLabel.setLayoutY(400);
-        InfoLabel merchantLabel = new InfoLabel("Merchant");
-        merchantLabel.setLayoutX(425);
-        merchantLabel.setLayoutY(400);
-        InfoLabel engineerLabel = new InfoLabel("Engineer");
-        engineerLabel.setLayoutX(600);
-        engineerLabel.setLayoutY(400);
+        InfoLabel pilotLabel = createInfoLabel("Pilot", 0);
+        InfoLabel fighterLabel = createInfoLabel("Fighter", 1);
+        InfoLabel merchantLabel = createInfoLabel("Merchant", 2);
+        InfoLabel engineerLabel = createInfoLabel("Engineer", 3);
+
+        SkillBar pilotBar = createSkillBar(SKILL.PILOT, 0);
+        SkillBar fighterBar = createSkillBar(SKILL.FIGHTER, 1);
+        SkillBar merchantBar = createSkillBar(SKILL.MERCHANT, 2);
+        SkillBar engineerBar = createSkillBar(SKILL.ENGINEER, 3);
+
         YellowButton btnReset = new YellowButton("Reset");
         btnReset.setLayoutX(800);
         btnReset.setLayoutY(500);
-        YellowButton btnConfirm = new YellowButton("Confirm");
+        btnConfirm = new YellowButton("Confirm");
         btnConfirm.setLayoutX(1000);
         btnConfirm.setLayoutY(500);
-
-        SkillBar pilotBar = new SkillBar(SKILL.PILOT);
-        pilotBar.setLayoutX(100);
-        pilotBar.setLayoutY(375);
-        SkillBar fighterBar = new SkillBar(SKILL.FIGHTER);
-        fighterBar.setLayoutX(275);
-        fighterBar.setLayoutY(375);
-        SkillBar merchantBar = new SkillBar(SKILL.MERCHANT);
-        merchantBar.setLayoutX(450);
-        merchantBar.setLayoutY(375);
-        SkillBar engineerBar = new SkillBar(SKILL.ENGINEER);
-        engineerBar.setLayoutX(625);
-        engineerBar.setLayoutY(375);
 
         this.getPane().getChildren().addAll(pilotLabel, fighterLabel, merchantLabel, engineerLabel, btnReset,
                 btnConfirm, pilotBar, fighterBar, merchantBar, engineerBar);
 
-        pilotLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                skills[0]++;
-                skillPoints--;
-                pilotBar.setLayoutY(pilotBar.getLayoutY() - 10);
-                pilotBar.setPrefHeight(pilotBar.getHeight() + 10);
-                pilotBar.setText(skills[0] + "");
-            }
-        });
-        fighterLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                skills[1]++;
-                skillPoints--;
-                fighterBar.setLayoutY(fighterBar.getLayoutY() - 10);
-                fighterBar.setPrefHeight(fighterBar.getHeight() + 10);
-                fighterBar.setText(skills[1] + "");
-            }
-        });
-        merchantLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                skills[2]++;
-                skillPoints--;
-                merchantBar.setLayoutY(merchantBar.getLayoutY() - 10);
-                merchantBar.setPrefHeight(merchantBar.getHeight() + 10);
-                merchantBar.setText(skills[2] + "");
-            }
-        });
-        engineerLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                skills[3]++;
-                skillPoints--;
-                engineerBar.setLayoutY(engineerBar.getLayoutY() - 10);
-                engineerBar.setPrefHeight(engineerBar.getHeight() + 10);
-                engineerBar.setText(skills[3] + "");
-            }
-        });
+        allocatingSkill(pilotLabel, pilotBar, 0);
+        allocatingSkill(fighterLabel, fighterBar, 1);
+        allocatingSkill(merchantLabel, merchantBar, 2);
+        allocatingSkill(engineerLabel, engineerBar, 3);
+
         btnReset.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                pilotBar.setLayoutY(375);
-                pilotBar.setPrefHeight(0);
-                pilotBar.setText(0 + "");
-                fighterBar.setLayoutY(375);
-                fighterBar.setPrefHeight(0);
-                fighterBar.setText(0 + "");
-                merchantBar.setLayoutY(375);
-                merchantBar.setPrefHeight(0);
-                merchantBar.setText(0 + "");
-                engineerBar.setLayoutY(375);
-                engineerBar.setPrefHeight(0);
-                engineerBar.setText(0 + "");
-                setName("");
-                nameValue.clear();
+                reset(pilotLabel, pilotBar);
+                reset(fighterLabel, fighterBar);
+                reset(merchantLabel, merchantBar);
+                reset(engineerLabel, engineerBar);
             }
         });
+    }
+
+    private SkillBar createSkillBar(SKILL skillType, int skillIndex) {
+        SkillBar temp = new SkillBar(skillType);
+        temp.setLayoutX(100 + skillIndex * 175);
+        temp.setLayoutY(375);
+        return temp;
+    }
+
+    private InfoLabel createInfoLabel(String skillName, int skillIndex) {
+        InfoLabel temp = new InfoLabel(skillName);
+        temp.setLayoutX(75 + skillIndex * 175);
+        temp.setLayoutY(400);
+        return temp;
+    }
+
+    private void allocatingSkill(InfoLabel button, SkillBar bar, int skillIndex) {
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(skillPoints > 0) {
+                    skills[skillIndex]++;
+                    skillPoints--;
+                    skillPointsStat.setText("Skill Points: " + skillPoints);
+                    bar.setLayoutY(bar.getLayoutY() - 10);
+                    bar.setPrefHeight(bar.getHeight() + 10);
+                    bar.setText(skills[skillIndex] + "");
+                } else {
+                    button.setHasSkillPoints(false);
+                }
+            }
+        });
+    }
+
+    private void reset(InfoLabel button, SkillBar bar) {
+        bar.setLayoutY(375);
+        bar.setPrefHeight(0);
+        bar.setText(0 + "");
+        button.setHasSkillPoints(true);
+        setName("");
+        nameValue.clear();
+        difficultyMode(difficulty);
     }
 
     //The skill scene will move down once you select level.
@@ -192,6 +179,18 @@ public class ConfigSkillSubscene extends SubScene {
         return (AnchorPane) this.getRoot();
     }
 
+    public int getSkillPoints() {
+        return skillPoints;
+    }
+
+    public int getCredits() {
+        return credits;
+    }
+
+    public int[] getSkills() {
+        return skills;
+    }
+
     // player enter name here
     // todo: make sure to check VALIDATION when submit
     public void enterName(AnchorPane anchorPane){
@@ -209,20 +208,19 @@ public class ConfigSkillSubscene extends SubScene {
         anchorPane.getChildren().add(inputName);
         setName(inputName.getText());
         nameValue = inputName;
-
-
     }
 
-    public void displayPoints(AnchorPane anchorPane){
-        Label skillPoints = new Label("Credits: " + this.credits);
-        skillPoints.setFont(new Font(23));
-        skillPoints.setAlignment(Pos.CENTER);
-        skillPoints.setStyle("-fx-background-color: blue");
-        skillPoints.setPrefWidth(325);
-        skillPoints.setPrefHeight(200);
-        skillPoints.setLayoutX(800);
-        skillPoints.setLayoutY(200);
-        anchorPane.getChildren().add(skillPoints);
+    public Label displayInfo(String name, int info, double x, double y) {
+        Label temp = new Label(name+ " " + info);
+        temp.setFont(new Font(23));
+        temp.setAlignment(Pos.CENTER);
+        temp.setStyle("-fx-background-color: blue");
+        temp.setPrefWidth(325);
+        temp.setPrefHeight(100);
+        temp.setLayoutX(x);
+        temp.setLayoutY(y);
+        this.getPane().getChildren().add(temp);
+        return temp;
     }
 
     public String getName() {

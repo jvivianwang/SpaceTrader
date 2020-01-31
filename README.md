@@ -30,10 +30,8 @@ Step:
 
 TO DO LIST: [THINGS NEED HELP WITH/ THINGS NEED TO BE DONE]
 -Description at line 30 in Main.java.
--SkillAllocate in the configSkillSubScene.
--connection between player class and main/configpage java file.
--Validate name when submit
--calculate skill points and display on the configSkillSubScene.
+-Validate name when submit [lettersOnly length between 3 and 8]
+-PlayerSheetPage design.
 
 
 Jiawei 1/29/20:
@@ -59,4 +57,11 @@ Vivian 1/30/20:
 [What I've done:]
 -implemented reset button
 -display credits
+
+Jiawei 1/31/20:
+[What I've done:]
+-Finished configpage.
+-Simplify the codes.
+-connect three scenes in Main.java.
+-Player created while press confirmbutton.
 

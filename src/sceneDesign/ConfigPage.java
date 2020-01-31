@@ -15,9 +15,9 @@ public class ConfigPage {
     private AnchorPane mainPane;
     private Scene mainScene;
 
-    private ConfigSkillSubscene easySubScene;
-    private ConfigSkillSubscene medSubScene;
-    private ConfigSkillSubscene hardSubScene;
+    public ConfigSkillSubscene easySubScene;
+    public ConfigSkillSubscene medSubScene;
+    public ConfigSkillSubscene hardSubScene;
 
     private ConfigSkillSubscene nextSceneToHide;
     private YellowButton nextButtonToRelease;
@@ -70,26 +70,20 @@ public class ConfigPage {
         btnHard.setLayoutX(900);
         btnHard.setLayoutY(700);
 
-        btnEasy.setOnMousePressed(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                difficultyButtonPressed(btnEasy);
-                showSubScene(easySubScene);
-            }
-        });
-        btnMed.setOnMousePressed(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                difficultyButtonPressed(btnMed);
-                showSubScene(medSubScene);
-            }
-        });
-        btnHard.setOnMousePressed(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
-                difficultyButtonPressed(btnHard);
-                showSubScene(hardSubScene);
-            }
-        });
+        buttonPressed(btnEasy, easySubScene);
+        buttonPressed(btnMed, medSubScene);
+        buttonPressed(btnHard, hardSubScene);
 
         mainPane.getChildren().addAll(btnEasy, btnMed, btnHard);
+    }
+
+    private void buttonPressed(YellowButton button, ConfigSkillSubscene scene) {
+        button.setOnMousePressed(event -> {
+            if(event.getButton().equals(MouseButton.PRIMARY)) {
+                difficultyButtonPressed(button);
+                showSubScene(scene);
+            }
+        });
     }
 
     private void createBackground() {

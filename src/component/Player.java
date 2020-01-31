@@ -4,10 +4,12 @@ public class Player {
 
     private int skillPoints;
     private int credits;
+    private int[] skills;
 
     public Player() {
         skillPoints = 0;
         credits = 0;
+        skills = new int[]{0,0,0,0,};
     }
 
     public int getSkillPoints() {
@@ -18,11 +20,19 @@ public class Player {
         return credits;
     }
 
+    public int[] getSkills() {
+        return skills;
+    }
+
     public void setSkillPoints(int skillPoints) {
         this.skillPoints = skillPoints;
     }
 
     public void setCredits(int credits) {
         this.credits = credits;
+    }
+
+    public void setSkills(int[] skills) {
+        this.skills = skills;
     }
 }
