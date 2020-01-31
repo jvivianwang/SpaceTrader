@@ -55,3 +55,8 @@ Jiawei 1/30/20:
 [what I've done:]
 -Created skillAllocating subscene and finished some of the functionality.
 
+Vivian 1/30/20:
+[What I've done:]
+-implemented reset button
+-display credits
+
