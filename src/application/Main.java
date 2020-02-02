@@ -2,21 +2,23 @@ package application;
 
 import component.Player;
 import javafx.application.Application;
-import javafx.embed.swing.JFXPanel;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import materials.ConfigSkillSubscene;
-import sceneDesign.ConfigPage;
-import sceneDesign.PlayerSheetPage;
-import sceneDesign.WelcomePage;
+import scene.ConfigPage;
+import scene.PlayerSheetPage;
+import scene.WelcomePage;
+
+//Commented out imports we haven't used yet
+//import javafx.embed.swing.JFXPanel;
+//import javafx.event.ActionEvent;
+//import javafx.event.EventHandler;
+//import javafx.scene.Group;
+//import javafx.scene.Scene;
+//import javafx.scene.canvas.Canvas;
+//import javafx.scene.canvas.GraphicsContext;
+//import javafx.scene.image.Image;
 
 public class Main extends Application {
 
@@ -28,7 +30,7 @@ public class Main extends Application {
     private Stage stage;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
         stage.setTitle("Space Trader");
         player = new Player();
@@ -41,30 +43,34 @@ public class Main extends Application {
 
         //Switch to player config.
 
-           //--------------------- TO BE IMPROVED -------------------//
-          //---------- NEED TO BE INSIDE WelcomePage.java ----------//
-         //---- canvas, play variable should not be accessible ----//
+        //--------------------- TO BE IMPROVED -------------------//
+        //---------- NEED TO BE INSIDE WelcomePage.java ----------//
+        //---- canvas, play variable should not be accessible ----//
         //----- READ COMMENTS AT LINE 18 IN WelcomePage.java -----//
-        wp.canvas.setOnMouseClicked(e -> {
+        wp.getCanvas().setOnMouseClicked(e -> {
             double x = e.getX();
             double y = e.getY();
-            if ((x < wp.canvas.getWidth() / 2 + wp.play.getWidth() / 2 && x > wp.canvas.getWidth() / 2 - wp.play.getWidth() / 2) &&
-                    (y < wp.canvas.getHeight() / 2 + wp.play.getHeight()  / 2 && y > wp.canvas.getHeight()  / 2 - wp.play.getHeight()  / 2)) {
+            double wCanvas = wp.getCanvas().getWidth();
+            double hCanvas = wp.getCanvas().getHeight();
+            double wPlay = wp.getPlay().getWidth();
+            double hPlay = wp.getPlay().getHeight();
+            if ((x < wCanvas / 2 + wPlay / 2 && x > wCanvas / 2 - wPlay / 2)
+                    && (y < hCanvas / 2 + hPlay  / 2 && y > hCanvas  / 2 - hPlay  / 2)) {
                 stage.setScene(cp.getMainScene());
             }
         });
 
-        sceneSwitchToPSP(cp.easySubScene);
-        sceneSwitchToPSP(cp.medSubScene);
-        sceneSwitchToPSP(cp.hardSubScene);
+        sceneSwitchToPSP(cp.getEasySubScene());
+        sceneSwitchToPSP(cp.getMedSubScene());
+        sceneSwitchToPSP(cp.getHardSubScene());
 
         stage.show();
     }
 
     private void sceneSwitchToPSP(ConfigSkillSubscene subscene) {
 
-        subscene.btnConfirm.setOnMouseClicked(e -> {
-            if (subscene.nameValue.getText().trim().isEmpty()) {
+        subscene.getBtnConfirm().setOnMouseClicked(e -> {
+            if (subscene.getNameValue().getText().trim().isEmpty()) {
                 //subscene.nameValue.setStyle("-fx-border-color: red");
                 Alert a = new Alert(Alert.AlertType.NONE,
                         "Please enter your name", ButtonType.OK);
@@ -73,10 +79,10 @@ public class Main extends Application {
 
             } else {
                 player = new Player();
-                player.setCredits( subscene.getCredits());
+                player.setCredits(subscene.getCredits());
                 player.setSkillPoints(subscene.getSkillPoints());
                 player.setSkills(subscene.getSkills());
-                player.setName(subscene.nameValue.getText());
+                player.setName(subscene.getNameValue().getText());
                 System.out.println("Created");
                 psp = new PlayerSheetPage();
                 stage.setScene(psp.getMainScene());

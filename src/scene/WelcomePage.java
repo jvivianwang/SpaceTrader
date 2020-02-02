@@ -1,4 +1,4 @@
-package sceneDesign;
+package scene;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -16,8 +16,8 @@ public class WelcomePage {
     //This two should not be outside of the createCanvas().
     //Line 33 should be Canvas canvas = new Canvas(WIDTH, HEIGHT);
     //Line 38 should start with Image play = ...
-    public Canvas canvas;
-    public Image play;
+    private Canvas canvas;
+    private Image play;
 
     public WelcomePage() {
         mainPane = new AnchorPane();
@@ -30,16 +30,31 @@ public class WelcomePage {
     }
 
     private void createCanvas() {
-        canvas = new Canvas( WIDTH, HEIGHT );
+        canvas = new Canvas(WIDTH, HEIGHT);
         mainPane.getChildren().add(canvas);
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        play = new Image("materials/image/playButton.png", HEIGHT / 3, HEIGHT / 3, false, false);
-        Image magic = new Image("materials/image/sparkle.gif", WIDTH / 8, WIDTH / 8, true, false);
+        play = new Image("materials/image/playButton.png",
+                HEIGHT / 3,
+                HEIGHT / 3,
+                false,
+                false);
+        Image magic = new Image("materials/image/sparkle.gif",
+                WIDTH / 8,
+                WIDTH / 8,
+                true,
+                false);
         //space dimensions: 1600 x 900 px
-        Image space = new Image("materials/image/space.jpg", WIDTH, HEIGHT, true, true);
-        Image title = new Image("materials/image/WizardsOfTheCaribbeanTitle.png", WIDTH / 2, WIDTH / 8, true,false);
+        Image space = new Image("materials/image/space.jpg",
+                WIDTH, HEIGHT,
+                true,
+                true);
+        Image title = new Image("materials/image/WizardsOfTheCaribbeanTitle.png",
+                WIDTH / 2,
+                WIDTH / 8,
+                true,
+                false);
 
         canvas.setOnMouseMoved(e -> {
             double x = 1400 - e.getX();
@@ -48,9 +63,18 @@ public class WelcomePage {
             gc.drawImage(space, 0, 0);
             gc.drawImage(play, 600, 250);
             gc.drawImage(magic, x, y);
-            gc.drawImage(title, 0,0);
+            gc.drawImage(title, 0, 0);
         });
 
 
     }
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public Image getPlay() {
+        return play;
+    }
+
 }

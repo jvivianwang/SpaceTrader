@@ -1,12 +1,14 @@
-package sceneDesign;
+package scene;
 
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import materials.ConfigSkillSubscene;
-import materials.InfoLabel;
 import materials.YellowButton;
+
+//Commented out unused labels for now
+//import materials.InfoLabel;
 
 public class ConfigPage {
 
@@ -15,9 +17,10 @@ public class ConfigPage {
     private AnchorPane mainPane;
     private Scene mainScene;
 
-    public ConfigSkillSubscene easySubScene;
-    public ConfigSkillSubscene medSubScene;
-    public ConfigSkillSubscene hardSubScene;
+    private ConfigSkillSubscene easySubScene;
+    private ConfigSkillSubscene medSubScene;
+    private ConfigSkillSubscene hardSubScene;
+
 
     private ConfigSkillSubscene nextSceneToHide;
     private YellowButton nextButtonToRelease;
@@ -32,7 +35,7 @@ public class ConfigPage {
     }
 
     private void difficultyButtonPressed(YellowButton subScene) {
-        if(nextButtonToRelease != null) {
+        if (nextButtonToRelease != null) {
             nextButtonToRelease.setButtonStyle();
         }
         subScene.setButtonStyle();
@@ -40,7 +43,7 @@ public class ConfigPage {
     }
 
     private void showSubScene(ConfigSkillSubscene subScene) {
-        if(nextSceneToHide != null) {
+        if (nextSceneToHide != null) {
             nextSceneToHide.moveSubScene();
         }
         subScene.moveSubScene();
@@ -79,7 +82,7 @@ public class ConfigPage {
 
     private void buttonPressed(YellowButton button, ConfigSkillSubscene scene) {
         button.setOnMousePressed(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
                 difficultyButtonPressed(button);
                 showSubScene(scene);
             }
@@ -87,8 +90,40 @@ public class ConfigPage {
     }
 
     private void createBackground() {
-        Image backgroundImage = new Image("materials/image/configBackground.png", WIDTH, HEIGHT, false, true);
-        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
+        Image backgroundImage = new Image("materials/image/configBackground.png",
+                WIDTH,
+                HEIGHT,
+                false,
+                true);
+        BackgroundImage background = new BackgroundImage(backgroundImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                null);
         mainPane.setBackground(new Background(background));
+    }
+
+    public ConfigSkillSubscene getEasySubScene() {
+        return easySubScene;
+    }
+
+    public void setEasySubScene(ConfigSkillSubscene easySubScene) {
+        this.easySubScene = easySubScene;
+    }
+
+    public ConfigSkillSubscene getMedSubScene() {
+        return medSubScene;
+    }
+
+    public void setMedSubScene(ConfigSkillSubscene medSubScene) {
+        this.medSubScene = medSubScene;
+    }
+
+    public ConfigSkillSubscene getHardSubScene() {
+        return hardSubScene;
+    }
+
+    public void setHardSubScene(ConfigSkillSubscene hardSubScene) {
+        this.hardSubScene = hardSubScene;
     }
 }

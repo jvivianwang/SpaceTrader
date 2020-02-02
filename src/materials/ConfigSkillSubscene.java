@@ -3,26 +3,29 @@ package materials;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
+
 import javafx.scene.SubScene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
+//Commented out unused imports for now.
+//import javafx.scene.Parent;
+//import javafx.scene.input.MouseButton;
+
 public class ConfigSkillSubscene extends SubScene {
 
-    private final static String FONT_PATH = "src/materials/font/FFF_Tusj.ttf";
-    private final static String BACKGROUND_IMAGE = "materials/image/configSubsceneBG.png";
+    private static final String FONT_PATH = "src/materials/font/FFF_Tusj.ttf";
+    private static final String BACKGROUND_IMAGE = "materials/image/configSubsceneBG.png";
 
-    private final static String PILOT_BAR = "materials/image/YellowSkillBar.png";
-    private final static String FIGHTER_BAR = "materials/image/BlackSkillBar.png";
-    private final static String MERCHANT_BAR = "materials/image/PurpleSkillBar.png";
-    private final static String ENGINEER_BAR = "materials/image/RedSkillBar.png";
+    private static final String PILOT_BAR = "materials/image/YellowSkillBar.png";
+    private static final String FIGHTER_BAR = "materials/image/BlackSkillBar.png";
+    private static final String MERCHANT_BAR = "materials/image/PurpleSkillBar.png";
+    private static final String ENGINEER_BAR = "materials/image/RedSkillBar.png";
 
     private boolean isHidden;
     private int[] skills;
@@ -32,17 +35,24 @@ public class ConfigSkillSubscene extends SubScene {
     private Label creditsStat;
     private String name;
     private String difficulty;
-    public TextField nameValue;
-
-    public YellowButton btnConfirm;
+    private TextField nameValue;
+    private YellowButton btnConfirm;
 
     public ConfigSkillSubscene(String difficulty) {
         super(new AnchorPane(), 1200, 600);
         prefHeight(1200);
         prefWidth(600);
 
-        Image backgroundImage = new Image(BACKGROUND_IMAGE, 1200, 600, false, true);
-        BackgroundImage image = new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
+        Image backgroundImage = new Image(BACKGROUND_IMAGE,
+                1200,
+                600,
+                false,
+                true);
+        BackgroundImage image = new BackgroundImage(backgroundImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                null);
 
         AnchorPane root2 = (AnchorPane) this.getRoot();
 
@@ -62,17 +72,17 @@ public class ConfigSkillSubscene extends SubScene {
     }
 
     private void difficultyMode(String difficulty) {
-        if(difficulty.equals("Easy")) {
+        if (difficulty.equals("Easy")) {
             credits = 1000;
             skillPoints = 16;
-        } else if(difficulty.equals("Medium")) {
+        } else if (difficulty.equals("Medium")) {
             credits = 500;
             skillPoints = 12;
         } else {
             credits = 100;
             skillPoints = 8;
         }
-        skills = new int[]{ 0, 0, 0, 0 };
+        skills = new int[]{0, 0, 0, 0};
         creditsStat = displayInfo("Credits", credits, 800, 200);
         skillPointsStat = displayInfo("Skill Points", skillPoints, 800, 300);
         this.getPane().getChildren().addAll(creditsStat, skillPointsStat);
@@ -85,10 +95,10 @@ public class ConfigSkillSubscene extends SubScene {
         InfoLabel merchantLabel = createInfoLabel("Merchant", 2);
         InfoLabel engineerLabel = createInfoLabel("Engineer", 3);
 
-        SkillBar pilotBar = createSkillBar(SKILL.PILOT, 0);
-        SkillBar fighterBar = createSkillBar(SKILL.FIGHTER, 1);
-        SkillBar merchantBar = createSkillBar(SKILL.MERCHANT, 2);
-        SkillBar engineerBar = createSkillBar(SKILL.ENGINEER, 3);
+        SkillBar pilotBar = createSkillBar(Skill.PILOT, 0);
+        SkillBar fighterBar = createSkillBar(Skill.FIGHTER, 1);
+        SkillBar merchantBar = createSkillBar(Skill.MERCHANT, 2);
+        SkillBar engineerBar = createSkillBar(Skill.ENGINEER, 3);
 
         YellowButton btnReset = new YellowButton("Reset");
         btnReset.setLayoutX(800);
@@ -97,8 +107,16 @@ public class ConfigSkillSubscene extends SubScene {
         btnConfirm.setLayoutX(1000);
         btnConfirm.setLayoutY(500);
 
-        this.getPane().getChildren().addAll(pilotLabel, fighterLabel, merchantLabel, engineerLabel, btnReset,
-                btnConfirm, pilotBar, fighterBar, merchantBar, engineerBar);
+        this.getPane().getChildren().addAll(pilotLabel,
+                fighterLabel,
+                merchantLabel,
+                engineerLabel,
+                btnReset,
+                btnConfirm,
+                pilotBar,
+                fighterBar,
+                merchantBar,
+                engineerBar);
 
         allocatingSkill(pilotLabel, pilotBar, 0);
         allocatingSkill(fighterLabel, fighterBar, 1);
@@ -116,7 +134,7 @@ public class ConfigSkillSubscene extends SubScene {
         });
     }
 
-    private SkillBar createSkillBar(SKILL skillType, int skillIndex) {
+    private SkillBar createSkillBar(Skill skillType, int skillIndex) {
         SkillBar temp = new SkillBar(skillType);
         temp.setLayoutX(100 + skillIndex * 175);
         temp.setLayoutY(375);
@@ -134,7 +152,7 @@ public class ConfigSkillSubscene extends SubScene {
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(skillPoints > 0) {
+                if (skillPoints > 0) {
                     skills[skillIndex]++;
                     skillPoints--;
                     skillPointsStat.setText("Skill Points: " + skillPoints);
@@ -164,7 +182,7 @@ public class ConfigSkillSubscene extends SubScene {
         transition.setDuration(Duration.seconds(0.5));
         transition.setNode(this);
 
-        if(isHidden) {
+        if (isHidden) {
             //setToY(y) is move down y units instead move to y coordinate.
             transition.setToY(750);
             isHidden = false;
@@ -174,6 +192,36 @@ public class ConfigSkillSubscene extends SubScene {
         }
 
         transition.play();
+    }
+
+    // player enter name here
+    public void enterName(AnchorPane anchorPane) {
+        Label nameLabel = new Label("Name");
+        nameLabel.setFont(new Font(20));
+        nameLabel.setStyle("-fx-background-color: blue");
+        TextField inputName = new TextField();
+        inputName.setPrefWidth(250);
+        inputName.setPrefHeight(30);
+        inputName.setLayoutX(875);
+        inputName.setLayoutY(100);
+        nameLabel.setLayoutX(800);
+        nameLabel.setLayoutY(103);
+        anchorPane.getChildren().add(nameLabel);
+        anchorPane.getChildren().add(inputName);
+        setName(inputName.getText());
+        nameValue = inputName;
+    }
+
+    public Label displayInfo(String name, int info, double x, double y) {
+        Label temp = new Label(name + " " + info);
+        temp.setFont(new Font(23));
+        temp.setAlignment(Pos.CENTER);
+        temp.setStyle("-fx-background-color: blue");
+        temp.setPrefWidth(325);
+        temp.setPrefHeight(100);
+        temp.setLayoutX(x);
+        temp.setLayoutY(y);
+        return temp;
     }
 
     public AnchorPane getPane() {
@@ -192,41 +240,20 @@ public class ConfigSkillSubscene extends SubScene {
         return skills;
     }
 
-    // player enter name here
-    public void enterName(AnchorPane anchorPane){
-        Label nameLabel = new Label("Name");
-        nameLabel.setFont(new Font(20));
-        nameLabel.setStyle("-fx-background-color: blue");
-        TextField inputName = new TextField();
-        inputName.setPrefWidth(250);
-        inputName.setPrefHeight(30);
-        inputName.setLayoutX(875);
-        inputName.setLayoutY(100);
-        nameLabel.setLayoutX(800);
-        nameLabel.setLayoutY(103);
-        anchorPane.getChildren().add(nameLabel);
-        anchorPane.getChildren().add(inputName);
-        setName(inputName.getText());
-        nameValue = inputName;
-    }
-
-    public Label displayInfo(String name, int info, double x, double y) {
-        Label temp = new Label(name+ " " + info);
-        temp.setFont(new Font(23));
-        temp.setAlignment(Pos.CENTER);
-        temp.setStyle("-fx-background-color: blue");
-        temp.setPrefWidth(325);
-        temp.setPrefHeight(100);
-        temp.setLayoutX(x);
-        temp.setLayoutY(y);
-        return temp;
-    }
-
-    public String getName() {
-        return this.name;
-    }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public TextField getNameValue() {
+        return nameValue;
+    }
+
+    public YellowButton getBtnConfirm() {
+        return btnConfirm;
+    }
+
+    public void setBtnConfirm(YellowButton btnConfirm) {
+        this.btnConfirm = btnConfirm;
     }
 }

@@ -10,7 +10,7 @@ public class Player {
     public Player() {
         skillPoints = 0;
         credits = 0;
-        skills = new int[]{0,0,0,0,};
+        skills = new int[]{0, 0, 0, 0, };
     }
 
     public int getSkillPoints() {
