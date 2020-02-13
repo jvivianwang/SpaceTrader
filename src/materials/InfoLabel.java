@@ -71,26 +71,20 @@ public class InfoLabel extends Label {
     }
 
     private void initializeButtonListeners() {
-        setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    setLayoutY(getLayoutY() + 10);
-                    if (hasSkillPoints) {
-                        setBackground(new Background(backgroundImagePressed));
-                    } else {
-                        setBackground(new Background(backgroundImageFulled));
-                    }
+        setOnMousePressed(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                setLayoutY(getLayoutY() + 10);
+                if (hasSkillPoints) {
+                    setBackground(new Background(backgroundImagePressed));
+                } else {
+                    setBackground(new Background(backgroundImageFulled));
                 }
             }
         });
-        setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    setLayoutY(getLayoutY() - 10);
-                    setBackground(new Background(backgroundImageReleased));
-                }
+        setOnMouseReleased(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                setLayoutY(getLayoutY() - 10);
+                setBackground(new Background(backgroundImageReleased));
             }
         });
     }

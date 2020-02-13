@@ -1,6 +1,7 @@
 package application;
 
 import component.Player;
+import component.Region;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -8,6 +9,7 @@ import javafx.stage.Stage;
 import materials.ConfigSkillSubscene;
 import scene.ConfigPage;
 import scene.PlayerSheetPage;
+import scene.RegionMapPage;
 import scene.WelcomePage;
 
 //Commented out imports we haven't used yet
@@ -27,6 +29,7 @@ public class Main extends Application {
     private WelcomePage wp;
     private ConfigPage cp;
     private PlayerSheetPage psp;
+    private RegionMapPage rmp;
     private Stage stage;
 
     @Override
@@ -42,11 +45,20 @@ public class Main extends Application {
         stage.setScene(wp.getMainScene());
 
         //Switch to player config.
+        sceneSwitchToCP();
 
-        //--------------------- TO BE IMPROVED -------------------//
-        //---------- NEED TO BE INSIDE WelcomePage.java ----------//
-        //---- canvas, play variable should not be accessible ----//
-        //----- READ COMMENTS AT LINE 18 IN WelcomePage.java -----//
+        //Switch to player sheet Page.
+        sceneSwitchToPSP(cp.getEasySubScene());
+        sceneSwitchToPSP(cp.getMedSubScene());
+        sceneSwitchToPSP(cp.getHardSubScene());
+
+        //Switch to Region Map Page.
+        //Call sceneSwitchToRMP() at line 93.
+
+        stage.show();
+    }
+
+    private void sceneSwitchToCP() {
         wp.getCanvas().setOnMouseClicked(e -> {
             double x = e.getX();
             double y = e.getY();
@@ -59,12 +71,6 @@ public class Main extends Application {
                 stage.setScene(cp.getMainScene());
             }
         });
-
-        sceneSwitchToPSP(cp.getEasySubScene());
-        sceneSwitchToPSP(cp.getMedSubScene());
-        sceneSwitchToPSP(cp.getHardSubScene());
-
-        stage.show();
     }
 
     private void sceneSwitchToPSP(ConfigSkillSubscene subscene) {
@@ -83,10 +89,17 @@ public class Main extends Application {
                 player.setSkillPoints(subscene.getSkillPoints());
                 player.setSkills(subscene.getSkills());
                 player.setName(subscene.getNameValue().getText());
-                System.out.println("Created");
                 psp = new PlayerSheetPage();
                 stage.setScene(psp.getMainScene());
+                sceneSwitchToRMP();
             }
+        });
+    }
+
+    private void sceneSwitchToRMP() {
+        psp.getBtnNextPage().setOnMouseClicked(e -> {
+                rmp = new RegionMapPage();
+                stage.setScene(rmp.getMainScene());
         });
     }
 

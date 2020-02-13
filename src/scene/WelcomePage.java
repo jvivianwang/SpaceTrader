@@ -56,14 +56,18 @@ public class WelcomePage {
                 true,
                 false);
 
+        gc.drawImage(space, 0, 0);
+        gc.drawImage(play, 600, 250);
+        gc.drawImage(title, 0, 0);
+
         canvas.setOnMouseMoved(e -> {
             double x = 1400 - e.getX();
             double y = 700 - e.getY();
 
             gc.drawImage(space, 0, 0);
             gc.drawImage(play, 600, 250);
-            gc.drawImage(magic, x, y);
             gc.drawImage(title, 0, 0);
+            gc.drawImage(magic, x, y);
         });
 
 

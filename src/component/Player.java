@@ -1,11 +1,14 @@
 package component;
 
+import application.Main;
+
 public class Player {
 
     private int skillPoints;
     private int credits;
     private int[] skills;
     private String name;
+    private Region currentRegion;
 
     public Player() {
         skillPoints = 0;
@@ -43,5 +46,13 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public  Region getCurrentRegion() {
+        return currentRegion;
+    }
+
+    public  void setCurrentRegion(Region currentRegion) {
+        this.currentRegion = currentRegion;
     }
 }

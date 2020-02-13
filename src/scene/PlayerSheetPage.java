@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import materials.YellowButton;
 
 //Commented out unused import for now
 //import javafx.scene.text.Text;
@@ -19,11 +20,14 @@ public class PlayerSheetPage {
     private AnchorPane mainPane;
     private Scene mainScene;
 
+    private YellowButton btnNextPage;
+
     public PlayerSheetPage() {
         mainPane = new AnchorPane();
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         createBackground();
         createInfo();
+        createButton();
     }
 
     private void createBackground() {
@@ -38,17 +42,6 @@ public class PlayerSheetPage {
                 BackgroundPosition.DEFAULT,
                 null);
         mainPane.setBackground(new Background(background));
-    }
-
-    public Label displayInfo(String name, double x, double y) {
-        Label temp = new Label(name);
-        temp.setFont(new Font(23));
-        temp.setAlignment(Pos.CENTER);
-        temp.setPrefWidth(325);
-        temp.setPrefHeight(100);
-        temp.setLayoutX(x);
-        temp.setLayoutY(y);
-        return temp;
     }
 
     private void createInfo() {
@@ -83,7 +76,30 @@ public class PlayerSheetPage {
                 engineer);
     }
 
+    public Label displayInfo(String name, double x, double y) {
+        Label temp = new Label(name);
+        temp.setFont(new Font(23));
+        temp.setAlignment(Pos.CENTER);
+        temp.setPrefWidth(325);
+        temp.setPrefHeight(100);
+        temp.setLayoutX(x);
+        temp.setLayoutY(y);
+        return temp;
+    }
+
+    private void createButton() {
+        btnNextPage  = new YellowButton("BEGIN GAME");
+        btnNextPage.setLayoutX(750);
+        btnNextPage.setLayoutY(600);
+        btnNextPage.setPrefWidth(200);
+        mainPane.getChildren().add(btnNextPage);
+    }
+
     public Scene getMainScene() {
         return mainScene;
+    }
+
+    public YellowButton getBtnNextPage() {
+        return btnNextPage;
     }
 }

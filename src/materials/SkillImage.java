@@ -1,6 +1,6 @@
 package materials;
 
-public enum Skill {
+public enum SkillImage {
     PILOT("materials/image/YellowSkillBar.png"),
     FIGHTER("materials/image/BlackSkillBar.png"),
     MERCHANT("materials/image/PurpleSkillBar.png"),
@@ -8,7 +8,7 @@ public enum Skill {
 
     private String urlSkill;
 
-    private Skill(String urlSkill) {
+    private SkillImage(String urlSkill) {
         this.urlSkill = urlSkill;
     }
 
