@@ -58,10 +58,6 @@ public class ConfigPage {
 
     }
 
-    public Scene getMainScene() {
-        return mainScene;
-    }
-
     private void createYellowButtons() {
         YellowButton btnEasy = new YellowButton("Easy");
         btnEasy.setLayoutX(500);
@@ -101,6 +97,10 @@ public class ConfigPage {
                 BackgroundPosition.DEFAULT,
                 null);
         mainPane.setBackground(new Background(background));
+    }
+
+    public Scene getMainScene() {
+        return mainScene;
     }
 
     public ConfigSkillSubscene getEasySubScene() {

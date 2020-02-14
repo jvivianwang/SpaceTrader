@@ -8,10 +8,10 @@ public class SkillBar extends Label {
 
     private BackgroundImage skillBar;
 
-    private Skill skill;
+    private SkillImage skillImage;
 
-    public SkillBar(Skill skill) {
-        this.skill = skill;
+    public SkillBar(SkillImage skillImage) {
+        this.skillImage = skillImage;
         setPrefWidth(100);
         setPrefHeight(0);
         setText("0");
@@ -19,7 +19,7 @@ public class SkillBar extends Label {
         setAlignment(Pos.CENTER);
         setStyle("-fx-font-size: 30px; "
                 + "-fx-background-color: transparent; "
-                + "-fx-background-image: url('/" + skill.getUrl() + "');"
+                + "-fx-background-image: url('/" + skillImage.getUrl() + "');"
                 + " -fx-background-size: 100% 100%;");
     }
 }

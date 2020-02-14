@@ -1,6 +1,9 @@
 package application;
 
+import com.sun.media.jfxmedia.Media;
+import com.sun.media.jfxmedia.MediaPlayer;
 import component.Player;
+import component.Region;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -8,7 +11,11 @@ import javafx.stage.Stage;
 import materials.ConfigSkillSubscene;
 import scene.ConfigPage;
 import scene.PlayerSheetPage;
+import scene.RegionMapPage;
 import scene.WelcomePage;
+
+import java.io.File;
+
 
 //Commented out imports we haven't used yet
 //import javafx.embed.swing.JFXPanel;
@@ -27,10 +34,12 @@ public class Main extends Application {
     private WelcomePage wp;
     private ConfigPage cp;
     private PlayerSheetPage psp;
+    private RegionMapPage rmp;
     private Stage stage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        music();
         stage = primaryStage;
         stage.setTitle("Space Trader");
         player = new Player();
@@ -42,11 +51,21 @@ public class Main extends Application {
         stage.setScene(wp.getMainScene());
 
         //Switch to player config.
+        //music();
+        sceneSwitchToCP();
 
-        //--------------------- TO BE IMPROVED -------------------//
-        //---------- NEED TO BE INSIDE WelcomePage.java ----------//
-        //---- canvas, play variable should not be accessible ----//
-        //----- READ COMMENTS AT LINE 18 IN WelcomePage.java -----//
+        //Switch to player sheet Page.
+        sceneSwitchToPSP(cp.getEasySubScene());
+        sceneSwitchToPSP(cp.getMedSubScene());
+        sceneSwitchToPSP(cp.getHardSubScene());
+
+        //Switch to Region Map Page.
+        //Call sceneSwitchToRMP() at line 93.
+
+        stage.show();
+    }
+
+    private void sceneSwitchToCP() {
         wp.getCanvas().setOnMouseClicked(e -> {
             double x = e.getX();
             double y = e.getY();
@@ -59,12 +78,6 @@ public class Main extends Application {
                 stage.setScene(cp.getMainScene());
             }
         });
-
-        sceneSwitchToPSP(cp.getEasySubScene());
-        sceneSwitchToPSP(cp.getMedSubScene());
-        sceneSwitchToPSP(cp.getHardSubScene());
-
-        stage.show();
     }
 
     private void sceneSwitchToPSP(ConfigSkillSubscene subscene) {
@@ -83,15 +96,29 @@ public class Main extends Application {
                 player.setSkillPoints(subscene.getSkillPoints());
                 player.setSkills(subscene.getSkills());
                 player.setName(subscene.getNameValue().getText());
-                System.out.println("Created");
                 psp = new PlayerSheetPage();
                 stage.setScene(psp.getMainScene());
+                sceneSwitchToRMP();
             }
+        });
+    }
+
+    private void sceneSwitchToRMP() {
+        psp.getBtnNextPage().setOnMouseClicked(e -> {
+                rmp = new RegionMapPage();
+                stage.setScene(rmp.getMainScene());
         });
     }
 
     public static Player getPlayer() {
         return player;
+    }
+
+    public void music() {
+        File file = new File("src/materials/battle.wav");
+        javafx.scene.media.Media music = new javafx.scene.media.Media(file.toURI().toString());
+        javafx.scene.media.MediaPlayer mp = new javafx.scene.media.MediaPlayer(music);
+        mp.play();
     }
 
     public static void main(String[] args) {

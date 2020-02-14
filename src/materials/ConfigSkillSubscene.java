@@ -95,10 +95,10 @@ public class ConfigSkillSubscene extends SubScene {
         InfoLabel merchantLabel = createInfoLabel("Merchant", 2);
         InfoLabel engineerLabel = createInfoLabel("Engineer", 3);
 
-        SkillBar pilotBar = createSkillBar(Skill.PILOT, 0);
-        SkillBar fighterBar = createSkillBar(Skill.FIGHTER, 1);
-        SkillBar merchantBar = createSkillBar(Skill.MERCHANT, 2);
-        SkillBar engineerBar = createSkillBar(Skill.ENGINEER, 3);
+        SkillBar pilotBar = createSkillBar(SkillImage.PILOT, 0);
+        SkillBar fighterBar = createSkillBar(SkillImage.FIGHTER, 1);
+        SkillBar merchantBar = createSkillBar(SkillImage.MERCHANT, 2);
+        SkillBar engineerBar = createSkillBar(SkillImage.ENGINEER, 3);
 
         YellowButton btnReset = new YellowButton("Reset");
         btnReset.setLayoutX(800);
@@ -107,7 +107,7 @@ public class ConfigSkillSubscene extends SubScene {
         btnConfirm.setLayoutX(1000);
         btnConfirm.setLayoutY(500);
 
-        this.getPane().getChildren().addAll(pilotLabel,
+        root.getChildren().addAll(pilotLabel,
                 fighterLabel,
                 merchantLabel,
                 engineerLabel,
@@ -134,8 +134,8 @@ public class ConfigSkillSubscene extends SubScene {
         });
     }
 
-    private SkillBar createSkillBar(Skill skillType, int skillIndex) {
-        SkillBar temp = new SkillBar(skillType);
+    private SkillBar createSkillBar(SkillImage SkillImageType, int skillIndex) {
+        SkillBar temp = new SkillBar(SkillImageType);
         temp.setLayoutX(100 + skillIndex * 175);
         temp.setLayoutY(375);
         return temp;
