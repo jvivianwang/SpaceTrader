@@ -33,7 +33,7 @@ TO DO LIST: [THINGS NEED HELP WITH/ THINGS NEED TO BE DONE]
 -SkillAllocate in the configSkillSubScene.
 -connection between player class and main/configpage java file.
 -Validate name when submit
--calculate skill points and display on the configSkillSubScene.
+-calculate skillImage points and display on the configSkillSubScene.
 
 
 Jiawei 1/29/20:
@@ -43,7 +43,7 @@ Jiawei 1/29/20:
 
 Jiawei 1/29/20:
 [What I've done:]
--Create button so that you can select difficulty and animation for the skill panel droping down.
+-Create button so that you can select difficulty and animation for the skillImage panel droping down.
 -Organize more in the src folder.
 -Create YellowButton,java so that you can use the same style button later.
 
@@ -59,6 +59,17 @@ Princeton 2/2/20:
 [What I've done:]
 -Stylized code to comply with checkstyle standards.
 
+
+Jiawei 2/12/20: 
+[What I've done:]
+-Most of the M4 Function finished.
+ -Travel function to be implemented. 
+ -Minor refactor in old class.
+
 Princeton 2/13/20:
 [What I've done:]
--Added fancy smancy music to the game.
+-Added fancy smancy music
+
+Jiawei 2/14/20: 
+[What I've done:]
+-Added few images.
