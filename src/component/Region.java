@@ -34,7 +34,18 @@ public class Region extends Label {
         setPrefHeight(150);
 
         //image name matches region name.
+        setRegionBackgroundToYellow();
+    }
+
+    public void setRegionBackgroundToYellow() {
         regionBackground = new BackgroundImage(new Image("materials/image/N" + regionName + ".png",
+                150, 150, false, true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
+        setBackground(new Background(regionBackground));
+    }
+
+    public void setRegionBackgroundToBlue() {
+        regionBackground = new BackgroundImage(new Image("materials/image/N" + regionName + "Blue.png",
                 150, 150, false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
         setBackground(new Background(regionBackground));

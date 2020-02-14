@@ -1,5 +1,6 @@
 package materials;
 
+import application.Main;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import component.Region;
@@ -70,9 +71,9 @@ public class RegionSubscene extends SubScene {
         root.getChildren().addAll(regionName, techLevel, description, distance);
     }
 
-    public void setDisplayInfo(Region currentRegion, Region regionSelect) {
+    public void setDisplayInfo(Region regionSelect) {
         regionNameInfo = regionSelect.getRegionName();
-        distanceInfo = calculateDistance(currentRegion, regionSelect) + "";
+        distanceInfo = calculateDistance(Main.getPlayer().getCurrentRegion(), regionSelect) + "";
         if (regionSelect.isDiscovered()) {
             techLevelInfo = regionSelect.getTechLevel() + "";
             descriptionInfo = regionSelect.getDescription();
@@ -126,4 +127,7 @@ public class RegionSubscene extends SubScene {
         return temp;
     }
 
+    public YellowButton getBtnTravel() {
+        return btnTravel;
+    }
 }

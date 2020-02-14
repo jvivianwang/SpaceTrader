@@ -29,11 +29,9 @@ Step:
 
 
 TO DO LIST: [THINGS NEED HELP WITH/ THINGS NEED TO BE DONE]
--Description at line 30 in Main.java.
--SkillAllocate in the configSkillSubScene.
--connection between player class and main/configpage java file.
--Validate name when submit
--calculate skillImage points and display on the configSkillSubScene.
+-checkStyle
+-Change the Region information
+-Chnage the graphic
 
 
 Jiawei 1/29/20:
@@ -73,3 +71,7 @@ Princeton 2/13/20:
 Jiawei 2/14/20: 
 [What I've done:]
 -Added few images.
+
+Jiawei 2/14/20:
+[What I've done:]
+-finished travel function with help of Vivian.

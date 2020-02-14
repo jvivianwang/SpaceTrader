@@ -23,19 +23,22 @@ public class RegionMapPage {
 
     private ArrayList<Region> regionList;
 
+    //Trick for the animation of subscene
     private RegionSubscene subscene1;
     private RegionSubscene subscene2;
     private RegionSubscene nextSceneToHide;
     private int currentSceneIndex;
+
+    private Region RegionSelected;
 
     public RegionMapPage() {
         mainPane = new AnchorPane();
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         regionList = new ArrayList<>();
 
+        createSubScenes();
         createBackground();
         createRegion();
-        createSubScenes();
     }
 
     private void createBackground() {
@@ -75,6 +78,8 @@ public class RegionMapPage {
         //Once you create all the region you also spawn player in a random region.
         Main.getPlayer().setCurrentRegion(regionList.get(shuffleList.get(0)));
         Main.getPlayer().getCurrentRegion().setDiscovered(true);
+        Main.getPlayer().getCurrentRegion().setRegionBackgroundToBlue();
+
 
         for (Region g: regionList) {
             buttonPressed(g);
@@ -82,26 +87,51 @@ public class RegionMapPage {
         }
     }
 
-    private void buttonPressed(Region region) {
-        region.setOnMousePressed(event -> {
+    private void buttonPressed(Region targetRegion) {
+        targetRegion.setOnMousePressed(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                showSubScene(region);
+                RegionSelected = targetRegion;
+                showSubScene(targetRegion);
             }
+        });
+        subscene1.getBtnTravel().setOnMouseClicked(event -> {
+            Main.getPlayer().getCurrentRegion().setRegionBackgroundToYellow();
+            RegionSelected.setRegionBackgroundToBlue();
+            RegionSelected.setDiscovered(true);
+            Main.getPlayer().setCurrentRegion(RegionSelected);
+            showSubScene(RegionSelected);
+        });
+        subscene2.getBtnTravel().setOnMouseClicked(event -> {
+            Main.getPlayer().getCurrentRegion().setRegionBackgroundToYellow();
+            RegionSelected.setRegionBackgroundToBlue();
+            RegionSelected.setDiscovered(true);
+            Main.getPlayer().setCurrentRegion(RegionSelected);
+            showSubScene(RegionSelected);
         });
     }
 
-    private void showSubScene(Region region) {
+    private void showSubScene(Region targetRegion) {
         if (nextSceneToHide != null) {
             nextSceneToHide.moveSubScene();
         }
 
         if (currentSceneIndex % 2 == 0) {
-            subscene1.setDisplayInfo(Main.getPlayer().getCurrentRegion(), region);
+            subscene1.setDisplayInfo(targetRegion);
+            if (targetRegion == Main.getPlayer().getCurrentRegion()) {
+                subscene1.getBtnTravel().setDisable(true);
+            } else {
+                subscene1.getBtnTravel().setDisable(false);
+            }
             subscene1.moveSubScene();
             nextSceneToHide = subscene1;
         } else {
-            subscene2.setDisplayInfo(Main.getPlayer().getCurrentRegion(), region);
+            subscene2.setDisplayInfo(targetRegion);
             subscene2.moveSubScene();
+            if (targetRegion == Main.getPlayer().getCurrentRegion()) {
+                subscene2.getBtnTravel().setDisable(true);
+            } else {
+                subscene2.getBtnTravel().setDisable(false);
+            }
             nextSceneToHide = subscene2;
         }
         currentSceneIndex = (currentSceneIndex + 1) % 2;
