@@ -51,6 +51,7 @@ public class Main extends Application {
         stage.setScene(wp.getMainScene());
 
         //Switch to player config.
+<<<<<<< HEAD
         //music();
         sceneSwitchToCP();
 
@@ -59,6 +60,15 @@ public class Main extends Application {
         sceneSwitchToPSP(cp.getMedSubScene());
         sceneSwitchToPSP(cp.getHardSubScene());
 
+=======
+        sceneSwitchToCP();
+
+        //Switch to player sheet Page.
+        sceneSwitchToPSP(cp.getEasySubScene());
+        sceneSwitchToPSP(cp.getMedSubScene());
+        sceneSwitchToPSP(cp.getHardSubScene());
+
+>>>>>>> master
         //Switch to Region Map Page.
         //Call sceneSwitchToRMP() at line 93.
 
