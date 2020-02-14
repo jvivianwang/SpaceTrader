@@ -59,6 +59,13 @@ Princeton 2/2/20:
 [What I've done:]
 -Stylized code to comply with checkstyle standards.
 
+
+Jiawei 2/12/20: 
+[What I've done:]
+-Most of the M4 Function finished.
+ -Travel function to be implemented. 
+ -Minor refactor in old class.
+
 Princeton 2/13/20:
 [What I've done:]
--Added fancy smancy music to the game.
+-Added fancy smancy music

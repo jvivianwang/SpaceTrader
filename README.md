@@ -29,12 +29,11 @@ Step:
 
 
 TO DO LIST: [THINGS NEED HELP WITH/ THINGS NEED TO BE DONE]
--Travel function needs to be implemented.
--Region info needs to be changed.
--RegionPage graphic needs to be changed.
--SoundFX needs to be added.
--CheckStyle needs to be done.
--CodeSmell??? maybe?
+-Description at line 30 in Main.java.
+-SkillAllocate in the configSkillSubScene.
+-connection between player class and main/configpage java file.
+-Validate name when submit
+-calculate skill points and display on the configSkillSubScene.
 
 
 Jiawei 1/29/20:
@@ -60,8 +59,6 @@ Princeton 2/2/20:
 [What I've done:]
 -Stylized code to comply with checkstyle standards.
 
-Jiawei 2/12/20:
+Princeton 2/13/20:
 [What I've done:]
--Most of the M4 Function finished.
--Travel function to be implemented.
--Minor refactor in old class.
+-Added fancy smancy music to the game.
