@@ -1,11 +1,10 @@
 package materials;
 
-import javafx.event.EventHandler;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -15,9 +14,6 @@ import javafx.scene.text.Font;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-//Commented out unused imports for now
-//import javafx.geometry.Insets;
-//import javafx.scene.effect.DropShadow;
 
 public class InfoLabel extends Label {
 

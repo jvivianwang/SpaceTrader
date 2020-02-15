@@ -38,22 +38,29 @@ public class Region extends Label {
     }
 
     public void setRegionBackgroundToYellow() {
-        regionBackground = new BackgroundImage(new Image("materials/image/N" + regionName + ".png",
-                150, 150, false, true),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
+        Image image = new Image("materials/image/N" + regionName + ".png",
+                150, 150, false, true);
+        regionBackground = new BackgroundImage(image,
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT, null);
         setBackground(new Background(regionBackground));
     }
 
     public void setRegionBackgroundToBlue() {
-        regionBackground = new BackgroundImage(new Image("materials/image/N" + regionName + "Blue.png",
-                150, 150, false, true),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
+        Image image = new Image("materials/image/N" + regionName + "Blue.png",
+                150, 150, false,
+                true);
+        regionBackground = new BackgroundImage(image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                null);
         setBackground(new Background(regionBackground));
     }
 
 
     public int getTechLevel() {
-            return techLevel;
+        return techLevel;
     }
     public String getRegionName() {
         return regionName;

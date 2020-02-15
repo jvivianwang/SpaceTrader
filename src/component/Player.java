@@ -1,6 +1,6 @@
 package component;
 
-import application.Main;
+//import application.Main;
 
 public class Player {
 

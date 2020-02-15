@@ -96,7 +96,8 @@ public class RegionSubscene extends SubScene {
     }
 
     private int calculateDistance(Region r1, Region r2) {
-        return (int)Math.sqrt(Math.pow(r2.getLayoutX() - r1.getLayoutX(),2) + Math.pow(r2.getLayoutY() - r1.getLayoutY(),2));
+        return (int) Math.sqrt(Math.pow(r2.getLayoutX() - r1.getLayoutX(),
+                2) + Math.pow(r2.getLayoutY() - r1.getLayoutY(), 2));
     }
 
     public void moveSubScene() {

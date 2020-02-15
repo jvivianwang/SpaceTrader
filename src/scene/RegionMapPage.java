@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import component.Region;
-import materials.ConfigSkillSubscene;
 import materials.RegionSubscene;
 
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ public class RegionMapPage {
     private RegionSubscene nextSceneToHide;
     private int currentSceneIndex;
 
-    private Region RegionSelected;
+    private Region regionSelected;
 
     public RegionMapPage() {
         mainPane = new AnchorPane();
@@ -90,23 +89,23 @@ public class RegionMapPage {
     private void buttonPressed(Region targetRegion) {
         targetRegion.setOnMousePressed(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                RegionSelected = targetRegion;
+                regionSelected = targetRegion;
                 showSubScene(targetRegion);
             }
         });
         subscene1.getBtnTravel().setOnMouseClicked(event -> {
             Main.getPlayer().getCurrentRegion().setRegionBackgroundToYellow();
-            RegionSelected.setRegionBackgroundToBlue();
-            RegionSelected.setDiscovered(true);
-            Main.getPlayer().setCurrentRegion(RegionSelected);
-            showSubScene(RegionSelected);
+            regionSelected.setRegionBackgroundToBlue();
+            regionSelected.setDiscovered(true);
+            Main.getPlayer().setCurrentRegion(regionSelected);
+            showSubScene(regionSelected);
         });
         subscene2.getBtnTravel().setOnMouseClicked(event -> {
             Main.getPlayer().getCurrentRegion().setRegionBackgroundToYellow();
-            RegionSelected.setRegionBackgroundToBlue();
-            RegionSelected.setDiscovered(true);
-            Main.getPlayer().setCurrentRegion(RegionSelected);
-            showSubScene(RegionSelected);
+            regionSelected.setRegionBackgroundToBlue();
+            regionSelected.setDiscovered(true);
+            Main.getPlayer().setCurrentRegion(regionSelected);
+            showSubScene(regionSelected);
         });
     }
 

@@ -75,3 +75,7 @@ Jiawei 2/14/20:
 Jiawei 2/14/20:
 [What I've done:]
 -finished travel function with help of Vivian.
+
+Princeton 2/14/20
+[What I've done:]
+-Formatted code to comply with checkstyle standards.

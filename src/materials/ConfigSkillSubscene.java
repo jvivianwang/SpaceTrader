@@ -134,8 +134,8 @@ public class ConfigSkillSubscene extends SubScene {
         });
     }
 
-    private SkillBar createSkillBar(SkillImage SkillImageType, int skillIndex) {
-        SkillBar temp = new SkillBar(SkillImageType);
+    private SkillBar createSkillBar(SkillImage skillImageType, int skillIndex) {
+        SkillBar temp = new SkillBar(skillImageType);
         temp.setLayoutX(100 + skillIndex * 175);
         temp.setLayoutY(375);
         return temp;

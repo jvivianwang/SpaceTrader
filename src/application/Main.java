@@ -1,9 +1,7 @@
 package application;
 
-import com.sun.media.jfxmedia.Media;
-import com.sun.media.jfxmedia.MediaPlayer;
+
 import component.Player;
-import component.Region;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -105,8 +103,8 @@ public class Main extends Application {
 
     private void sceneSwitchToRMP() {
         psp.getBtnNextPage().setOnMouseClicked(e -> {
-                rmp = new RegionMapPage();
-                stage.setScene(rmp.getMainScene());
+            rmp = new RegionMapPage();
+            stage.setScene(rmp.getMainScene());
         });
     }
 
