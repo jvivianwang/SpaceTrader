@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import component.Region;
+import materials.MarketSubscene;
 import materials.RegionSubscene;
 
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class RegionMapPage {
     private RegionSubscene subscene1;
     private RegionSubscene subscene2;
     private RegionSubscene nextSceneToHide;
+
+    private MarketSubscene marketScene;
+
     private int currentSceneIndex;
 
     private Region regionSelected;
@@ -36,7 +40,9 @@ public class RegionMapPage {
         regionList = new ArrayList<>();
 
         createSubScenes();
+
         createBackground();
+
         createRegion();
     }
 
@@ -81,8 +87,11 @@ public class RegionMapPage {
 
 
         for (Region g: regionList) {
-            buttonPressed(g);
             mainPane.getChildren().add(g);
+        }
+        createMarketScene();
+        for (Region g: regionList) {
+            buttonPressed(g);
         }
     }
 
@@ -107,7 +116,29 @@ public class RegionMapPage {
             Main.getPlayer().setCurrentRegion(regionSelected);
             showSubScene(regionSelected);
         });
+
+        subscene1.getBtnMarket().setOnMouseClicked(event -> {
+            nextSceneToHide.moveSubScene();
+            nextSceneToHide = null;
+            //Set marketScene store info based on current region tech level before animation
+            marketScene.moveSubScene();
+        });
+
+        subscene2.getBtnMarket().setOnMouseClicked(event -> {
+            nextSceneToHide.moveSubScene();
+            nextSceneToHide = null;
+            //Set marketScene store info based on current region tech level before animation
+            marketScene.moveSubScene();
+        });
+        marketScene.getBtnExit().setOnMouseClicked(e -> {
+          marketScene.moveSubScene();
+          showSubScene(Main.getPlayer().getCurrentRegion());
+
+        });
     }
+
+
+
 
     private void showSubScene(Region targetRegion) {
         if (nextSceneToHide != null) {
@@ -142,6 +173,11 @@ public class RegionMapPage {
         currentSceneIndex = 0;
         mainPane.getChildren().addAll(subscene1, subscene2);
 
+    }
+
+    private  void createMarketScene(){
+        marketScene = new MarketSubscene();
+        mainPane.getChildren().add(marketScene);
     }
 
     public Scene getMainScene() {

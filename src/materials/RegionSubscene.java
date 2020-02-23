@@ -28,6 +28,7 @@ public class RegionSubscene extends SubScene {
     private String distanceInfo;
 
     private YellowButton btnTravel;
+    private YellowButton btnMarket;
 
     public RegionSubscene() {
         super(new AnchorPane(), 300, 700);
@@ -64,9 +65,9 @@ public class RegionSubscene extends SubScene {
         distanceInfo = "UNKNOWN";
 
         regionName = displayLabel("Region Name", regionNameInfo, 0, 0);
-        techLevel = displayLabel("Tech Level", techLevelInfo, 0, 150);
-        description = displayLabel("Description", descriptionInfo, 0, 300);
-        distance = displayLabel("Distance", distanceInfo, 0, 450);
+        techLevel = displayLabel("Tech Level", techLevelInfo, 0, 130);
+        description = displayLabel("Description", descriptionInfo, 0, 260);
+        distance = displayLabel("Distance", distanceInfo, 0, 390);
 
         root.getChildren().addAll(regionName, techLevel, description, distance);
     }
@@ -89,10 +90,14 @@ public class RegionSubscene extends SubScene {
 
     private void createButton(AnchorPane root) {
         btnTravel = new YellowButton("Travel");
+        btnMarket = new YellowButton("Market");
         btnTravel.setLayoutX(100);
-        btnTravel.setLayoutY(600);
+        btnTravel.setLayoutY(520);
+        btnMarket.setLayoutX(100);
+        btnMarket.setLayoutY(620);
 
         root.getChildren().add(btnTravel);
+        root.getChildren().add(btnMarket);
     }
 
     private int calculateDistance(Region r1, Region r2) {
@@ -130,5 +135,8 @@ public class RegionSubscene extends SubScene {
 
     public YellowButton getBtnTravel() {
         return btnTravel;
+    }
+    public YellowButton getBtnMarket() {
+        return btnMarket;
     }
 }
