@@ -84,3 +84,9 @@ Jiawei 2/26/20
 [What I've done]
 -modified the market subscene function
 -Improved image
+
+
+Princeton 2/26/20:
+[What I've done:]
+-Created basic Creature class with price calculation
+--Price calc based on region tech level and player merchant skill 
