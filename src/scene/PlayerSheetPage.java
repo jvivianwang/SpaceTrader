@@ -22,6 +22,8 @@ public class PlayerSheetPage {
 
     private YellowButton btnNextPage;
 
+
+
     public PlayerSheetPage() {
         mainPane = new AnchorPane();
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);

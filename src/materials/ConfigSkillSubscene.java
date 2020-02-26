@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 //Commented out unused imports for now.
 //import javafx.scene.Parent;
@@ -23,13 +24,8 @@ import java.io.FileInputStream;
 
 public class ConfigSkillSubscene extends SubScene {
 
-    private static final String FONT_PATH = "src/materials/font/FFF_Tusj.ttf";
+    private static final String FONT_PATH = "src/materials/font/SEASRN__.ttf";
     private static final String BACKGROUND_IMAGE = "materials/image/configSubsceneBG.png";
-
-    private static final String PILOT_BAR = "materials/image/YellowSkillBar.png";
-    private static final String FIGHTER_BAR = "materials/image/BlackSkillBar.png";
-    private static final String MERCHANT_BAR = "materials/image/PurpleSkillBar.png";
-    private static final String ENGINEER_BAR = "materials/image/RedSkillBar.png";
     private static final String BROOM_PATH = "materials/image/broom.png";
 
     private boolean isHidden;
@@ -204,8 +200,12 @@ public class ConfigSkillSubscene extends SubScene {
     // player enter name here
     public void enterName(AnchorPane anchorPane) {
         Label nameLabel = new Label("Name");
-        nameLabel.setFont(new Font(20));
-        nameLabel.setStyle("-fx-background-color: blue");
+        try {
+            nameLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
+        } catch (FileNotFoundException e) {
+            nameLabel.setFont(Font.font("Verdana", 23));
+        }
+        //nameLabel.setStyle("-fx-background-color: blue");
         TextField inputName = new TextField();
         inputName.setPrefWidth(250);
         inputName.setPrefHeight(30);
@@ -223,10 +223,14 @@ public class ConfigSkillSubscene extends SubScene {
     //player select broom
     public void selectShip(AnchorPane anchorPane){
         Label shipLabel = new Label("Select broom");
-        shipLabel.setFont(new Font(20));
-        shipLabel.setStyle("-fx-background-color: blue");
+        try {
+            shipLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
+        } catch (FileNotFoundException e) {
+            shipLabel.setFont(Font.font("Verdana", 23));
+        }
+        //shipLabel.setStyle("-fx-background-color: blue");
         CheckBox checkBox = new CheckBox();
-        checkBox.setStyle("-fx-border-color: blue");
+        //checkBox.setStyle("-fx-border-color: blue");
         Image broom = new Image(BROOM_PATH);
         ImageView broomView = new ImageView(broom);
         shipLabel.setLayoutX(800);
@@ -244,9 +248,13 @@ public class ConfigSkillSubscene extends SubScene {
 
     public Label displayInfo(String name, int info, double x, double y) {
         Label temp = new Label(name + " " + info);
-        temp.setFont(new Font(23));
+        try {
+            temp.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
+        } catch (FileNotFoundException e) {
+            temp.setFont(Font.font("Verdana", 23));
+        }
         temp.setAlignment(Pos.CENTER);
-        temp.setStyle("-fx-background-color: blue");
+        //temp.setStyle("-fx-background-color: blue");
         temp.setPrefWidth(325);
         temp.setPrefHeight(50);
         temp.setLayoutX(x);
