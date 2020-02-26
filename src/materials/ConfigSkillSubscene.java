@@ -5,13 +5,17 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 
 import javafx.scene.SubScene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+
+import java.io.FileInputStream;
 
 //Commented out unused imports for now.
 //import javafx.scene.Parent;
@@ -26,6 +30,7 @@ public class ConfigSkillSubscene extends SubScene {
     private static final String FIGHTER_BAR = "materials/image/BlackSkillBar.png";
     private static final String MERCHANT_BAR = "materials/image/PurpleSkillBar.png";
     private static final String ENGINEER_BAR = "materials/image/RedSkillBar.png";
+    private static final String BROOM_PATH = "materials/image/broom.png";
 
     private boolean isHidden;
     private int[] skills;
@@ -60,6 +65,8 @@ public class ConfigSkillSubscene extends SubScene {
 
         enterName(root2);
 
+        selectShip(root2);
+
         isHidden = true;
 
         this.difficulty = difficulty;
@@ -83,8 +90,8 @@ public class ConfigSkillSubscene extends SubScene {
             skillPoints = 8;
         }
         skills = new int[]{0, 0, 0, 0};
-        creditsStat = displayInfo("Credits", credits, 800, 200);
-        skillPointsStat = displayInfo("Skill Points", skillPoints, 800, 300);
+        creditsStat = displayInfo("Credits", credits, 800, 100);
+        skillPointsStat = displayInfo("Skill Points", skillPoints, 800, 150);
         this.getPane().getChildren().addAll(creditsStat, skillPointsStat);
     }
 
@@ -203,13 +210,36 @@ public class ConfigSkillSubscene extends SubScene {
         inputName.setPrefWidth(250);
         inputName.setPrefHeight(30);
         inputName.setLayoutX(875);
-        inputName.setLayoutY(100);
+        inputName.setLayoutY(50);
         nameLabel.setLayoutX(800);
-        nameLabel.setLayoutY(103);
+        nameLabel.setLayoutY(53);
         anchorPane.getChildren().add(nameLabel);
         anchorPane.getChildren().add(inputName);
         setName(inputName.getText());
         nameValue = inputName;
+
+    }
+
+    //player select broom
+    public void selectShip(AnchorPane anchorPane){
+        Label shipLabel = new Label("Select broom");
+        shipLabel.setFont(new Font(20));
+        shipLabel.setStyle("-fx-background-color: blue");
+        CheckBox checkBox = new CheckBox();
+        checkBox.setStyle("-fx-border-color: blue");
+        Image broom = new Image(BROOM_PATH);
+        ImageView broomView = new ImageView(broom);
+        shipLabel.setLayoutX(800);
+        shipLabel.setLayoutY(250);
+        checkBox.setLayoutX(950);
+        checkBox.setLayoutY(300);
+        broomView.setLayoutX(890);
+        broomView.setLayoutY(300);
+        broomView.setFitHeight(200);
+        broomView.setFitWidth(200);
+        anchorPane.getChildren().add(shipLabel);
+        anchorPane.getChildren().add(checkBox);
+        anchorPane.getChildren().add(broomView);
     }
 
     public Label displayInfo(String name, int info, double x, double y) {
@@ -218,7 +248,7 @@ public class ConfigSkillSubscene extends SubScene {
         temp.setAlignment(Pos.CENTER);
         temp.setStyle("-fx-background-color: blue");
         temp.setPrefWidth(325);
-        temp.setPrefHeight(100);
+        temp.setPrefHeight(50);
         temp.setLayoutX(x);
         temp.setLayoutY(y);
         return temp;
