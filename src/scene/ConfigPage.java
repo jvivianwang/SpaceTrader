@@ -86,7 +86,7 @@ public class ConfigPage {
     }
 
     private void createBackground() {
-        Image backgroundImage = new Image("materials/image/configBackground.png",
+        Image backgroundImage = new Image("materials/image/configBackground.jpg",
                 WIDTH,
                 HEIGHT,
                 false,

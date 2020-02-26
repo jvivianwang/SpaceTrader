@@ -13,14 +13,14 @@ public class MarketSubscene extends SubScene {
     private YellowButton btnExit;
 
     public MarketSubscene() {
-        super(new AnchorPane(), 1200, 700);
-        prefWidth(1200);
-        prefHeight(700);
+        super(new AnchorPane(), 1600, 900);
+        prefWidth(1600);
+        prefHeight(900);
 
         isHidden = true;
 
-        setLayoutX(200);
-        setLayoutY(-800);
+        setLayoutX(0);
+        setLayoutY(-900);
 
         AnchorPane root = (AnchorPane) this.getRoot();
 

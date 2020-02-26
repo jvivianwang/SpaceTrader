@@ -1,6 +1,7 @@
 package scene;
 
 import application.Main;
+import component.Player;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
@@ -33,12 +34,13 @@ public class RegionMapPage {
     private int currentSceneIndex;
 
     private Region regionSelected;
+    private Player player;
 
     public RegionMapPage() {
         mainPane = new AnchorPane();
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         regionList = new ArrayList<>();
-
+        player = Main.getPlayer();
         createSubScenes();
 
         createBackground();
@@ -81,9 +83,9 @@ public class RegionMapPage {
         regionList.add(new Region("9", 5, "Princeton is so great", shuffleList.get(9)));
 
         //Once you create all the region you also spawn player in a random region.
-        Main.getPlayer().setCurrentRegion(regionList.get(shuffleList.get(0)));
-        Main.getPlayer().getCurrentRegion().setDiscovered(true);
-        Main.getPlayer().getCurrentRegion().setRegionBackgroundToBlue();
+        player.setCurrentRegion(regionList.get(shuffleList.get(0)));
+        player.getCurrentRegion().setDiscovered(true);
+        player.getCurrentRegion().setRegionBackgroundToBlue();
 
 
         for (Region g: regionList) {
@@ -93,6 +95,7 @@ public class RegionMapPage {
         for (Region g: regionList) {
             buttonPressed(g);
         }
+        showSubScene(player.getCurrentRegion());
     }
 
     private void buttonPressed(Region targetRegion) {
@@ -103,17 +106,17 @@ public class RegionMapPage {
             }
         });
         subscene1.getBtnTravel().setOnMouseClicked(event -> {
-            Main.getPlayer().getCurrentRegion().setRegionBackgroundToYellow();
+            player.getCurrentRegion().setRegionBackgroundToYellow();
             regionSelected.setRegionBackgroundToBlue();
             regionSelected.setDiscovered(true);
-            Main.getPlayer().setCurrentRegion(regionSelected);
+            player.setCurrentRegion(regionSelected);
             showSubScene(regionSelected);
         });
         subscene2.getBtnTravel().setOnMouseClicked(event -> {
-            Main.getPlayer().getCurrentRegion().setRegionBackgroundToYellow();
+            player.getCurrentRegion().setRegionBackgroundToYellow();
             regionSelected.setRegionBackgroundToBlue();
             regionSelected.setDiscovered(true);
-            Main.getPlayer().setCurrentRegion(regionSelected);
+            player.setCurrentRegion(regionSelected);
             showSubScene(regionSelected);
         });
 
@@ -132,7 +135,7 @@ public class RegionMapPage {
         });
         marketScene.getBtnExit().setOnMouseClicked(e -> {
           marketScene.moveSubScene();
-          showSubScene(Main.getPlayer().getCurrentRegion());
+          showSubScene(player.getCurrentRegion());
 
         });
     }
@@ -147,20 +150,24 @@ public class RegionMapPage {
 
         if (currentSceneIndex % 2 == 0) {
             subscene1.setDisplayInfo(targetRegion);
-            if (targetRegion == Main.getPlayer().getCurrentRegion()) {
+            if (targetRegion == player.getCurrentRegion()) {
                 subscene1.getBtnTravel().setDisable(true);
+                subscene1.getBtnMarket().setDisable(false);
             } else {
                 subscene1.getBtnTravel().setDisable(false);
+                subscene1.getBtnMarket().setDisable(true);
             }
             subscene1.moveSubScene();
             nextSceneToHide = subscene1;
         } else {
             subscene2.setDisplayInfo(targetRegion);
             subscene2.moveSubScene();
-            if (targetRegion == Main.getPlayer().getCurrentRegion()) {
+            if (targetRegion == player.getCurrentRegion()) {
                 subscene2.getBtnTravel().setDisable(true);
+                subscene2.getBtnMarket().setDisable(false);
             } else {
                 subscene2.getBtnTravel().setDisable(false);
+                subscene2.getBtnMarket().setDisable(true);
             }
             nextSceneToHide = subscene2;
         }

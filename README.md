@@ -79,3 +79,8 @@ Jiawei 2/14/20:
 Princeton 2/14/20
 [What I've done:]
 -Formatted code to comply with checkstyle standards.
+
+Jiawei 2/26/20
+[What I've done]
+-modified the market subscene function
+-Improved image
