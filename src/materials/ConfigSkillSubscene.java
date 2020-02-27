@@ -44,23 +44,10 @@ public class ConfigSkillSubscene extends SubScene {
         prefHeight(1200);
         prefWidth(600);
 
-        Image backgroundImage = new Image(BACKGROUND_IMAGE,
-                1200,
-                600,
-                false,
-                true);
-        BackgroundImage image = new BackgroundImage(backgroundImage,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT,
-                null);
-
         AnchorPane root2 = (AnchorPane) this.getRoot();
 
-        root2.setBackground(new Background(image));
-
+        setBackgroundImage(root2);
         enterName(root2);
-
         selectShip(root2);
 
         isHidden = true;
@@ -72,6 +59,20 @@ public class ConfigSkillSubscene extends SubScene {
 
         setLayoutX(200);
         setLayoutY(-700);
+    }
+
+    private void setBackgroundImage(AnchorPane root) {
+        Image backgroundImage = new Image(BACKGROUND_IMAGE,
+                1200,
+                600,
+                false,
+                true);
+        BackgroundImage image = new BackgroundImage(backgroundImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                null);
+        root.setBackground(new Background(image));
     }
 
     private void difficultyMode(String difficulty) {

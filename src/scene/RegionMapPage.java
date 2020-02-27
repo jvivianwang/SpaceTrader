@@ -8,6 +8,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import component.Region;
 import materials.MarketSubscene;
+import materials.OlivanderMarketSubscene;
 import materials.RegionSubscene;
 
 import java.util.ArrayList;
@@ -30,17 +31,16 @@ public class RegionMapPage {
     private RegionSubscene nextSceneToHide;
 
     private MarketSubscene marketScene;
+    private OlivanderMarketSubscene olivanderMarketScene;
 
     private int currentSceneIndex;
 
     private Region regionSelected;
-    private Player player;
 
     public RegionMapPage() {
         mainPane = new AnchorPane();
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         regionList = new ArrayList<>();
-        player = Main.getPlayer();
         createSubScenes();
 
         createBackground();
@@ -83,19 +83,20 @@ public class RegionMapPage {
         regionList.add(new Region("9", 5, "Princeton is so great", shuffleList.get(9)));
 
         //Once you create all the region you also spawn player in a random region.
-        player.setCurrentRegion(regionList.get(shuffleList.get(0)));
-        player.getCurrentRegion().setDiscovered(true);
-        player.getCurrentRegion().setRegionBackgroundToBlue();
+        Player.getInstance().setCurrentRegion(regionList.get(shuffleList.get(0)));
+        Player.getInstance().getCurrentRegion().setDiscovered(true);
+        Player.getInstance().getCurrentRegion().setRegionBackgroundToBlue();
 
 
         for (Region g: regionList) {
             mainPane.getChildren().add(g);
         }
         createMarketScene();
+        createOlivanderScene();
         for (Region g: regionList) {
             buttonPressed(g);
         }
-        showSubScene(player.getCurrentRegion());
+        showSubScene(Player.getInstance().getCurrentRegion());
     }
 
     private void buttonPressed(Region targetRegion) {
@@ -106,21 +107,28 @@ public class RegionMapPage {
             }
         });
         subscene1.getBtnTravel().setOnMouseClicked(event -> {
-            player.getCurrentRegion().setRegionBackgroundToYellow();
+            Player.getInstance().getCurrentRegion().setRegionBackgroundToYellow();
             regionSelected.setRegionBackgroundToBlue();
             regionSelected.setDiscovered(true);
-            player.setCurrentRegion(regionSelected);
+            Player.getInstance().setCurrentRegion(regionSelected);
             showSubScene(regionSelected);
         });
         subscene2.getBtnTravel().setOnMouseClicked(event -> {
-            player.getCurrentRegion().setRegionBackgroundToYellow();
+            Player.getInstance().getCurrentRegion().setRegionBackgroundToYellow();
             regionSelected.setRegionBackgroundToBlue();
             regionSelected.setDiscovered(true);
-            player.setCurrentRegion(regionSelected);
+            Player.getInstance().setCurrentRegion(regionSelected);
             showSubScene(regionSelected);
         });
 
         subscene1.getBtnMarket().setOnMouseClicked(event -> {
+            nextSceneToHide.moveSubScene();
+            nextSceneToHide = null;
+            //Set marketScene store info based on current region tech level before animation
+            marketScene.updateMarket();
+            marketScene.moveSubScene();
+        });
+        subscene1.getBtnOlivanderMarket().setOnMouseClicked(event -> {
             nextSceneToHide.moveSubScene();
             nextSceneToHide = null;
             //Set marketScene store info based on current region tech level before animation
@@ -131,11 +139,24 @@ public class RegionMapPage {
             nextSceneToHide.moveSubScene();
             nextSceneToHide = null;
             //Set marketScene store info based on current region tech level before animation
+            marketScene.updateMarket();
             marketScene.moveSubScene();
         });
+        subscene2.getBtnOlivanderMarket().setOnMouseClicked(event -> {
+            nextSceneToHide.moveSubScene();
+            nextSceneToHide = null;
+            //Set marketScene store info based on current region tech level before animation
+            marketScene.moveSubScene();
+        });
+
         marketScene.getBtnExit().setOnMouseClicked(e -> {
           marketScene.moveSubScene();
-          showSubScene(player.getCurrentRegion());
+          showSubScene(Player.getInstance().getCurrentRegion());
+
+        });
+        olivanderMarketScene.getBtnExit().setOnMouseClicked(e -> {
+            olivanderMarketScene.moveSubScene();
+            showSubScene(Player.getInstance().getCurrentRegion());
 
         });
     }
@@ -150,7 +171,7 @@ public class RegionMapPage {
 
         if (currentSceneIndex % 2 == 0) {
             subscene1.setDisplayInfo(targetRegion);
-            if (targetRegion == player.getCurrentRegion()) {
+            if (targetRegion == Player.getInstance().getCurrentRegion()) {
                 subscene1.getBtnTravel().setDisable(true);
                 subscene1.getBtnMarket().setDisable(false);
             } else {
@@ -162,7 +183,7 @@ public class RegionMapPage {
         } else {
             subscene2.setDisplayInfo(targetRegion);
             subscene2.moveSubScene();
-            if (targetRegion == player.getCurrentRegion()) {
+            if (targetRegion == Player.getInstance().getCurrentRegion()) {
                 subscene2.getBtnTravel().setDisable(true);
                 subscene2.getBtnMarket().setDisable(false);
             } else {
@@ -182,9 +203,14 @@ public class RegionMapPage {
 
     }
 
-    private  void createMarketScene(){
+    private void createMarketScene(){
         marketScene = new MarketSubscene();
         mainPane.getChildren().add(marketScene);
+    }
+
+    private void createOlivanderScene(){
+        olivanderMarketScene = new OlivanderMarketSubscene();
+        mainPane.getChildren().add(olivanderMarketScene);
     }
 
     public Scene getMainScene() {

@@ -74,4 +74,8 @@ public class Region extends Label {
     public void setDiscovered(boolean discovered) {
         isDiscovered = discovered;
     }
+
+    public String getCoordinate() {
+        return "( " + (int) this.getLayoutX() + ", " + (int) this.getLayoutY() + ")";
+    }
 }

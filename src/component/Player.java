@@ -1,16 +1,18 @@
 package component;
 
-//import application.Main;
 
 public class Player {
 
-    private int skillPoints;
-    private int credits;
-    private int[] skills;
-    private String name;
-    private Region currentRegion;
+    // Static variable single_instance of type
+    private static Player single_instance = null;
 
-    public Player() {
+    public int skillPoints;
+    public int credits;
+    public int[] skills;
+    public String name;
+    public Region currentRegion;
+
+    private Player() {
         skillPoints = 0;
         credits = 0;
         skills = new int[]{0, 0, 0, 0, };
@@ -52,7 +54,18 @@ public class Player {
         return currentRegion;
     }
 
-    public  void setCurrentRegion(Region currentRegion) {
+    public void setCurrentRegion(Region currentRegion) {
         this.currentRegion = currentRegion;
+    }
+
+    public static Player getInstance() {
+        if (single_instance == null) {
+            synchronized (Player.class) {
+                if (single_instance == null) {
+                    single_instance = new Player();
+                }
+            }
+        }
+        return single_instance;
     }
 }

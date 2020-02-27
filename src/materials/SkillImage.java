@@ -8,7 +8,7 @@ public enum SkillImage {
 
     private String urlSkill;
 
-    private SkillImage(String urlSkill) {
+    SkillImage(String urlSkill) {
         this.urlSkill = urlSkill;
     }
 

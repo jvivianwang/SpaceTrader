@@ -27,8 +27,6 @@ import java.io.File;
 
 public class Main extends Application {
 
-    private static Player player;
-
     private WelcomePage wp;
     private ConfigPage cp;
     private PlayerSheetPage psp;
@@ -40,7 +38,6 @@ public class Main extends Application {
         music();
         stage = primaryStage;
         stage.setTitle("Space Trader");
-        player = new Player();
         //All scenes initialized.
         wp = new WelcomePage();
         cp = new ConfigPage();
@@ -89,11 +86,11 @@ public class Main extends Application {
                 a.show();
 
             } else {
-                player = new Player();
-                player.setCredits(subscene.getCredits());
-                player.setSkillPoints(subscene.getSkillPoints());
-                player.setSkills(subscene.getSkills());
-                player.setName(subscene.getNameValue().getText());
+                Player.getInstance();
+                Player.getInstance().setCredits(subscene.getCredits());
+                Player.getInstance().setSkillPoints(subscene.getSkillPoints());
+                Player.getInstance().setSkills(subscene.getSkills());
+                Player.getInstance().setName(subscene.getNameValue().getText());
                 psp = new PlayerSheetPage();
                 stage.setScene(psp.getMainScene());
                 sceneSwitchToRMP();
@@ -106,10 +103,6 @@ public class Main extends Application {
             rmp = new RegionMapPage();
             stage.setScene(rmp.getMainScene());
         });
-    }
-
-    public static Player getPlayer() {
-        return player;
     }
 
     public void music() {

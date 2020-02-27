@@ -1,6 +1,7 @@
 package scene;
 
 import application.Main;
+import component.Player;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -47,25 +48,25 @@ public class PlayerSheetPage {
     }
 
     private void createInfo() {
-        Label name = displayInfo("Player Name: " + Main.getPlayer().getName(),
+        Label name = displayInfo("Player Name: " + Player.getInstance().getName(),
                 100,
                 100);
-        Label credits = displayInfo("Player Credits: " + Main.getPlayer().getCredits(),
+        Label credits = displayInfo("Player Credits: " + Player.getInstance().getCredits(),
                 100,
                 150);
-        Label skillPointsLeft = displayInfo("Player Skills: " + Main.getPlayer().getSkillPoints(),
+        Label skillPointsLeft = displayInfo("Player Skills: " + Player.getInstance().getSkillPoints(),
                 100,
                 200);
-        Label pilot = displayInfo("Pilot Skill Level: " + Main.getPlayer().getSkills()[0],
+        Label pilot = displayInfo("Pilot Skill Level: " + Player.getInstance().getSkills()[0],
                 100,
                 250);
-        Label fighter = displayInfo("Fighter Skill Level: " + Main.getPlayer().getSkills()[1],
+        Label fighter = displayInfo("Fighter Skill Level: " + Player.getInstance().getSkills()[1],
                 100,
                 300);
-        Label merchant = displayInfo("Merchant Skill Level: " + Main.getPlayer().getSkills()[2],
+        Label merchant = displayInfo("Merchant Skill Level: " + Player.getInstance().getSkills()[2],
                 100,
                 350);
-        Label engineer = displayInfo("Engineer Skill Level: " + Main.getPlayer().getSkills()[3],
+        Label engineer = displayInfo("Engineer Skill Level: " + Player.getInstance().getSkills()[3],
                 100,
                 400);
 

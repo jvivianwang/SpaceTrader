@@ -85,8 +85,12 @@ Jiawei 2/26/20
 -modified the market subscene function
 -Improved image
 
-
 Princeton 2/26/20:
 [What I've done:]
 -Created basic Creature class with price calculation
---Price calc based on region tech level and player merchant skill 
+--Price calc based on region tech level and player merchant skill
+
+Jiawei 2/26/20
+[What I've done]
+-update the store based on the current region
+-make Player.java as a singleton class
