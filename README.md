@@ -99,3 +99,7 @@ Vivian 2/27/20
 [What I've done]
 -added alert when user did not select the default broom
 -display the number of brooms in the player summary page
+
+Jiawei 2/27/20
+[What I've done]
+-fixed connection between OlivanderSubscene and RegionMapPage

@@ -131,8 +131,8 @@ public class RegionMapPage {
         subscene1.getBtnOlivanderMarket().setOnMouseClicked(event -> {
             nextSceneToHide.moveSubScene();
             nextSceneToHide = null;
-            //Set marketScene store info based on current region tech level before animation
-            marketScene.moveSubScene();
+            //Set olivanderMarketScene store info based on current region tech level before animation
+            olivanderMarketScene.moveSubScene();
         });
 
         subscene2.getBtnMarket().setOnMouseClicked(event -> {
@@ -145,8 +145,8 @@ public class RegionMapPage {
         subscene2.getBtnOlivanderMarket().setOnMouseClicked(event -> {
             nextSceneToHide.moveSubScene();
             nextSceneToHide = null;
-            //Set marketScene store info based on current region tech level before animation
-            marketScene.moveSubScene();
+            //Set olivanderMarketScene store info based on current region tech level before animation
+            olivanderMarketScene.moveSubScene();
         });
 
         marketScene.getBtnExit().setOnMouseClicked(e -> {
@@ -174,9 +174,11 @@ public class RegionMapPage {
             if (targetRegion == Player.getInstance().getCurrentRegion()) {
                 subscene1.getBtnTravel().setDisable(true);
                 subscene1.getBtnMarket().setDisable(false);
+                subscene1.getBtnOlivanderMarket().setDisable(false);
             } else {
                 subscene1.getBtnTravel().setDisable(false);
                 subscene1.getBtnMarket().setDisable(true);
+                subscene1.getBtnOlivanderMarket().setDisable(true);
             }
             subscene1.moveSubScene();
             nextSceneToHide = subscene1;
@@ -186,9 +188,11 @@ public class RegionMapPage {
             if (targetRegion == Player.getInstance().getCurrentRegion()) {
                 subscene2.getBtnTravel().setDisable(true);
                 subscene2.getBtnMarket().setDisable(false);
+                subscene2.getBtnOlivanderMarket().setDisable(false);
             } else {
                 subscene2.getBtnTravel().setDisable(false);
                 subscene2.getBtnMarket().setDisable(true);
+                subscene2.getBtnOlivanderMarket().setDisable(true);
             }
             nextSceneToHide = subscene2;
         }
