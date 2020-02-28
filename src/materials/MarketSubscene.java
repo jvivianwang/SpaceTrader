@@ -1,9 +1,6 @@
 package materials;
 
-import component.Broom;
-import component.Creature;
-import component.Market;
-import component.Player;
+import component.*;
 import javafx.animation.TranslateTransition;
 import javafx.scene.SubScene;
 import javafx.scene.control.Alert;
@@ -15,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import materials.YellowButton;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,10 +29,12 @@ public class MarketSubscene extends SubScene {
 
     private ImageView[] shopListImage;
     private ImageView[] inventoryListImage;
+    private ImageView[] shopEquipmentListImage;
 
     //Index should be from 0 to 4 since only five creature from the list
     private int creatureIndexSelectedFromStore;
-    private int creatureIndexSelectedFromBroom;
+    private int indexSelectedFromBroom;
+    private int equipmentIndexSelectedFromStore;
 
     private Label credits;
     private Label inventorySize;
@@ -47,11 +47,13 @@ public class MarketSubscene extends SubScene {
 
         isHidden = true;
         creatureIndexSelectedFromStore = -1;
-        creatureIndexSelectedFromBroom = -1;
+        indexSelectedFromBroom = -1;
+        equipmentIndexSelectedFromStore = -1;
 
         AnchorPane root2 = (AnchorPane) this.getRoot();
 
         setMarket(root2);
+        setOlivanderMarket(root2);
         setInventory(root2);
         setPlayerInfo(root2);
 
@@ -71,6 +73,18 @@ public class MarketSubscene extends SubScene {
             shopListImage[i].setLayoutX(200);
             shopListImage[i].setLayoutY(50 + 150 * i);
             root.getChildren().add(shopListImage[i]);
+        }
+    }
+
+    private void setOlivanderMarket(AnchorPane root) {
+        shopEquipmentListImage = new ImageView[2];
+        for (int i = 0; i < shopEquipmentListImage.length; i++) {
+            //set default images to earthdragon just because the imageview cant be null
+            shopEquipmentListImage[i] = new ImageView(new Image("materials/image/empty.png",
+                    100, 100, false, true));
+            shopEquipmentListImage[i].setLayoutX(450 + 200 * i);
+            shopEquipmentListImage[i].setLayoutY(350);
+            root.getChildren().add(shopEquipmentListImage[i]);
         }
     }
 
@@ -116,10 +130,10 @@ public class MarketSubscene extends SubScene {
             credits.setFont(Font.font("Verdana", 23));
         }
         credits.setLayoutX(450);
-        credits.setLayoutY(200);
+        credits.setLayoutY(50);
 
         inventorySize = new Label("# of Creatures in your broom: " +
-                Broom.getInstance().getCreatureInventory().size());
+                Broom.getInstance().getInventory().size());
         inventorySize.setStyle("-fx-font-weight: bold");
         inventorySize.setStyle("-fx-border-color: SADDLEBROWN ; " +
                 "-fx-background-color: BURLYWOOD; -fx-border-width: 2px");
@@ -129,7 +143,7 @@ public class MarketSubscene extends SubScene {
             inventorySize.setFont(Font.font("Verdana", 23));
         }
         inventorySize.setLayoutX(450);
-        inventorySize.setLayoutY(350);
+        inventorySize.setLayoutY(150);
 
         price = new Label("The price of selected creature: ");
         price.setStyle("-fx-font-weight: bold");
@@ -140,7 +154,7 @@ public class MarketSubscene extends SubScene {
             price.setFont(Font.font("Verdana", 23));
         }
         price.setLayoutX(450);
-        price.setLayoutY(500);
+        price.setLayoutY(250);
 
         root.getChildren().addAll(credits, inventorySize, price);
     }
@@ -148,31 +162,43 @@ public class MarketSubscene extends SubScene {
     private void selectFromStore(ImageView creatureImage, int creatureIndexFromList) {
         creatureImage.setOnMouseClicked(e -> {
             creatureIndexSelectedFromStore = creatureIndexFromList;
-            creatureIndexSelectedFromBroom = -1;
+            indexSelectedFromBroom = -1;
+            equipmentIndexSelectedFromStore = -1;
             updateBuySellBtn();
             updatePlayerInfo();
         });
     }
 
-    private void selectFromInventory(ImageView creatureImage, int creatureIndexFromList) {
-        creatureImage.setOnMouseClicked(e -> {
-            creatureIndexSelectedFromBroom = creatureIndexFromList;
+    private void selectFromEquipmentStore(ImageView equipmentImage, int equipmentIndexFromList) {
+        equipmentImage.setOnMouseClicked(e -> {
+            equipmentIndexSelectedFromStore = equipmentIndexFromList;
+            indexSelectedFromBroom = -1;
             creatureIndexSelectedFromStore = -1;
             updateBuySellBtn();
             updatePlayerInfo();
         });
     }
 
+    private void selectFromInventory(ImageView image, int indexFromList) {
+        image.setOnMouseClicked(e -> {
+            indexSelectedFromBroom = indexFromList;
+            creatureIndexSelectedFromStore = -1;
+            equipmentIndexSelectedFromStore = -1;
+            updateBuySellBtn();
+            updatePlayerInfo();
+        });
+    }
+
     private void updateBuySellBtn() {
-        if (creatureIndexSelectedFromStore == -1) {
-            btnBuy.setDisable(true);
-        } else {
+        if (creatureIndexSelectedFromStore != -1 || equipmentIndexSelectedFromStore != -1) {
             btnBuy.setDisable(false);
-        }
-        if (creatureIndexSelectedFromBroom == -1) {
-            btnSell.setDisable(true);
         } else {
+            btnBuy.setDisable(true);
+        }
+        if (indexSelectedFromBroom != -1) {
             btnSell.setDisable(false);
+        } else {
+            btnSell.setDisable(true);
         }
     }
 
@@ -190,10 +216,19 @@ public class MarketSubscene extends SubScene {
 
     public void updateInventory() {
         for (int i = 0; i < inventoryListImage.length; i++) {
-            if (i < Broom.getInstance().getCreatureInventory().size()) {
-                Image image = new Image(
-                        "materials/image/" + Broom.getInstance().getCreatureInventory().get(i).getName() + ".png",
-                        100, 100, false, true);
+            if (i < Broom.getInstance().getInventory().size()) {
+                Image image;
+                if (Broom.getInstance().getInventory().get(i) instanceof Creature) {
+                    image = new Image(
+                            "materials/image/" +
+                                    ((Creature) Broom.getInstance().getInventory().get(i)).getName() + ".png",
+                            100, 100, false, true);
+                } else {
+                    image = new Image(
+                            "materials/image/" +
+                                    ((Equipment) Broom.getInstance().getInventory().get(i)).getName() + ".png",
+                            100, 100, false, true);
+                }
                 inventoryListImage[i].setImage(image);
                 selectFromInventory(inventoryListImage[i], i);
             } else {
@@ -204,16 +239,37 @@ public class MarketSubscene extends SubScene {
         }
     }
 
+    public void updateOlivanderMarket() {
+        Market.getInstance().updateEquipmentList();
+        for (int i = 0; i < Market.getInstance().getEquipmentList().length; i++) {
+            Image image = new Image(
+                    "materials/image/" + Market.getInstance().getEquipmentList()[i].getName() + ".png",
+                    100, 100, false, true);
+            // Create the ImageView
+            shopEquipmentListImage[i].setImage(image);
+            shopEquipmentListImage[i].setDisable(false);
+            selectFromEquipmentStore(shopEquipmentListImage[i], i);
+        }
+    }
+
     public void updatePlayerInfo() {
         credits.setText("Your current credits: " + Player.getInstance().getCredits());
         inventorySize.setText("# of Creatures in your broom: " +
-                Broom.getInstance().getCreatureInventory().size());
+                Broom.getInstance().getInventory().size());
         if (creatureIndexSelectedFromStore != -1) {
             price.setText("The price of selected creature: " +
                     Market.getInstance().getShopList()[creatureIndexSelectedFromStore].getFinalPrice());
-        } else if (creatureIndexSelectedFromBroom != -1) {
-            price.setText("The price of selected creature: " +
-                    Broom.getInstance().getCreatureInventory().get(creatureIndexSelectedFromBroom).getFinalPrice());
+        } else if (equipmentIndexSelectedFromStore != -1) {
+            price.setText("The price of selected equipment: " +
+                    Market.getInstance().getEquipmentList()[equipmentIndexSelectedFromStore].getFinalPrice());
+        } else if (indexSelectedFromBroom != -1) {
+            if (Broom.getInstance().getInventory().get(indexSelectedFromBroom) instanceof Creature) {
+                price.setText("The price of selected creature: " +
+                        ((Creature) Broom.getInstance().getInventory().get(indexSelectedFromBroom)).getFinalPrice());
+            } else {
+                price.setText("The price of selected equipment: " +
+                        ((Equipment) Broom.getInstance().getInventory().get(indexSelectedFromBroom)).getFinalPrice());
+            }
         } else {
             price.setText("The price of selected creature: ");
         }
@@ -266,33 +322,56 @@ public class MarketSubscene extends SubScene {
 
     private void transactionButtonFunction() {
         btnBuy.setOnMouseClicked(e -> {
-            int price = Market.getInstance().getShopList()[creatureIndexSelectedFromStore].getFinalPrice();
+            int price;
+            //creature selected
+            if (creatureIndexSelectedFromStore != -1) {
+                price = Market.getInstance().getShopList()[creatureIndexSelectedFromStore].getFinalPrice();
+            } else {
+                //equipment selected
+                price = Market.getInstance().getEquipmentList()[equipmentIndexSelectedFromStore].getFinalPrice();
+            }
             if (Player.getInstance().getCredits() < price) {
                 new Alert(Alert.AlertType.NONE,
                         "Ooops! You don't have enough credits.", ButtonType.OK).show();
-            } else if (Broom.getInstance().getCreatureInventory().size() >= Broom.getInstance().getCargoCapacity()){
+            } else if (Broom.getInstance().getInventory().size() >= Broom.getInstance().getCargoCapacity()){
                 new Alert(Alert.AlertType.NONE,
-                        "Ooops! You don't enough space to carry the creature.", ButtonType.OK).show();
+                        "Ooops! You don't enough space to carry the item.", ButtonType.OK).show();
             } else {
-                shopListImage[creatureIndexSelectedFromStore].setDisable(true);
+                Player.getInstance().setCredits(Player.getInstance().getCredits() - price);
                 Image image = new Image("materials/image/soldOut.jpg",
                         100, 100, false, true);
-                shopListImage[creatureIndexSelectedFromStore].setImage(image);
-                Player.getInstance().setCredits(Player.getInstance().getCredits() - price);
-                Broom.getInstance().gainCreature(Market.getInstance().getShopList()[creatureIndexSelectedFromStore]);
+                if (creatureIndexSelectedFromStore != -1) {
+                    shopListImage[creatureIndexSelectedFromStore].setDisable(true);
+                    shopListImage[creatureIndexSelectedFromStore].setImage(image);
+                    Broom.getInstance().gainCreature(
+                            Market.getInstance().getShopList()[creatureIndexSelectedFromStore]);
+                } else {
+                    shopEquipmentListImage[equipmentIndexSelectedFromStore].setDisable(true);
+                    shopEquipmentListImage[equipmentIndexSelectedFromStore].setImage(image);
+                    Broom.getInstance().gainEquipment(
+                            Market.getInstance().getEquipmentList()[equipmentIndexSelectedFromStore]);
+                }
                 creatureIndexSelectedFromStore = -1;
+                equipmentIndexSelectedFromStore = -1;
                 updateInventory();
                 updatePlayerInfo();
+                updateBuySellBtn();
             }
         });
 
         btnSell.setOnMouseClicked(e -> {
-            int price = Broom.getInstance().getCreatureInventory().get(creatureIndexSelectedFromBroom).getFinalPrice();
-            Broom.getInstance().removeCreature(creatureIndexSelectedFromBroom);
-            creatureIndexSelectedFromBroom = -1;
+            int price;
+            if (Broom.getInstance().getInventory().get(indexSelectedFromBroom) instanceof Creature) {
+                price = ((Creature) Broom.getInstance().getInventory().get(indexSelectedFromBroom)).getFinalPrice();
+            } else {
+                price = ((Equipment) Broom.getInstance().getInventory().get(indexSelectedFromBroom)).getFinalPrice();
+            }
+            Broom.getInstance().remove(indexSelectedFromBroom);
+            indexSelectedFromBroom = -1;
             updateInventory();
             Player.getInstance().setCredits(Player.getInstance().getCredits() + price);
             updatePlayerInfo();
+            updateBuySellBtn();
         });
     }
 

@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import materials.YellowButton;
 
 public class RegionSubscene extends SubScene {
 
@@ -32,7 +33,6 @@ public class RegionSubscene extends SubScene {
 
     private YellowButton btnTravel;
     private YellowButton btnMarket;
-    private YellowButton btnOlivanderMarket;
 
     public RegionSubscene() {
         super(new AnchorPane(), 300, 900);
@@ -99,18 +99,13 @@ public class RegionSubscene extends SubScene {
     private void createButton(AnchorPane root) {
         btnTravel = new YellowButton("Travel");
         btnMarket = new YellowButton("Market");
-        btnOlivanderMarket = new YellowButton("Olivander Market");
         btnTravel.setLayoutX(80);
         btnTravel.setLayoutY(600);
         btnMarket.setLayoutX(80);
         btnMarket.setLayoutY(700);
-        btnOlivanderMarket.setPrefWidth(250);
-        btnOlivanderMarket.setLayoutX(30);
-        btnOlivanderMarket.setLayoutY(800);
 
         root.getChildren().add(btnTravel);
         root.getChildren().add(btnMarket);
-        root.getChildren().add(btnOlivanderMarket);
     }
 
     private int calculateDistance(Region r1, Region r2) {
@@ -151,8 +146,5 @@ public class RegionSubscene extends SubScene {
     }
     public YellowButton getBtnMarket() {
         return btnMarket;
-    }
-    public YellowButton getBtnOlivanderMarket() {
-        return btnOlivanderMarket;
     }
 }

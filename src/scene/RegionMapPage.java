@@ -1,6 +1,5 @@
 package scene;
 
-import application.Main;
 import component.Player;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -8,7 +7,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import component.Region;
 import materials.MarketSubscene;
-import materials.OlivanderMarketSubscene;
 import materials.RegionSubscene;
 
 import java.util.ArrayList;
@@ -31,7 +29,6 @@ public class RegionMapPage {
     private RegionSubscene nextSceneToHide;
 
     private MarketSubscene marketScene;
-    private OlivanderMarketSubscene olivanderMarketScene;
 
     private int currentSceneIndex;
 
@@ -92,7 +89,6 @@ public class RegionMapPage {
             mainPane.getChildren().add(g);
         }
         createMarketScene();
-        createOlivanderScene();
         for (Region g: regionList) {
             buttonPressed(g);
         }
@@ -126,13 +122,8 @@ public class RegionMapPage {
             nextSceneToHide = null;
             //Set marketScene store info based on current region tech level before animation
             marketScene.updateMarket();
+            marketScene.updateOlivanderMarket();
             marketScene.moveSubScene();
-        });
-        subscene1.getBtnOlivanderMarket().setOnMouseClicked(event -> {
-            nextSceneToHide.moveSubScene();
-            nextSceneToHide = null;
-            //Set olivanderMarketScene store info based on current region tech level before animation
-            olivanderMarketScene.moveSubScene();
         });
 
         subscene2.getBtnMarket().setOnMouseClicked(event -> {
@@ -140,23 +131,13 @@ public class RegionMapPage {
             nextSceneToHide = null;
             //Set marketScene store info based on current region tech level before animation
             marketScene.updateMarket();
+            marketScene.updateOlivanderMarket();
             marketScene.moveSubScene();
-        });
-        subscene2.getBtnOlivanderMarket().setOnMouseClicked(event -> {
-            nextSceneToHide.moveSubScene();
-            nextSceneToHide = null;
-            //Set olivanderMarketScene store info based on current region tech level before animation
-            olivanderMarketScene.moveSubScene();
         });
 
         marketScene.getBtnExit().setOnMouseClicked(e -> {
           marketScene.moveSubScene();
           showSubScene(Player.getInstance().getCurrentRegion());
-
-        });
-        olivanderMarketScene.getBtnExit().setOnMouseClicked(e -> {
-            olivanderMarketScene.moveSubScene();
-            showSubScene(Player.getInstance().getCurrentRegion());
 
         });
     }
@@ -174,11 +155,9 @@ public class RegionMapPage {
             if (targetRegion == Player.getInstance().getCurrentRegion()) {
                 subscene1.getBtnTravel().setDisable(true);
                 subscene1.getBtnMarket().setDisable(false);
-                subscene1.getBtnOlivanderMarket().setDisable(false);
             } else {
                 subscene1.getBtnTravel().setDisable(false);
                 subscene1.getBtnMarket().setDisable(true);
-                subscene1.getBtnOlivanderMarket().setDisable(true);
             }
             subscene1.moveSubScene();
             nextSceneToHide = subscene1;
@@ -188,11 +167,9 @@ public class RegionMapPage {
             if (targetRegion == Player.getInstance().getCurrentRegion()) {
                 subscene2.getBtnTravel().setDisable(true);
                 subscene2.getBtnMarket().setDisable(false);
-                subscene2.getBtnOlivanderMarket().setDisable(false);
             } else {
                 subscene2.getBtnTravel().setDisable(false);
                 subscene2.getBtnMarket().setDisable(true);
-                subscene2.getBtnOlivanderMarket().setDisable(true);
             }
             nextSceneToHide = subscene2;
         }
@@ -210,11 +187,6 @@ public class RegionMapPage {
     private void createMarketScene(){
         marketScene = new MarketSubscene();
         mainPane.getChildren().add(marketScene);
-    }
-
-    private void createOlivanderScene(){
-        olivanderMarketScene = new OlivanderMarketSubscene();
-        mainPane.getChildren().add(olivanderMarketScene);
     }
 
     public Scene getMainScene() {

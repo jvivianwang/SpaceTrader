@@ -8,14 +8,14 @@ public class Broom {
     private String name;
     private int cargoCapacity;
     private int fuelCapacity;
-    private ArrayList<Creature> creatureInventory;
+    private ArrayList<Object> inventory;
     private int health;
 
     private Broom(){
         health = 0;
         //itemInventory.length == cargoCapacity;
         cargoCapacity = 10;
-        creatureInventory = new ArrayList<>(10);
+        inventory = new ArrayList<>(10);
     }
 
     public static Broom getInstance() {
@@ -53,8 +53,8 @@ public class Broom {
         return this.fuelCapacity;
     }
 
-    public ArrayList<Creature> getCreatureInventory(){
-        return creatureInventory;
+    public ArrayList<Object> getInventory(){
+        return inventory;
     }
 
     public void setHealth(){
@@ -66,19 +66,25 @@ public class Broom {
     }
 
     public void gainCreature(Creature creature) {
-        for (int i = 0; i < creatureInventory.size(); i++) {
+        for (int i = 0; i < inventory.size(); i++) {
             //If we have a same level creature in our inventory we evolve it
-            if (creatureInventory.get(i).getLevel() == creature.getLevel()) {
-                creatureInventory.remove(i);
-                creatureInventory.add(new Creature(creature.getLevel() + 1));
-                return;
+            if (inventory.get(i) instanceof Creature) {
+                if (((Creature) inventory.get(i)).getLevel() == creature.getLevel()) {
+                    inventory.remove(i);
+                    inventory.add(new Creature(creature.getLevel() + 1));
+                    return;
+                }
             }
         }
         //we dont have same creature, we add to our inventory
-        creatureInventory.add(new Creature(creature.getLevel()));
+        inventory.add(new Creature(creature.getLevel()));
     }
 
-    public void removeCreature(int creatureIndex) {
-        creatureInventory.remove(creatureIndex);
+    public void gainEquipment(Equipment equipment) {
+        inventory.add(new Equipment(equipment.getIndex(), equipment.getLevel()));
+    }
+
+    public void remove(int index) {
+        inventory.remove(index);
     }
 }

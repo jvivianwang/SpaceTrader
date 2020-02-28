@@ -23,10 +23,10 @@ public class Creature {
 
     public Creature(int level) {
         this.level = level;
-        setLevelandName(level);
+        setPriceAndName(level);
     }
 
-    private void setLevelandName(int level) {
+    private void setPriceAndName(int level) {
         if (level == 0) {
             setName("EarthDragon");
             setBasePrice(50);

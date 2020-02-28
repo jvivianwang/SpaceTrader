@@ -11,16 +11,26 @@ package component;
 //    MagicFairy is level 8
 //    Unicorn is level 9
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class Market {
     private static Market single_instance = null;
     private Creature[] shopList;
+    private Equipment[] equipmentList;
 
     private Market() {
         shopList = new Creature[5];
+        equipmentList = new Equipment[2];
     }
 
     public Creature[] getShopList() {
         return shopList;
+    }
+
+    public Equipment[] getEquipmentList() {
+        return equipmentList;
     }
 
     public void updateShopList() {
@@ -65,6 +75,16 @@ public class Market {
                     new Creature(8)
             };
         }
+    }
+
+    public void updateEquipmentList() {
+        Integer[] array = new Integer[]{0, 1, 2, 3};
+        List<Integer> shuffleList = Arrays.asList(array);
+        Collections.shuffle(shuffleList);
+        equipmentList = new Equipment[]{
+                new Equipment(shuffleList.get(0), Player.getInstance().getCurrentRegion().getTechLevel()),
+                new Equipment(shuffleList.get(1), Player.getInstance().getCurrentRegion().getTechLevel())
+        };
     }
 
     public static Market getInstance() {

@@ -14,6 +14,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import materials.InfoLabel;
+import materials.SkillBar;
+import materials.SkillImage;
+import materials.YellowButton;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
