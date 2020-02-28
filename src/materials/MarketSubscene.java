@@ -90,34 +90,24 @@ public class MarketSubscene extends SubScene {
 
     private void setInventory(AnchorPane root) {
         //The boarder
-        ImageView[] boarder = new ImageView[10];
-        for (int i = 0; i < boarder.length - 1; i++) {
+        ImageView[] boarder = new ImageView[9];
+        for (int i = 0; i < boarder.length; i++) {
             boarder[i] = new ImageView(new Image("materials/image/emptyBoarder.png",
                     100, 100, false, true));
             boarder[i].setLayoutX(1000 + (i % 3) * 150);
             boarder[i].setLayoutY(100 + (i / 3) * 150);
             root.getChildren().add(boarder[i]);
         }
-        boarder[9] = new ImageView(new Image("materials/image/emptyBoarder.png",
-                100, 100, false, true));
-        boarder[9].setLayoutX(1150);
-        boarder[9].setLayoutY(550);
-        root.getChildren().add(boarder[9]);
 
         //The image inside boarder
-        inventoryListImage = new ImageView[10];
-        for (int i = 0; i < inventoryListImage.length - 1; i++) {
+        inventoryListImage = new ImageView[9];
+        for (int i = 0; i < inventoryListImage.length; i++) {
             inventoryListImage[i] = new ImageView(new Image("materials/image/empty.png",
                     100, 100, false, true));
             inventoryListImage[i].setLayoutX(1000 + (i % 3) * 150);
             inventoryListImage[i].setLayoutY(100 + (i / 3) * 150);
             root.getChildren().add(inventoryListImage[i]);
         }
-        inventoryListImage[9] = new ImageView(new Image("materials/image/empty.png",
-                100, 100, false, true));
-        inventoryListImage[9].setLayoutX(1150);
-        inventoryListImage[9].setLayoutY(550);
-        root.getChildren().add(inventoryListImage[9]);
     }
 
     private void setPlayerInfo(AnchorPane root) {
@@ -308,13 +298,13 @@ public class MarketSubscene extends SubScene {
 
     private void createButton(AnchorPane root){
         btnExit = new YellowButton("Exit");
-        btnExit.setLayoutX(1300);
+        btnExit.setLayoutX(800);
         btnExit.setLayoutY(700);
         btnBuy = new YellowButton("Buy");
-        btnBuy.setLayoutX(700);
+        btnBuy.setLayoutX(400);
         btnBuy.setLayoutY(700);
         btnSell = new YellowButton("Sell");
-        btnSell.setLayoutX(1000);
+        btnSell.setLayoutX(600);
         btnSell.setLayoutY(700);
         transactionButtonFunction();
         root.getChildren().addAll(btnExit, btnBuy, btnSell);

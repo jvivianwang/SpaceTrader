@@ -14,8 +14,8 @@ public class Broom {
     private Broom(){
         health = 0;
         //itemInventory.length == cargoCapacity;
-        cargoCapacity = 10;
-        inventory = new ArrayList<>(10);
+        cargoCapacity = 9;
+        inventory = new ArrayList<>(9);
     }
 
     public static Broom getInstance() {
