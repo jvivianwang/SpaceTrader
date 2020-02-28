@@ -94,3 +94,8 @@ Jiawei 2/26/20
 [What I've done]
 -update the store based on the current region
 -make Player.java as a singleton class
+
+Vivian 2/27/20
+[What I've done]
+-added alert when user did not select the default broom
+-display the number of brooms in the player summary page
