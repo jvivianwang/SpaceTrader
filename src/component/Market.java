@@ -26,43 +26,43 @@ public class Market {
     public void updateShopList() {
         if (Player.getInstance().getCurrentRegion().getTechLevel() == 1) {
             shopList = new Creature[]{
-                    new Creature("EarthDragon"),
-                    new Creature("AirDragon"),
-                    new Creature("FireDragon"),
-                    new Creature("WaterDragon"),
-                    new Creature("MagicDragon")
+                    new Creature(0),
+                    new Creature(1),
+                    new Creature(2),
+                    new Creature(3),
+                    new Creature(4)
             };
         } else if (Player.getInstance().getCurrentRegion().getTechLevel() == 2) {
             shopList = new Creature[]{
-                    new Creature("AirDragon"),
-                    new Creature("FireDragon"),
-                    new Creature("WaterDragon"),
-                    new Creature("MagicDragon"),
-                    new Creature("EarthFairy")
+                    new Creature(1),
+                    new Creature(2),
+                    new Creature(3),
+                    new Creature(4),
+                    new Creature(5)
             };
         } else if (Player.getInstance().getCurrentRegion().getTechLevel() == 3) {
             shopList = new Creature[]{
-                    new Creature("FireDragon"),
-                    new Creature("WaterDragon"),
-                    new Creature("MagicDragon"),
-                    new Creature("EarthFairy"),
-                    new Creature("FireFairy")
+                    new Creature(2),
+                    new Creature(3),
+                    new Creature(4),
+                    new Creature(5),
+                    new Creature(6)
             };
         } else if (Player.getInstance().getCurrentRegion().getTechLevel() == 4) {
             shopList = new Creature[]{
-                    new Creature("WaterDragon"),
-                    new Creature("MagicDragon"),
-                    new Creature("EarthFairy"),
-                    new Creature("FireFairy"),
-                    new Creature("WaterFairy")
+                    new Creature(3),
+                    new Creature(4),
+                    new Creature(5),
+                    new Creature(6),
+                    new Creature(7)
             };
         } else {
             shopList = new Creature[]{
-                    new Creature("MagicDragon"),
-                    new Creature("EarthFairy"),
-                    new Creature("FireFairy"),
-                    new Creature("WaterFairy"),
-                    new Creature("MagicFairy")
+                    new Creature(4),
+                    new Creature(5),
+                    new Creature(6),
+                    new Creature(7),
+                    new Creature(8)
             };
         }
     }

@@ -21,46 +21,46 @@ public class Creature {
     //    MagicFairy is level 8
     //    Unicorn is level 9
 
-    public Creature(String name) {
-        this.name = name;
-        setLevelandPrice(name);
+    public Creature(int level) {
+        this.level = level;
+        setLevelandName(level);
     }
 
-    private void setLevelandPrice(String name) {
-        if (name.equalsIgnoreCase("EarthDragon")) {
-            setLevel(0);
-            setBasePrice(100);
-        } else if (name.equalsIgnoreCase("AirDragon")) {
-            setLevel(1);
-            setBasePrice(300);
-        } else if (name.equalsIgnoreCase("FireDragon")) {
-            setLevel(2);
-            setBasePrice(700);
-        } else if (name.equalsIgnoreCase("WaterDragon")) {
-            setLevel(3);
-            setBasePrice(1500);
-        } else if (name.equalsIgnoreCase("MagicDragon")) {
-            setLevel(4);
-            setBasePrice(3100);
-        } else if (name.equalsIgnoreCase("EarthFairy")) {
-            setLevel(5);
-            setBasePrice(6300);
-        } else if (name.equalsIgnoreCase("FireFairy")) {
-            setLevel(6);
-            setBasePrice(12700);
-        } else if (name.equalsIgnoreCase("WaterFairy")) {
-            setLevel(7);
-            setBasePrice(25500);
-        } else if (name.equalsIgnoreCase("MagicFairy")) {
-            setLevel(8);
-            setBasePrice(51100);
+    private void setLevelandName(int level) {
+        if (level == 0) {
+            setName("EarthDragon");
+            setBasePrice(50);
+        } else if (level == 1) {
+            setName("AirDragon");
+            setBasePrice(150);
+        } else if (level == 2) {
+            setName("FireDragon");
+            setBasePrice(350);
+        } else if (level == 3) {
+            setName("WaterDragon");
+            setBasePrice(750);
+        } else if (level == 4) {
+            setName("MagicDragon");
+            setBasePrice(1550);
+        } else if (level == 5) {
+            setName("EarthFairy");
+            setBasePrice(3150);
+        } else if (level == 6) {
+            setName("FireFairy");
+            setBasePrice(6350);
+        } else if (level == 7) {
+            setName("WaterFairy");
+            setBasePrice(12750);
+        } else if (level == 8) {
+            setName("MagicFairy");
+            setBasePrice(20550);
         } else {
-            setLevel(9);
+            setName("Unicorn");
             setBasePrice(9999999);
         }
     }
 
-    private int calculatePrice() {
+    public int getFinalPrice() {
         return (int) Math.floor(basePrice * Player.getInstance().getCurrentRegion().getTechLevel() *
                 (1 - 0.01 * (Player.getInstance().getSkills()[2] * 3)));
     }

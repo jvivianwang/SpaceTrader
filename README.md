@@ -30,8 +30,7 @@ Step:
 
 TO DO LIST: [THINGS NEED HELP WITH/ THINGS NEED TO BE DONE]
 -checkStyle
--Change the Region information
--Chnage the graphic
+-OlivanderSubscene
 
 
 Jiawei 1/29/20:
@@ -103,3 +102,7 @@ Vivian 2/27/20
 Jiawei 2/27/20
 [What I've done]
 -fixed connection between OlivanderSubscene and RegionMapPage
+
+Jiawei 2/28/20
+[What I've done]
+-Finished all the function with market

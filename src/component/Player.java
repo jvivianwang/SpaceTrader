@@ -6,12 +6,12 @@ public class Player {
     // Static variable single_instance of type
     private static Player single_instance = null;
 
-    public int skillPoints;
-    public int credits;
-    public int[] skills;
-    public String name;
-    public Region currentRegion;
-    private int numberOfBroom;
+    private int skillPoints;
+    private int credits;
+    private int[] skills;
+    private String name;
+    private Region currentRegion;
+    private int numberOfBroom; // not needed
 
 
     private Player() {
@@ -78,4 +78,5 @@ public class Player {
         }
         return single_instance;
     }
+
 }

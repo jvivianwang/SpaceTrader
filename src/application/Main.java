@@ -1,6 +1,7 @@
 package application;
 
 
+import component.Broom;
 import component.Player;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
@@ -34,7 +35,7 @@ public class Main extends Application {
     private Stage stage;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         music();
         stage = primaryStage;
         stage.setTitle("Space Trader");
@@ -79,7 +80,7 @@ public class Main extends Application {
     private void sceneSwitchToPSP(ConfigSkillSubscene subscene) {
 
         subscene.getBtnConfirm().setOnMouseClicked(e -> {
-            if (subscene.getNameValue().getText().trim().isEmpty() && subscene.getBroomCheckBox().isSelected() == false) {
+            if (subscene.getNameValue().getText().trim().isEmpty() && !subscene.getBroomCheckBox().isSelected()) {
                 //subscene.nameValue.setStyle("-fx-border-color: red");
                 Alert a = new Alert(Alert.AlertType.NONE,
                         "Please enter your name and select your broom", ButtonType.OK);
@@ -93,7 +94,7 @@ public class Main extends Application {
 
                 a.show();
 
-            } else if (subscene.getBroomCheckBox().isSelected() == false) {
+            } else if (!subscene.getBroomCheckBox().isSelected()) {
                 //subscene.nameValue.setStyle("-fx-border-color: red");
                 Alert a = new Alert(Alert.AlertType.NONE,
                         "Please select your broom", ButtonType.OK);
@@ -107,6 +108,8 @@ public class Main extends Application {
                 Player.getInstance().setSkills(subscene.getSkills());
                 Player.getInstance().setName(subscene.getNameValue().getText());
                 Player.getInstance().setNumberOfBroom(1);
+                //create broom
+                Broom.getInstance();
                 psp = new PlayerSheetPage();
                 stage.setScene(psp.getMainScene());
                 sceneSwitchToRMP();
