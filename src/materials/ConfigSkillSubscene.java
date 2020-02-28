@@ -38,6 +38,8 @@ public class ConfigSkillSubscene extends SubScene {
     private String difficulty;
     private TextField nameValue;
     private YellowButton btnConfirm;
+    private CheckBox broomCheckBox;
+    private boolean selected;
 
     public ConfigSkillSubscene(String difficulty) {
         super(new AnchorPane(), 1200, 600);
@@ -181,6 +183,7 @@ public class ConfigSkillSubscene extends SubScene {
         button.setHasSkillPoints(true);
         setName("");
         nameValue.clear();
+        broomCheckBox.setSelected(false);
         difficultyMode(difficulty);
     }
 
@@ -238,21 +241,27 @@ public class ConfigSkillSubscene extends SubScene {
             shipLabel.setFont(Font.font("Verdana", 23));
         }
         //shipLabel.setStyle("-fx-background-color: blue");
-        CheckBox checkBox = new CheckBox();
+        broomCheckBox = new CheckBox();
         //checkBox.setStyle("-fx-border-color: blue");
         Image broom = new Image(BROOM_PATH);
         ImageView broomView = new ImageView(broom);
         shipLabel.setLayoutX(775);
         shipLabel.setLayoutY(250);
-        checkBox.setLayoutX(950);
-        checkBox.setLayoutY(300);
+        broomCheckBox.setLayoutX(950);
+        broomCheckBox.setLayoutY(300);
         broomView.setLayoutX(890);
         broomView.setLayoutY(300);
         broomView.setFitHeight(200);
         broomView.setFitWidth(200);
         anchorPane.getChildren().add(shipLabel);
-        anchorPane.getChildren().add(checkBox);
+        anchorPane.getChildren().add(broomCheckBox);
         anchorPane.getChildren().add(broomView);
+        setSelected(broomCheckBox.isSelected());
+        if (broomCheckBox.isSelected()) {
+            setSelected(true);
+        } else {
+            setSelected(false);
+        }
     }
 
     public Label displayInfo(String name, int info, double x, double y) {
@@ -302,5 +311,17 @@ public class ConfigSkillSubscene extends SubScene {
 
     public void setBtnConfirm(YellowButton btnConfirm) {
         this.btnConfirm = btnConfirm;
+    }
+
+    public boolean getSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected){
+        this.selected = selected;
+    }
+
+    public CheckBox getBroomCheckBox(){
+        return this.broomCheckBox;
     }
 }

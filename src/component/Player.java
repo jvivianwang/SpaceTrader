@@ -11,11 +11,14 @@ public class Player {
     public int[] skills;
     public String name;
     public Region currentRegion;
+    private int numberOfBroom;
+
 
     private Player() {
         skillPoints = 0;
         credits = 0;
         skills = new int[]{0, 0, 0, 0, };
+        numberOfBroom = 0;
     }
 
     public int getSkillPoints() {
@@ -56,6 +59,13 @@ public class Player {
 
     public void setCurrentRegion(Region currentRegion) {
         this.currentRegion = currentRegion;
+    }
+
+    public void setNumberOfBroom(int numberOfBroom){
+        this.numberOfBroom = this.numberOfBroom;
+    }
+    public int getNumberOfBroom(){
+        return this.numberOfBroom;
     }
 
     public static Player getInstance() {

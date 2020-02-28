@@ -75,13 +75,28 @@ public class Main extends Application {
         });
     }
 
+
     private void sceneSwitchToPSP(ConfigSkillSubscene subscene) {
 
         subscene.getBtnConfirm().setOnMouseClicked(e -> {
-            if (subscene.getNameValue().getText().trim().isEmpty()) {
+            if (subscene.getNameValue().getText().trim().isEmpty() && subscene.getBroomCheckBox().isSelected() == false) {
+                //subscene.nameValue.setStyle("-fx-border-color: red");
+                Alert a = new Alert(Alert.AlertType.NONE,
+                        "Please enter your name and select your broom", ButtonType.OK);
+
+                a.show();
+
+            } else if (subscene.getNameValue().getText().trim().isEmpty()) {
                 //subscene.nameValue.setStyle("-fx-border-color: red");
                 Alert a = new Alert(Alert.AlertType.NONE,
                         "Please enter your name", ButtonType.OK);
+
+                a.show();
+
+            } else if (subscene.getBroomCheckBox().isSelected() == false) {
+                //subscene.nameValue.setStyle("-fx-border-color: red");
+                Alert a = new Alert(Alert.AlertType.NONE,
+                        "Please select your broom", ButtonType.OK);
 
                 a.show();
 
@@ -91,6 +106,7 @@ public class Main extends Application {
                 Player.getInstance().setSkillPoints(subscene.getSkillPoints());
                 Player.getInstance().setSkills(subscene.getSkills());
                 Player.getInstance().setName(subscene.getNameValue().getText());
+                Player.getInstance().setNumberOfBroom(1);
                 psp = new PlayerSheetPage();
                 stage.setScene(psp.getMainScene());
                 sceneSwitchToRMP();

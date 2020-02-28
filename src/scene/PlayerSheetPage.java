@@ -77,6 +77,9 @@ public class PlayerSheetPage {
         Label engineer = displayInfo("Engineer Skill Level: " + Player.getInstance().getSkills()[3],
                 680,
                 320);
+        Label broom = displayInfo("Number of Broom: " + Player.getInstance().getNumberOfBroom(),
+                680,
+                470);
 
         mainPane.getChildren().addAll( name,
                 credits,
@@ -84,7 +87,8 @@ public class PlayerSheetPage {
                 pilot,
                 fighter,
                 merchant,
-                engineer);
+                engineer,
+                broom);
     }
 
     public Label displayInfo(String name, double x, double y) {
@@ -103,7 +107,7 @@ public class PlayerSheetPage {
     private void createButton() {
         btnNextPage  = new YellowButton("BEGIN GAME");
         btnNextPage.setLayoutX(750);
-        btnNextPage.setLayoutY(600);
+        btnNextPage.setLayoutY(650);
         btnNextPage.setPrefWidth(200);
         mainPane.getChildren().add(btnNextPage);
     }
