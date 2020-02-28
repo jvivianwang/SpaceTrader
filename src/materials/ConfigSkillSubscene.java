@@ -87,8 +87,12 @@ public class ConfigSkillSubscene extends SubScene {
             skillPoints = 8;
         }
         skills = new int[]{0, 0, 0, 0};
-        creditsStat = displayInfo("Credits", credits, 800, 100);
-        skillPointsStat = displayInfo("Skill Points", skillPoints, 800, 150);
+        creditsStat = displayInfo("Credits ", credits, 775, 100);
+        creditsStat.setStyle("-fx-font-weight: bold");
+        creditsStat.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
+        skillPointsStat = displayInfo("Skill Points ", skillPoints, 775, 165);
+        skillPointsStat.setStyle("-fx-font-weight: bold");
+        skillPointsStat.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
         this.getPane().getChildren().addAll(creditsStat, skillPointsStat);
     }
 
@@ -201,6 +205,8 @@ public class ConfigSkillSubscene extends SubScene {
     // player enter name here
     public void enterName(AnchorPane anchorPane) {
         Label nameLabel = new Label("Name");
+        nameLabel.setStyle("-fx-font-weight: bold");
+        nameLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
         try {
             nameLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
         } catch (FileNotFoundException e) {
@@ -211,8 +217,8 @@ public class ConfigSkillSubscene extends SubScene {
         inputName.setPrefWidth(250);
         inputName.setPrefHeight(30);
         inputName.setLayoutX(875);
-        inputName.setLayoutY(50);
-        nameLabel.setLayoutX(800);
+        inputName.setLayoutY(54.5);
+        nameLabel.setLayoutX(775);
         nameLabel.setLayoutY(53);
         anchorPane.getChildren().add(nameLabel);
         anchorPane.getChildren().add(inputName);
@@ -224,6 +230,8 @@ public class ConfigSkillSubscene extends SubScene {
     //player select broom
     public void selectShip(AnchorPane anchorPane){
         Label shipLabel = new Label("Select broom");
+        shipLabel.setStyle("-fx-font-weight: bold");
+        shipLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
         try {
             shipLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
         } catch (FileNotFoundException e) {
@@ -234,7 +242,7 @@ public class ConfigSkillSubscene extends SubScene {
         //checkBox.setStyle("-fx-border-color: blue");
         Image broom = new Image(BROOM_PATH);
         ImageView broomView = new ImageView(broom);
-        shipLabel.setLayoutX(800);
+        shipLabel.setLayoutX(775);
         shipLabel.setLayoutY(250);
         checkBox.setLayoutX(950);
         checkBox.setLayoutY(300);

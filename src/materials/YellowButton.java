@@ -16,7 +16,7 @@ import java.io.FileNotFoundException;
 
 public class YellowButton extends Button {
 
-    private final String fontPath = "src/materials/font/FFF_Tusj.ttf";
+    private final String fontPath = "src/materials/font/Cochin W01 Roman.ttf";
     private final String buttonPressedStyle = "-fx-background-color: transparent;"
            + " -fx-background-image: url('/materials/image/buttonAfter.jpg');"
             + "  -fx-background-size: 100% 100%;";
