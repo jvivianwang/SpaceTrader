@@ -41,10 +41,7 @@ public class Equipment {
                 (1 - 0.01 * (Player.getInstance().getSkills()[2] * 3)));
     }
 
-    private int calcualteSkill(){
-        //implement algorithum
-        return level;
-    }
+
 
 
     public int getBasePrice() {
@@ -76,6 +73,10 @@ public class Equipment {
         return "Equitment{" +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public int calculateSkills() {
+        return this.level;
     }
 }
 

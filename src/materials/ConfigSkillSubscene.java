@@ -83,7 +83,7 @@ public class ConfigSkillSubscene extends SubScene {
 
     private void difficultyMode(String difficulty) {
         if (difficulty.equals("Easy")) {
-            credits = 1000;
+            credits = 100000;
             skillPoints = 16;
         } else if (difficulty.equals("Medium")) {
             credits = 500;

@@ -107,3 +107,8 @@ Jiawei 2/28/20
 [What I've done]
 -Finished all the function with market
 -Finished equipment(charcter upgrade)
+
+Vivian 2/28/20
+[What I've done]
+-implemented the equip/unequip functionality with a lot of help from jiawei
+-fixed bugs

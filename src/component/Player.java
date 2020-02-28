@@ -12,6 +12,7 @@ public class Player {
     private String name;
     private Region currentRegion;
     private int numberOfBroom; // not needed
+    private Equipment equipedItem;
 
 
     private Player() {
@@ -78,5 +79,22 @@ public class Player {
         }
         return single_instance;
     }
+
+    public Equipment getEquippmentItem() {
+        return equipedItem;
+    }
+
+    public void setEquippmentItem(Equipment equipedItem) {
+        Broom.getInstance().getInventory().remove(equipedItem);
+        if (this.equipedItem != null) {
+            skills[this.equipedItem.getIndex()] -= this.equipedItem.calculateSkills();
+            Broom.getInstance().getInventory().add(this.equipedItem);
+        }
+        this.equipedItem = equipedItem;
+        if (equipedItem != null) {
+            skills[equipedItem.getIndex()] += equipedItem.calculateSkills();
+        }
+    }
+
 
 }

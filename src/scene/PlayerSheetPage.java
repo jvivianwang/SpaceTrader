@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -77,9 +78,12 @@ public class PlayerSheetPage {
         Label engineer = displayInfo("Engineer Skill Level: " + Player.getInstance().getSkills()[3],
                 680,
                 320);
-        Label broom = displayInfo("Number of Broom: " + Player.getInstance().getNumberOfBroom(),
-                680,
-                470);
+        Image image = new Image("materials/image/broom.png");
+        ImageView imageView = new ImageView(image);
+        imageView.setLayoutX(730);
+        imageView.setLayoutY(470);
+        imageView.setFitHeight(250);
+        imageView.setFitWidth(250);
 
         mainPane.getChildren().addAll( name,
                 credits,
@@ -88,7 +92,7 @@ public class PlayerSheetPage {
                 fighter,
                 merchant,
                 engineer,
-                broom);
+                imageView);
     }
 
     public Label displayInfo(String name, double x, double y) {
@@ -107,7 +111,7 @@ public class PlayerSheetPage {
     private void createButton() {
         btnNextPage  = new YellowButton("BEGIN GAME");
         btnNextPage.setLayoutX(750);
-        btnNextPage.setLayoutY(650);
+        btnNextPage.setLayoutY(750);
         btnNextPage.setPrefWidth(200);
         mainPane.getChildren().add(btnNextPage);
     }
