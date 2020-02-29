@@ -112,3 +112,7 @@ Vivian 2/28/20
 [What I've done]
 -implemented the equip/unequip functionality with a lot of help from jiawei
 -fixed bugs
+
+Princeton 2/28/20
+[What I've done]
+-checkstyle fixes
