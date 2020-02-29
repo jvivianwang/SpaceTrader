@@ -1,6 +1,5 @@
 package materials;
 
-import application.Main;
 import component.Player;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
@@ -9,9 +8,9 @@ import javafx.scene.SubScene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import materials.YellowButton;
 
 public class RegionSubscene extends SubScene {
 
@@ -81,7 +80,8 @@ public class RegionSubscene extends SubScene {
     public void setDisplayInfo(Region regionSelect) {
         regionNameInfo = regionSelect.getRegionName();
         coordinateInfo = regionSelect.getCoordinate();
-        distanceInfo = calculateDistance(Player.getInstance().getCurrentRegion(), regionSelect) + "";
+        distanceInfo = calculateDistance(Player.getInstance().getCurrentRegion(), regionSelect)
+                + "";
         if (regionSelect.isDiscovered()) {
             techLevelInfo = regionSelect.getTechLevel() + "";
             descriptionInfo = regionSelect.getDescription();
@@ -90,10 +90,16 @@ public class RegionSubscene extends SubScene {
             descriptionInfo = "UNKNOWN";
         }
         regionName.setText("Region Name: " + "\n" + regionNameInfo);
+        regionName.setTextFill(Color.web("#ffffff"));
         techLevel.setText("Tech Level: " + "\n" + techLevelInfo);
+        techLevel.setTextFill(Color.web("#ffffff"));
         description.setText("Description: " + "\n" + descriptionInfo);
+        description.setTextFill(Color.web("#ffffff"));
         distance.setText("Distance: " + "\n" + distanceInfo);
+        distance.setTextFill(Color.web("#ffffff"));
         coordinate.setText("Coordinate: " + "\n" + coordinateInfo);
+        coordinate.setTextFill(Color.web("#ffffff"));
+
     }
 
     private void createButton(AnchorPane root) {

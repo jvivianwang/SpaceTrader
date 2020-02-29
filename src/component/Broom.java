@@ -11,7 +11,7 @@ public class Broom {
     private ArrayList<Object> inventory;
     private int health;
 
-    private Broom(){
+    private Broom() {
         health = 0;
         //itemInventory.length == cargoCapacity;
         cargoCapacity = 9;
@@ -33,35 +33,35 @@ public class Broom {
         this.name = name;
     }
 
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
-    public void setCargoCapacity(int cargoCapacity){
+    public void setCargoCapacity(int cargoCapacity) {
         this.cargoCapacity = cargoCapacity;
     }
 
-    public int getCargoCapacity(){
+    public int getCargoCapacity() {
         return cargoCapacity;
     }
 
-    public void setFuelCapacity(int fuelCapacity){
+    public void setFuelCapacity(int fuelCapacity) {
         this.fuelCapacity = fuelCapacity;
     }
 
-    public int getFuelCapacity(){
+    public int getFuelCapacity() {
         return this.fuelCapacity;
     }
 
-    public ArrayList<Object> getInventory(){
+    public ArrayList<Object> getInventory() {
         return inventory;
     }
 
-    public void setHealth(){
+    public void setHealth() {
         this.health = health;
     }
 
-    public int getHealth(){
+    public int getHealth() {
         return health;
     }
 

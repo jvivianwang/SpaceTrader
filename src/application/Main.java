@@ -80,7 +80,8 @@ public class Main extends Application {
     private void sceneSwitchToPSP(ConfigSkillSubscene subscene) {
 
         subscene.getBtnConfirm().setOnMouseClicked(e -> {
-            if (subscene.getNameValue().getText().trim().isEmpty() && !subscene.getBroomCheckBox().isSelected()) {
+            if (subscene.getNameValue().getText().trim().isEmpty()
+                    && !subscene.getBroomCheckBox().isSelected()) {
                 //subscene.nameValue.setStyle("-fx-border-color: red");
                 Alert a = new Alert(Alert.AlertType.NONE,
                         "Please enter your name and select your broom", ButtonType.OK);

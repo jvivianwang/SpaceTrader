@@ -5,16 +5,13 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.SubScene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import materials.YellowButton;
 
-import javax.xml.stream.FactoryConfigurationError;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -121,7 +118,7 @@ public class MarketSubscene extends SubScene {
         }
     }
 
-    private void setEquipSlot(AnchorPane root){
+    private void setEquipSlot(AnchorPane root) {
         Image equipSlot = new Image("materials/image/emptyBoarder.png", 150, 150,
                 false, true);
         ImageView equipSlotView = new ImageView(equipSlot);
@@ -133,7 +130,7 @@ public class MarketSubscene extends SubScene {
         equipmentImage.setLayoutX(1125);
         equipmentImage.setLayoutY(450);
         equipmentImage.setOnMouseClicked(e -> {
-            if(Player.getInstance().getEquippmentItem() != null){
+            if (Player.getInstance().getEquippmentItem() != null) {
                 equipmenSlotSelected = true;
                 indexSelectedFromBroom = -1;
                 creatureIndexSelectedFromStore = -1;
@@ -149,7 +146,8 @@ public class MarketSubscene extends SubScene {
     private void setPlayerInfo(AnchorPane root) {
         credits = new Label("Your current credits: " + Player.getInstance().getCredits());
         credits.setStyle("-fx-font-weight: bold");
-        credits.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
+        credits.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
+                + " BURLYWOOD; -fx-border-width: 2px");
         try {
             credits.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
         } catch (FileNotFoundException e) {
@@ -158,11 +156,11 @@ public class MarketSubscene extends SubScene {
         credits.setLayoutX(450);
         credits.setLayoutY(50);
 
-        inventorySize = new Label("# of Creatures in your broom: " +
-                Broom.getInstance().getInventory().size());
+        inventorySize = new Label("# of Creatures in your broom: "
+                + Broom.getInstance().getInventory().size());
         inventorySize.setStyle("-fx-font-weight: bold");
-        inventorySize.setStyle("-fx-border-color: SADDLEBROWN ; " +
-                "-fx-background-color: BURLYWOOD; -fx-border-width: 2px");
+        inventorySize.setStyle("-fx-border-color: SADDLEBROWN ; "
+                + "-fx-background-color: BURLYWOOD; -fx-border-width: 2px");
         try {
             inventorySize.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
         } catch (FileNotFoundException e) {
@@ -173,7 +171,8 @@ public class MarketSubscene extends SubScene {
 
         price = new Label("The price of selected creature: ");
         price.setStyle("-fx-font-weight: bold");
-        price.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
+        price.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
+                + "BURLYWOOD; -fx-border-width: 2px");
         try {
             price.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
         } catch (FileNotFoundException e) {
@@ -182,14 +181,12 @@ public class MarketSubscene extends SubScene {
         price.setLayoutX(450);
         price.setLayoutY(150);
 
-//        InfoLabel pilotLabel = createInfoLabel("Pilot", 0);
-//        InfoLabel fighterLabel = createInfoLabel("Fighter", 1);
-//        InfoLabel merchantLabel = createInfoLabel("Merchant", 2);
-//        InfoLabel engineerLabel = createInfoLabel("Engineer", 3);
+
 
         pilotLabel = new Label("Pilot skills: " + Player.getInstance().getSkills()[0]);
         pilotLabel.setStyle("-fx-font-weight: bold");
-        pilotLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
+        pilotLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
+                + "BURLYWOOD; -fx-border-width: 2px");
         try {
             pilotLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
         } catch (FileNotFoundException e) {
@@ -200,7 +197,8 @@ public class MarketSubscene extends SubScene {
 
         fighterLabel = new Label("Fighter skills: " + Player.getInstance().getSkills()[1]);
         fighterLabel.setStyle("-fx-font-weight: bold");
-        fighterLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
+        fighterLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
+                + "BURLYWOOD; -fx-border-width: 2px");
         try {
             fighterLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
         } catch (FileNotFoundException e) {
@@ -211,7 +209,8 @@ public class MarketSubscene extends SubScene {
 
         merchantLabel = new Label("Merchant skills: " + Player.getInstance().getSkills()[2]);
         merchantLabel.setStyle("-fx-font-weight: bold");
-        merchantLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
+        merchantLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
+                + "BURLYWOOD; -fx-border-width: 2px");
         try {
             merchantLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
         } catch (FileNotFoundException e) {
@@ -222,7 +221,8 @@ public class MarketSubscene extends SubScene {
 
         engineerLabel = new Label("Engineer skills: " + Player.getInstance().getSkills()[3]);
         engineerLabel.setStyle("-fx-font-weight: bold");
-        engineerLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
+        engineerLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
+                + " BURLYWOOD; -fx-border-width: 2px");
         try {
             engineerLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
         } catch (FileNotFoundException e) {
@@ -232,7 +232,8 @@ public class MarketSubscene extends SubScene {
         engineerLabel.setLayoutY(400);
 
         root.getChildren().addAll(
-                credits, inventorySize, price, pilotLabel, fighterLabel, merchantLabel, engineerLabel);
+                credits, inventorySize, price, pilotLabel,
+                fighterLabel, merchantLabel, engineerLabel);
     }
 
     private void selectFromStore(ImageView creatureImage, int creatureIndexFromList) {
@@ -286,7 +287,8 @@ public class MarketSubscene extends SubScene {
 
     private void updateEquipUnequipBtn() {
         if (indexSelectedFromBroom != -1) {
-            if (Broom.getInstance().getInventory().get(indexSelectedFromBroom) instanceof Equipment) {
+            if (Broom.getInstance().getInventory().get(indexSelectedFromBroom)
+                    instanceof Equipment) {
                 btnEquip.setDisable(false);
             } else {
                 btnEquip.setDisable(true);
@@ -294,8 +296,8 @@ public class MarketSubscene extends SubScene {
         } else {
             btnEquip.setDisable(true);
         }
-        if (! equipmenSlotSelected || Broom.getInstance().getInventory().size() >=
-                Broom.getInstance().getCargoCapacity()) {
+        if (!equipmenSlotSelected || Broom.getInstance().getInventory().size()
+                >= Broom.getInstance().getCargoCapacity()) {
             btnUnequip.setDisable(true);
         } else {
             btnUnequip.setDisable(false);
@@ -305,7 +307,8 @@ public class MarketSubscene extends SubScene {
     public void updateMarket() {
         Market.getInstance().updateShopList();
         for (int i = 0; i < Market.getInstance().getShopList().length; i++) {
-            Image image = new Image("materials/image/" + Market.getInstance().getShopList()[i].getName() + ".png",
+            Image image = new Image("materials/image/"
+                    + Market.getInstance().getShopList()[i].getName() + ".png",
                     100, 100, false, true);
             // Create the ImageView
             shopListImage[i].setImage(image);
@@ -320,13 +323,15 @@ public class MarketSubscene extends SubScene {
                 Image image;
                 if (Broom.getInstance().getInventory().get(i) instanceof Creature) {
                     image = new Image(
-                            "materials/image/" +
-                                    ((Creature) Broom.getInstance().getInventory().get(i)).getName() + ".png",
+                            "materials/image/"
+                                    + ((Creature) Broom.getInstance().
+                                    getInventory().get(i)).getName() + ".png",
                             100, 100, false, true);
                 } else {
                     image = new Image(
-                            "materials/image/" +
-                                    ((Equipment) Broom.getInstance().getInventory().get(i)).getName() + ".png",
+                            "materials/image/"
+                                    + ((Equipment) Broom.getInstance().
+                                    getInventory().get(i)).getName() + ".png",
                             100, 100, false, true);
                 }
                 inventoryListImage[i].setImage(image);
@@ -343,7 +348,8 @@ public class MarketSubscene extends SubScene {
         Market.getInstance().updateEquipmentList();
         for (int i = 0; i < Market.getInstance().getEquipmentList().length; i++) {
             Image image = new Image(
-                    "materials/image/" + Market.getInstance().getEquipmentList()[i].getName() + ".png",
+                    "materials/image/" + Market.getInstance().
+                            getEquipmentList()[i].getName() + ".png",
                     100, 100, false, true);
             // Create the ImageView
             shopEquipmentListImage[i].setImage(image);
@@ -356,7 +362,8 @@ public class MarketSubscene extends SubScene {
         Image image;
         if (Player.getInstance().getEquippmentItem() != null) {
             image = new Image(
-                    "materials/image/" + Player.getInstance().getEquippmentItem().getName() + ".png",
+                    "materials/image/" + Player.getInstance().
+                            getEquippmentItem().getName() + ".png",
                     150, 150, false, true);
         } else {
             image = new Image(
@@ -369,8 +376,8 @@ public class MarketSubscene extends SubScene {
     public void updatePlayerInfo() {
         credits.setText("Your current credits: " + Player.getInstance().getCredits());
 
-        inventorySize.setText("# of item in your broom: " +
-                Broom.getInstance().getInventory().size());
+        inventorySize.setText("# of item in your broom: "
+                + Broom.getInstance().getInventory().size());
 
         pilotLabel.setText("Pilot skills: " + Player.getInstance().getSkills()[0]);
         fighterLabel.setText("Fighter skills: " + Player.getInstance().getSkills()[1]);
@@ -378,18 +385,23 @@ public class MarketSubscene extends SubScene {
         engineerLabel.setText("Engineer skills: " + Player.getInstance().getSkills()[3]);
 
         if (creatureIndexSelectedFromStore != -1) {
-            price.setText("The price of selected creature: " +
-                    Market.getInstance().getShopList()[creatureIndexSelectedFromStore].getFinalPrice());
+            price.setText("The price of selected creature: "
+                    + Market.getInstance().getShopList()
+                    [creatureIndexSelectedFromStore].getFinalPrice());
         } else if (equipmentIndexSelectedFromStore != -1) {
-            price.setText("The price of selected equipment: " +
-                    Market.getInstance().getEquipmentList()[equipmentIndexSelectedFromStore].getFinalPrice());
+            price.setText("The price of selected equipment: "
+                    + Market.getInstance().getEquipmentList()
+                    [equipmentIndexSelectedFromStore].getFinalPrice());
         } else if (indexSelectedFromBroom != -1) {
-            if (Broom.getInstance().getInventory().get(indexSelectedFromBroom) instanceof Creature) {
-                price.setText("The price of selected creature: " +
-                        ((Creature) Broom.getInstance().getInventory().get(indexSelectedFromBroom)).getFinalPrice());
+            if (Broom.getInstance().getInventory().get(indexSelectedFromBroom)
+                    instanceof Creature) {
+                price.setText("The price of selected creature: "
+                        + ((Creature) Broom.getInstance().getInventory().
+                        get(indexSelectedFromBroom)).getFinalPrice());
             } else {
-                price.setText("The price of selected equipment: " +
-                        ((Equipment) Broom.getInstance().getInventory().get(indexSelectedFromBroom)).getFinalPrice());
+                price.setText("The price of selected equipment: "
+                        + ((Equipment) Broom.getInstance().getInventory().
+                        get(indexSelectedFromBroom)).getFinalPrice());
             }
         } else {
             price.setText("The price of selected creature: ");
@@ -427,7 +439,7 @@ public class MarketSubscene extends SubScene {
         transition.play();
     }
 
-    private void createButton(AnchorPane root){
+    private void createButton(AnchorPane root) {
         btnExit = new YellowButton("Exit");
         btnExit.setLayoutX(800);
         btnExit.setLayoutY(700);
@@ -450,7 +462,7 @@ public class MarketSubscene extends SubScene {
 
         transactionButtonFunction();
         equipButtonFunction();
-        root.getChildren().addAll(btnExit, btnBuy, btnSell,btnEquip, btnUnequip);
+        root.getChildren().addAll(btnExit, btnBuy, btnSell, btnEquip, btnUnequip);
     }
 
     private void transactionButtonFunction() {
@@ -458,15 +470,18 @@ public class MarketSubscene extends SubScene {
             int price;
             //creature selected
             if (creatureIndexSelectedFromStore != -1) {
-                price = Market.getInstance().getShopList()[creatureIndexSelectedFromStore].getFinalPrice();
+                price = Market.getInstance().getShopList()
+                        [creatureIndexSelectedFromStore].getFinalPrice();
             } else {
                 //equipment selected
-                price = Market.getInstance().getEquipmentList()[equipmentIndexSelectedFromStore].getFinalPrice();
+                price = Market.getInstance().getEquipmentList()
+                        [equipmentIndexSelectedFromStore].getFinalPrice();
             }
             if (Player.getInstance().getCredits() < price) {
                 new Alert(Alert.AlertType.NONE,
                         "Ooops! You don't have enough credits.", ButtonType.OK).show();
-            } else if (Broom.getInstance().getInventory().size() >= Broom.getInstance().getCargoCapacity()){
+            } else if (Broom.getInstance().getInventory().size()
+                    >= Broom.getInstance().getCargoCapacity()) {
                 new Alert(Alert.AlertType.NONE,
                         "Ooops! You don't enough space to carry the item.", ButtonType.OK).show();
             } else {
@@ -482,7 +497,8 @@ public class MarketSubscene extends SubScene {
                     shopEquipmentListImage[equipmentIndexSelectedFromStore].setDisable(true);
                     shopEquipmentListImage[equipmentIndexSelectedFromStore].setImage(image);
                     Broom.getInstance().gainEquipment(
-                            Market.getInstance().getEquipmentList()[equipmentIndexSelectedFromStore]);
+                            Market.getInstance().getEquipmentList()
+                                    [equipmentIndexSelectedFromStore]);
                 }
                 creatureIndexSelectedFromStore = -1;
                 equipmentIndexSelectedFromStore = -1;
@@ -494,10 +510,13 @@ public class MarketSubscene extends SubScene {
 
         btnSell.setOnMouseClicked(e -> {
             int price;
-            if (Broom.getInstance().getInventory().get(indexSelectedFromBroom) instanceof Creature) {
-                price = ((Creature) Broom.getInstance().getInventory().get(indexSelectedFromBroom)).getFinalPrice();
+            if (Broom.getInstance().getInventory().
+                    get(indexSelectedFromBroom) instanceof Creature) {
+                price = ((Creature) Broom.getInstance().getInventory().
+                        get(indexSelectedFromBroom)).getFinalPrice();
             } else {
-                price = ((Equipment) Broom.getInstance().getInventory().get(indexSelectedFromBroom)).getFinalPrice();
+                price = ((Equipment) Broom.getInstance().getInventory().
+                        get(indexSelectedFromBroom)).getFinalPrice();
             }
             Broom.getInstance().remove(indexSelectedFromBroom);
             indexSelectedFromBroom = -1;
@@ -508,7 +527,7 @@ public class MarketSubscene extends SubScene {
         });
     }
 
-    public void equipButtonFunction(){
+    public void equipButtonFunction() {
         btnEquip.setOnMouseClicked(e -> {
             Player.getInstance().setEquippmentItem(
                     (Equipment) Broom.getInstance().getInventory().get(indexSelectedFromBroom));

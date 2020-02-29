@@ -107,8 +107,8 @@ public class RegionMapPage {
         travelAndMarketButtonFunction(subscene2);
 
         marketScene.getBtnExit().setOnMouseClicked(e -> {
-          marketScene.moveSubScene();
-          showSubScene(Player.getInstance().getCurrentRegion());
+            marketScene.moveSubScene();
+            showSubScene(Player.getInstance().getCurrentRegion());
 
         });
     }
@@ -171,7 +171,7 @@ public class RegionMapPage {
 
     }
 
-    private void createMarketScene(){
+    private void createMarketScene() {
         marketScene = new MarketSubscene();
         marketScene.updateMarket();
         marketScene.updateOlivanderMarket();

@@ -35,44 +35,42 @@ public class Market {
 
     public void updateShopList() {
         if (Player.getInstance().getCurrentRegion().getTechLevel() == 1) {
-            shopList = new Creature[]{
-                    new Creature(0),
-                    new Creature(1),
-                    new Creature(2),
-                    new Creature(3),
-                    new Creature(4)
-            };
+            shopList = new Creature[] {new Creature(0),
+                new Creature(1),
+                new Creature(2),
+                new Creature(3),
+                new Creature(4) };
         } else if (Player.getInstance().getCurrentRegion().getTechLevel() == 2) {
-            shopList = new Creature[]{
-                    new Creature(1),
-                    new Creature(2),
-                    new Creature(3),
-                    new Creature(4),
-                    new Creature(5)
+            shopList = new Creature[] {
+                new Creature(1),
+                new Creature(2),
+                new Creature(3),
+                new Creature(4),
+                new Creature(5)
             };
         } else if (Player.getInstance().getCurrentRegion().getTechLevel() == 3) {
-            shopList = new Creature[]{
-                    new Creature(2),
-                    new Creature(3),
-                    new Creature(4),
-                    new Creature(5),
-                    new Creature(6)
+            shopList = new Creature[] {
+                new Creature(2),
+                new Creature(3),
+                new Creature(4),
+                new Creature(5),
+                new Creature(6)
             };
         } else if (Player.getInstance().getCurrentRegion().getTechLevel() == 4) {
-            shopList = new Creature[]{
-                    new Creature(3),
-                    new Creature(4),
-                    new Creature(5),
-                    new Creature(6),
-                    new Creature(7)
+            shopList = new Creature[] {
+                new Creature(3),
+                new Creature(4),
+                new Creature(5),
+                new Creature(6),
+                new Creature(7)
             };
         } else {
-            shopList = new Creature[]{
-                    new Creature(4),
-                    new Creature(5),
-                    new Creature(6),
-                    new Creature(7),
-                    new Creature(8)
+            shopList = new Creature[] {
+                new Creature(4),
+                new Creature(5),
+                new Creature(6),
+                new Creature(7),
+                new Creature(8)
             };
         }
     }
@@ -81,9 +79,11 @@ public class Market {
         Integer[] array = new Integer[]{0, 1, 2, 3};
         List<Integer> shuffleList = Arrays.asList(array);
         Collections.shuffle(shuffleList);
-        equipmentList = new Equipment[]{
-                new Equipment(shuffleList.get(0), Player.getInstance().getCurrentRegion().getTechLevel()),
-                new Equipment(shuffleList.get(1), Player.getInstance().getCurrentRegion().getTechLevel())
+        equipmentList = new Equipment[] {
+            new Equipment(shuffleList.get(0), Player.getInstance().
+                    getCurrentRegion().getTechLevel()),
+            new Equipment(shuffleList.get(1), Player.getInstance().
+                     getCurrentRegion().getTechLevel())
         };
     }
 

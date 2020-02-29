@@ -14,10 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import materials.InfoLabel;
-import materials.SkillBar;
-import materials.SkillImage;
-import materials.YellowButton;
+
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -95,10 +92,12 @@ public class ConfigSkillSubscene extends SubScene {
         skills = new int[]{0, 0, 0, 0};
         creditsStat = displayInfo("Credits ", credits, 775, 100);
         creditsStat.setStyle("-fx-font-weight: bold");
-        creditsStat.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
+        creditsStat.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
+                + "BURLYWOOD; -fx-border-width: 2px");
         skillPointsStat = displayInfo("Skill Points ", skillPoints, 775, 165);
         skillPointsStat.setStyle("-fx-font-weight: bold");
-        skillPointsStat.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
+        skillPointsStat.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: "
+                + "BURLYWOOD; -fx-border-width: 2px");
         this.getPane().getChildren().addAll(creditsStat, skillPointsStat);
     }
 
@@ -213,7 +212,8 @@ public class ConfigSkillSubscene extends SubScene {
     public void enterName(AnchorPane anchorPane) {
         Label nameLabel = new Label("Name");
         nameLabel.setStyle("-fx-font-weight: bold");
-        nameLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
+        nameLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: "
+                + "BURLYWOOD; -fx-border-width: 2px");
         try {
             nameLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
         } catch (FileNotFoundException e) {
@@ -235,10 +235,11 @@ public class ConfigSkillSubscene extends SubScene {
     }
 
     //player select broom
-    public void selectShip(AnchorPane anchorPane){
+    public void selectShip(AnchorPane anchorPane) {
         Label shipLabel = new Label("Select broom");
         shipLabel.setStyle("-fx-font-weight: bold");
-        shipLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
+        shipLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
+                + " BURLYWOOD; -fx-border-width: 2px");
         try {
             shipLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
         } catch (FileNotFoundException e) {
@@ -321,11 +322,11 @@ public class ConfigSkillSubscene extends SubScene {
         return selected;
     }
 
-    public void setSelected(boolean selected){
+    public void setSelected(boolean selected) {
         this.selected = selected;
     }
 
-    public CheckBox getBroomCheckBox(){
+    public CheckBox getBroomCheckBox() {
         return this.broomCheckBox;
     }
 }

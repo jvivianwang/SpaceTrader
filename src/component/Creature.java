@@ -1,7 +1,6 @@
 package component;
 
 
-import application.Main;
 
 public class Creature {
     private int level;
@@ -61,8 +60,8 @@ public class Creature {
     }
 
     public int getFinalPrice() {
-        return (int) Math.floor(basePrice * Player.getInstance().getCurrentRegion().getTechLevel() *
-                (1 - 0.01 * (Player.getInstance().getSkills()[2] * 3)));
+        return (int) Math.floor(basePrice * Player.getInstance().getCurrentRegion().getTechLevel()
+                * (1 - 0.01 * (Player.getInstance().getSkills()[2] * 3)));
     }
 
     public int getLevel() {
@@ -91,9 +90,9 @@ public class Creature {
 
     @Override
     public String toString() {
-        return "Creature{" +
-                "level=" + level +
-                ", name='" + name + '\'' +
-                '}';
+        return "Creature{"
+                + "level=" + level
+                + ", name='" + name + '\''
+                + '}';
     }
 }

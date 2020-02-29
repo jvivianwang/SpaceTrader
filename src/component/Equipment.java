@@ -1,5 +1,4 @@
 package component;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Equipment {
@@ -37,8 +36,8 @@ public class Equipment {
     }
 
     public int getFinalPrice() {
-        return (int) Math.floor(basePrice * Player.getInstance().getCurrentRegion().getTechLevel() *
-                (1 - 0.01 * (Player.getInstance().getSkills()[2] * 3)));
+        return (int) Math.floor(basePrice * Player.getInstance().getCurrentRegion().getTechLevel()
+                * (1 - 0.01 * (Player.getInstance().getSkills()[2] * 3)));
     }
 
 
@@ -70,9 +69,9 @@ public class Equipment {
 
     @Override
     public String toString() {
-        return "Equitment{" +
-                ", name='" + name + '\'' +
-                '}';
+        return "Equitment{"
+                + ", name='" + name + '\''
+                + '}';
     }
 
     public int calculateSkills() {

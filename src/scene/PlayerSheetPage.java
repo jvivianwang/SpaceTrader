@@ -1,6 +1,5 @@
 package scene;
 
-import application.Main;
 import component.Player;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,12 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import materials.YellowButton;
 
-import javafx.scene.shape.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -63,7 +59,8 @@ public class PlayerSheetPage {
         Label credits = displayInfo("Player Credits: " + Player.getInstance().getCredits(),
                 280,
                 170);
-        Label skillPointsLeft = displayInfo("Player Skills: " + Player.getInstance().getSkillPoints(),
+        Label skillPointsLeft = displayInfo("Player Skills: "
+                        + Player.getInstance().getSkillPoints(),
                 680,
                 170);
         Label pilot = displayInfo("Pilot Skill Level: " + Player.getInstance().getSkills()[0],
@@ -85,7 +82,7 @@ public class PlayerSheetPage {
         imageView.setFitHeight(250);
         imageView.setFitWidth(250);
 
-        mainPane.getChildren().addAll( name,
+        mainPane.getChildren().addAll(name,
                 credits,
                 skillPointsLeft,
                 pilot,
@@ -104,7 +101,8 @@ public class PlayerSheetPage {
         temp.setLayoutX(x);
         temp.setLayoutY(y);
         temp.setStyle("-fx-font-weight: bold");
-        temp.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: BURLYWOOD; -fx-border-width: 2px");
+        temp.setStyle("-fx-border-color: SADDLEBROWN ;"
+                + "-fx-background-color: BURLYWOOD; -fx-border-width: 2px");
         return temp;
     }
 
@@ -125,7 +123,7 @@ public class PlayerSheetPage {
     }
     private void setLabelFont(Label myLabel) {
         try {
-           myLabel.setFont(Font.loadFont(new FileInputStream(fontPath),30));
+            myLabel.setFont(Font.loadFont(new FileInputStream(fontPath), 30));
         } catch (FileNotFoundException e) {
             myLabel.setFont(Font.font("Verdana", 23));
         }

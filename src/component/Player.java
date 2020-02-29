@@ -62,10 +62,10 @@ public class Player {
         this.currentRegion = currentRegion;
     }
 
-    public void setNumberOfBroom(int numberOfBroom){
+    public void setNumberOfBroom(int numberOfBroom) {
         this.numberOfBroom = this.numberOfBroom;
     }
-    public int getNumberOfBroom(){
+    public int getNumberOfBroom() {
         return this.numberOfBroom;
     }
 
