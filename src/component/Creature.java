@@ -1,8 +1,9 @@
 package component;
 
 
+import materials.Item;
 
-public class Creature {
+public class Creature implements Item {
     private int level;
     private int basePrice;
     private String name;
@@ -66,14 +67,6 @@ public class Creature {
 
     public int getLevel() {
         return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public int getBasePrice() {
-        return basePrice;
     }
 
     public void setBasePrice(int basePrice) {

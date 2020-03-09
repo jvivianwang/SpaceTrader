@@ -1,5 +1,7 @@
 package component;
 
+import materials.Item;
+
 import java.util.ArrayList;
 
 public class Broom {
@@ -8,7 +10,7 @@ public class Broom {
     private String name;
     private int cargoCapacity;
     private int fuelCapacity;
-    private ArrayList<Object> inventory;
+    private ArrayList<Item> inventory;
     private int health;
 
     private Broom() {
@@ -53,7 +55,7 @@ public class Broom {
         return this.fuelCapacity;
     }
 
-    public ArrayList<Object> getInventory() {
+    public ArrayList<Item> getInventory() {
         return inventory;
     }
 

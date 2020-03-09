@@ -320,20 +320,10 @@ public class MarketSubscene extends SubScene {
     public void updateInventory() {
         for (int i = 0; i < inventoryListImage.length; i++) {
             if (i < Broom.getInstance().getInventory().size()) {
-                Image image;
-                if (Broom.getInstance().getInventory().get(i) instanceof Creature) {
-                    image = new Image(
+                Image image = new Image(
                             "materials/image/"
-                                    + ((Creature) Broom.getInstance().
-                                    getInventory().get(i)).getName() + ".png",
+                                    + Broom.getInstance().getInventory().get(i).getName() + ".png",
                             100, 100, false, true);
-                } else {
-                    image = new Image(
-                            "materials/image/"
-                                    + ((Equipment) Broom.getInstance().
-                                    getInventory().get(i)).getName() + ".png",
-                            100, 100, false, true);
-                }
                 inventoryListImage[i].setImage(image);
                 selectFromInventory(inventoryListImage[i], i);
             } else {
@@ -393,16 +383,9 @@ public class MarketSubscene extends SubScene {
                     + Market.getInstance().getEquipmentList()
                     [equipmentIndexSelectedFromStore].getFinalPrice());
         } else if (indexSelectedFromBroom != -1) {
-            if (Broom.getInstance().getInventory().get(indexSelectedFromBroom)
-                    instanceof Creature) {
-                price.setText("The price of selected creature: "
-                        + ((Creature) Broom.getInstance().getInventory().
-                        get(indexSelectedFromBroom)).getFinalPrice());
-            } else {
-                price.setText("The price of selected equipment: "
-                        + ((Equipment) Broom.getInstance().getInventory().
-                        get(indexSelectedFromBroom)).getFinalPrice());
-            }
+            price.setText("The price of selected item: "
+                        + Broom.getInstance().getInventory().
+                        get(indexSelectedFromBroom).getFinalPrice());
         } else {
             price.setText("The price of selected creature: ");
         }
@@ -509,15 +492,8 @@ public class MarketSubscene extends SubScene {
         });
 
         btnSell.setOnMouseClicked(e -> {
-            int price;
-            if (Broom.getInstance().getInventory().
-                    get(indexSelectedFromBroom) instanceof Creature) {
-                price = ((Creature) Broom.getInstance().getInventory().
-                        get(indexSelectedFromBroom)).getFinalPrice();
-            } else {
-                price = ((Equipment) Broom.getInstance().getInventory().
-                        get(indexSelectedFromBroom)).getFinalPrice();
-            }
+            int price = Broom.getInstance().getInventory().
+                        get(indexSelectedFromBroom).getFinalPrice();
             Broom.getInstance().remove(indexSelectedFromBroom);
             indexSelectedFromBroom = -1;
             updateInventory();

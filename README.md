@@ -29,8 +29,7 @@ Step:
 
 
 TO DO LIST: [THINGS NEED HELP WITH/ THINGS NEED TO BE DONE]
--checkStyle
--equip unequip
+-M6
 
 
 Jiawei 1/29/20:
@@ -116,3 +115,7 @@ Vivian 2/28/20
 Princeton 2/28/20
 [What I've done]
 -checkstyle fixes
+
+Jiawei 3/9/20
+[What I've done]
+- Fixed interface

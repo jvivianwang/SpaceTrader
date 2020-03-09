@@ -1,7 +1,9 @@
 package component;
 
 
-public class Equipment {
+import materials.Item;
+
+public class Equipment implements Item {
     private int basePrice;
     private String name;
     private int index;
@@ -40,11 +42,8 @@ public class Equipment {
                 * (1 - 0.01 * (Player.getInstance().getSkills()[2] * 3)));
     }
 
-
-
-
-    public int getBasePrice() {
-        return basePrice;
+    public int getLevel() {
+        return level;
     }
 
     public void setBasePrice(int basePrice) {
@@ -61,10 +60,6 @@ public class Equipment {
 
     public int getIndex() {
         return index;
-    }
-
-    public int getLevel() {
-        return level;
     }
 
     @Override
