@@ -4,7 +4,7 @@ package component;
 public class Player {
 
     // Static variable single_instance of type
-    private static Player singleInstance = null;
+    private static Player single_instance = null;
 
     private int skillPoints;
     private int credits;
@@ -70,14 +70,14 @@ public class Player {
     }
 
     public static Player getInstance() {
-        if (singleInstance == null) {
+        if (single_instance == null) {
             synchronized (Player.class) {
-                if (singleInstance == null) {
-                    singleInstance = new Player();
+                if (single_instance == null) {
+                    single_instance = new Player();
                 }
             }
         }
-        return singleInstance;
+        return single_instance;
     }
 
     public Equipment getEquippmentItem() {

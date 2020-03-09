@@ -46,7 +46,7 @@ public class RegionMapPage {
     }
 
     private void createBackground() {
-        Image backgroundImage = new Image("materials/image/configBackground.png",
+        Image backgroundImage = new Image("materials/image/worldMap.jpg",
                 WIDTH,
                 HEIGHT,
                 false,
@@ -68,16 +68,16 @@ public class RegionMapPage {
         //Shuffle the spots
         Collections.shuffle(shuffleList);
 
-        regionList.add(new Region("0", 1, "CS1332 is so great", shuffleList.get(0)));
-        regionList.add(new Region("1", 1, "CS2340 is so great", shuffleList.get(1)));
-        regionList.add(new Region("2", 1, "CS2110 is so great", shuffleList.get(2)));
-        regionList.add(new Region("3", 2, "MATH3012 is so great", shuffleList.get(3)));
-        regionList.add(new Region("4", 2, "CS1100 is so great", shuffleList.get(4)));
-        regionList.add(new Region("5", 2, "Jiawei is so great", shuffleList.get(5)));
-        regionList.add(new Region("6", 3, "Rylie is so great", shuffleList.get(6)));
-        regionList.add(new Region("7", 3, "Vivian is so great", shuffleList.get(7)));
-        regionList.add(new Region("8", 4, "Paulina is so great", shuffleList.get(8)));
-        regionList.add(new Region("9", 5, "Princeton is so great", shuffleList.get(9)));
+        regionList.add(new Region("0", 1, "Paulina’s Peaceful Paradise", shuffleList.get(0)));
+        regionList.add(new Region("1", 1, "Jay’s Jovial Jackpot", shuffleList.get(1)));
+        regionList.add(new Region("2", 1, "Princeton’s Proud Palace", shuffleList.get(2)));
+        regionList.add(new Region("3", 2, "Vivian’s Vivacious Veranda", shuffleList.get(3)));
+        regionList.add(new Region("4", 2, "Rylie’s Radiant Resort", shuffleList.get(4)));
+        regionList.add(new Region("5", 2, "Aibek’s Astonishing Aquarium ", shuffleList.get(5)));
+        regionList.add(new Region("6", 3, "Yukt's Yacht ", shuffleList.get(6)));
+        regionList.add(new Region("7", 3, "Diagon Alley", shuffleList.get(7)));
+        regionList.add(new Region("8", 4, "Ollivander’s ", shuffleList.get(8)));
+        regionList.add(new Region("9", 5, "Hogsmeade", shuffleList.get(9)));
 
         //Once you create all the region you also spawn player in a random region.
         Player.getInstance().setCurrentRegion(regionList.get(shuffleList.get(0)));

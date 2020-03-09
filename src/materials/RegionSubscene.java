@@ -14,7 +14,7 @@ import javafx.util.Duration;
 
 public class RegionSubscene extends SubScene {
 
-    private static final String BACKGROUND_IMAGE = "materials/image/regionInfoBackground.png";
+    private static final String BACKGROUND_IMAGE = "materials/image/configSubsceneBG.png";
 
     private boolean isHidden;
 

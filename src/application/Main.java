@@ -126,7 +126,7 @@ public class Main extends Application {
     }
 
     public void music() {
-        File file = new File("src/materials/battle.wav");
+        File file = new File("src/materials/monsterMusic.mp3");
         javafx.scene.media.Media music = new javafx.scene.media.Media(file.toURI().toString());
         javafx.scene.media.MediaPlayer mp = new javafx.scene.media.MediaPlayer(music);
         mp.play();

@@ -3,7 +3,7 @@ package component;
 import java.util.ArrayList;
 
 public class Broom {
-    private static Broom singleInstance = null;
+    private static Broom single_instance = null;
 
     private String name;
     private int cargoCapacity;
@@ -19,14 +19,14 @@ public class Broom {
     }
 
     public static Broom getInstance() {
-        if (singleInstance == null) {
+        if (single_instance == null) {
             synchronized (Broom.class) {
-                if (singleInstance == null) {
-                    singleInstance = new Broom();
+                if (single_instance == null) {
+                    single_instance = new Broom();
                 }
             }
         }
-        return singleInstance;
+        return single_instance;
     }
 
     public void setName(String name) {

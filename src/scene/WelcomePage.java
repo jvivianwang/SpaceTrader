@@ -46,7 +46,7 @@ public class WelcomePage {
                 true,
                 false);
         //space dimensions: 1600 x 900 px
-        Image space = new Image("materials/image/space.jpg",
+        Image space = new Image("materials/image/testBackground.jpg",
                 WIDTH, HEIGHT,
                 true,
                 true);
