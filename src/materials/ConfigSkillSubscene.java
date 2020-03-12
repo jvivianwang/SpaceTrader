@@ -314,12 +314,8 @@ public class ConfigSkillSubscene extends SubScene {
         return btnConfirm;
     }
 
-    public void setBtnConfirm(YellowButton btnConfirm) {
-        this.btnConfirm = btnConfirm;
-    }
-
-    public boolean getSelected() {
-        return selected;
+    public String getDifficulty() {
+        return this.difficulty;
     }
 
     public void setSelected(boolean selected) {

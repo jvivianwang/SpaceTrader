@@ -6,8 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import component.Region;
-import materials.MarketSubscene;
-import materials.RegionSubscene;
+import materials.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +29,9 @@ public class RegionMapPage {
     private RegionSubscene nextSceneToHide;
 
     private MarketSubscene marketScene;
+    private BanditSubscene banditSubscene;
+    private TraderSubscene traderSubscene;
+    private PoliceSubscene policeSubscene;
 
     private int currentSceneIndex;
 
@@ -100,6 +102,7 @@ public class RegionMapPage {
             mainPane.getChildren().add(g);
         }
         createMarketScene();
+        createNPCSubScene();
 
         for (Region g: regionList) {
             buttonPressed(g);
@@ -127,9 +130,11 @@ public class RegionMapPage {
 
     private void travelAndMarketButtonFunction(RegionSubscene subscene) {
         subscene.getBtnTravel().setOnMouseClicked(event -> {
-            travelTo(regionSelected);
-            //Change to NPC interaction (del travelTo() in line 130)
-            //banditSubscene = new BanditSubscene(100);
+            banditSubscene.generateBanditInfo(regionSelected);
+            banditSubscene.moveSubScene();
+            //Change to NPC interaction
+            //Before implement random NPC interaction in order to work on your own NPC page you shall do like these:
+            //banditSubscene = new BanditSubscene();
             //banditSubscene.moveSubScene();
         });
         subscene.getBtnMarket().setOnMouseClicked(event -> {
@@ -195,6 +200,13 @@ public class RegionMapPage {
         marketScene.updateMarket();
         marketScene.updateOlivanderMarket();
         mainPane.getChildren().add(marketScene);
+    }
+
+    private void createNPCSubScene() {
+        banditSubscene = new BanditSubscene();
+        traderSubscene = new TraderSubscene();
+        policeSubscene = new PoliceSubscene();
+        mainPane.getChildren().addAll(banditSubscene, traderSubscene, policeSubscene);
     }
 
     public Scene getMainScene() {

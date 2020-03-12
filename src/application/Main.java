@@ -104,11 +104,11 @@ public class Main extends Application {
 
             } else {
                 Player.getInstance();
+                Player.getInstance().setDifficulty(subscene.getDifficulty());
                 Player.getInstance().setCredits(subscene.getCredits());
                 Player.getInstance().setSkillPoints(subscene.getSkillPoints());
                 Player.getInstance().setSkills(subscene.getSkills());
                 Player.getInstance().setName(subscene.getNameValue().getText());
-                Player.getInstance().setNumberOfBroom(1);
                 //create broom
                 Broom.getInstance();
                 psp = new PlayerSheetPage();

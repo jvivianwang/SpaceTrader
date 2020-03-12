@@ -6,20 +6,28 @@ public class Player {
     // Static variable single_instance of type
     private static Player single_instance = null;
 
+    private String difficulty;
+
     private int skillPoints;
     private int credits;
     private int[] skills;
     private String name;
     private Region currentRegion;
-    private int numberOfBroom; // not needed
     private Equipment equipedItem;
 
 
     private Player() {
         skillPoints = 0;
         credits = 0;
-        skills = new int[]{0, 0, 0, 0, };
-        numberOfBroom = 0;
+        skills = new int[]{0, 0, 0, 0};
+    }
+
+    public String getDifficulty() {
+        return this.difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
 
     public int getSkillPoints() {
@@ -62,12 +70,6 @@ public class Player {
         this.currentRegion = currentRegion;
     }
 
-    public void setNumberOfBroom(int numberOfBroom) {
-        this.numberOfBroom = this.numberOfBroom;
-    }
-    public int getNumberOfBroom() {
-        return this.numberOfBroom;
-    }
 
     public static Player getInstance() {
         if (single_instance == null) {

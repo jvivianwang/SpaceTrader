@@ -123,3 +123,8 @@ Jiawei 3/9/20
 Vivian 3/11/20
 [What I've done]
 - update travel method in regionMapPage
+
+Jiawei 3/12/20
+[What I've done]
+- after Rylie created the rough structure of three NPCsubscene, I connect the subscene to the regionMapPage.
+- fixed some functionality and all the methods should be able to be reused
