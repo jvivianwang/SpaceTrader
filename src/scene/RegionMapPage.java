@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class RegionMapPage {
+    private static RegionMapPage single_instance = null;
 
     private static final int HEIGHT = 900;
     private static final int WIDTH = 1600;
@@ -34,7 +35,18 @@ public class RegionMapPage {
 
     private Region regionSelected;
 
-    public RegionMapPage() {
+    public static RegionMapPage getInstance() {
+        if (single_instance == null) {
+            synchronized (RegionMapPage.class) {
+                if (single_instance == null) {
+                    single_instance = new RegionMapPage();
+                }
+            }
+        }
+        return single_instance;
+    }
+
+    private RegionMapPage() {
         mainPane = new AnchorPane();
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         regionList = new ArrayList<>();
@@ -115,20 +127,27 @@ public class RegionMapPage {
 
     private void travelAndMarketButtonFunction(RegionSubscene subscene) {
         subscene.getBtnTravel().setOnMouseClicked(event -> {
-            Player.getInstance().getCurrentRegion().setRegionBackgroundToYellow();
-            regionSelected.setRegionBackgroundToBlue();
-            regionSelected.setDiscovered(true);
-            Player.getInstance().setCurrentRegion(regionSelected);
-            //Set marketScene store info based on current region tech level before animation
-            marketScene.updateMarket();
-            marketScene.updateOlivanderMarket();
-            showSubScene(regionSelected);
+            travelTo(regionSelected);
+            //Change to NPC interaction (del travelTo() in line 130)
+            //banditSubscene = new BanditSubscene(100);
+            //banditSubscene.moveSubScene();
         });
         subscene.getBtnMarket().setOnMouseClicked(event -> {
             nextSceneToHide.moveSubScene();
             nextSceneToHide = null;
             marketScene.moveSubScene();
         });
+    }
+
+    public void travelTo(Region targetRegion) {
+        Player.getInstance().getCurrentRegion().setRegionBackgroundToYellow();
+        targetRegion.setRegionBackgroundToBlue();
+        targetRegion.setDiscovered(true);
+        Player.getInstance().setCurrentRegion(targetRegion);
+        //Set marketScene store info based on current region tech level before animation
+        marketScene.updateMarket();
+        marketScene.updateOlivanderMarket();
+        showSubScene(targetRegion);
     }
 
 

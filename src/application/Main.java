@@ -120,8 +120,8 @@ public class Main extends Application {
 
     private void sceneSwitchToRMP() {
         psp.getBtnNextPage().setOnMouseClicked(e -> {
-            rmp = new RegionMapPage();
-            stage.setScene(rmp.getMainScene());
+            RegionMapPage.getInstance();
+            stage.setScene(RegionMapPage.getInstance().getMainScene());
         });
     }
 

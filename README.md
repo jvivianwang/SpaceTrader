@@ -119,3 +119,7 @@ Princeton 2/28/20
 Jiawei 3/9/20
 [What I've done]
 - Fixed interface
+
+Vivian 3/11/20
+[What I've done]
+- update travel method in regionMapPage
