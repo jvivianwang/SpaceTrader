@@ -29,8 +29,11 @@ public class PoliceSubscene extends SubScene {
     private YellowButton btnFight;
     private YellowButton btnExit;
 
-    private Label resultLabel;
+    private Label healthResultLabel;
+    private Label creditsResultLabel;
+    private Label fuelResultLabel;
     private Label PoliceDemandLabel;
+    private Label resultLabel;
 
     private Item[] demandItems;
     private ImageView[] demandItemsView;
@@ -52,10 +55,8 @@ public class PoliceSubscene extends SubScene {
         prefHeight(900);
 
         isHidden = true;
-
-
         AnchorPane root2 = (AnchorPane) this.getRoot();
-
+        setDemandMarket(root2);
         displayText(root2);
         setBackgroundImage(root2);
         createButton(root2);
@@ -64,12 +65,38 @@ public class PoliceSubscene extends SubScene {
         setLayoutY(-900);
     }
 
+    private void setDemandMarket(AnchorPane root) {
+        demandItemsView = new ImageView[3];
+        for (int i = 0; i < demandItemsView.length; i++) {
+            //set default images to earthdragon just because the imageview cant be null
+            demandItemsView[i] = new ImageView(new Image("materials/image/empty.png",
+                    100, 100, false, true));
+            demandItemsView[i].setLayoutX(100 + 200 * i);
+            demandItemsView[i].setLayoutY(75 );
+            root.getChildren().add(demandItemsView[i]);
+        }
+    }
+
     /**
      * Before you travel to the selectedRegion, if you encounter police, the police will ask random items in your broom
      * @param regionSelected the region you are about to travel to
      */
     public void generatePoliceInfo(Region regionSelected) {
         this.targetRegion = regionSelected;
+        updateCreatureList();
+        for (int i = 0; i < demandItems.length; i++) {
+            Image image = new Image("materials/image/"
+                    + demandItems[i].getName() + ".png",
+                    100, 100, false, true);
+            // Create the ImageView
+            demandItemsView[i].setImage(image);
+            demandItemsView[i].setDisable(false);
+            //selectFromTrader(creatureListImage[i], i);
+        }
+        resetScene();
+    }
+
+    private void updateCreatureList() {
         Item[] array = new Item[Broom.getInstance().getInventory().size()];
         for (int i = 0; i < array.length; i++) {
             array[i] = Broom.getInstance().getInventory().get(i);
@@ -77,14 +104,15 @@ public class PoliceSubscene extends SubScene {
         List<Item> shuffleList = Arrays.asList(array);
         //Shuffle the spots
         Collections.shuffle(shuffleList);
-
         demandItems = new Item[array.length / 2 + 1];
         //Lose size / 2 + 1 items
         for (int i = 0; i < array.length / 2 + 1; i++) {
             demandItems[i] = array[i];
         }
-        resetScene();
+
     }
+
+
 
     /**
      * Every time you travel, the subscene's information needs to be updated(including buttons)
@@ -96,7 +124,10 @@ public class PoliceSubscene extends SubScene {
         btnFlee.setDisable(false);
         btnFight.setDisable(false);
         PoliceDemandLabel.setText("Well well well... wanna pass? Give me your illegal items: ");
-        //reassign Imageview[] to update the image
+        //reassign Imageview[] to update the image\
+        healthResultLabel.setText("Your broom health: " + Broom.getInstance().getHealth());
+        fuelResultLabel.setText("Your broom fuel: " + Broom.getInstance().getFuelCapacity());
+        creditsResultLabel.setText("Your broom credits: " + Player.getInstance().getCredits());
         resultLabel.setText("");
     }
 
@@ -151,9 +182,13 @@ public class PoliceSubscene extends SubScene {
      * @param root Root to add conversation and result to
      */
     private void displayText(AnchorPane root) {
-        PoliceDemandLabel = displayLabel("", 700, 100);
-        resultLabel = displayLabel("", 700, 400);
-        root.getChildren().addAll(PoliceDemandLabel, resultLabel);
+        PoliceDemandLabel = displayLabel("", 100, 400);
+        resultLabel = displayLabel("", 100, 450);
+        healthResultLabel = displayLabel("", 100, 500);
+        creditsResultLabel = displayLabel("", 100, 550);
+        fuelResultLabel = displayLabel("", 100, 600);
+        root.getChildren().addAll(PoliceDemandLabel, resultLabel, healthResultLabel, creditsResultLabel,
+                fuelResultLabel);
     }
 
     /**
@@ -193,18 +228,20 @@ public class PoliceSubscene extends SubScene {
     private void flee() {
         btnFlee.setOnMouseClicked(e -> {
             Random random = new Random();
-            int pilotSkill = skills[0];
-            int points = random.nextInt(100);
-            boolean escape = (points < 50 + pilotSkill * 2); //possibly change this moving forward
-            targetRegion = player.getCurrentRegion(); // player goes back to the previous region
-            if (escape) {
-                reduceBroomHealth(5);
-                loseCredits(5);
-                broom.resetInventory();
-                disableButtons();
-                resultLabel.setText("You got what you deserved. You leave with 5 less fuels, "
-                        + "credits and health");
+            int point = random.nextInt(100);
+            if (point < 50 + Player.getInstance().getSkills()[0]) {
+                resultLabel.setText("Nice speed! Your flee was successful!!");
+                targetRegion = Player.getInstance().getCurrentRegion();
+            } else {
+                resultLabel.setText("Too slow! Better luck next time!");
+                Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                Player.getInstance().setCredits(Player.getInstance().getCredits() - 500);
+                Broom.getInstance().getInventory().removeAll(Arrays.asList(demandItems));
             }
+            disableButtons();
+            creditsResultLabel.setText("Now your credits are: " + Player.getInstance().getCredits());
+            healthResultLabel.setText("Your broom health: " + Broom.getInstance().getHealth());
+            fuelResultLabel.setText("Your broom fuel: " + Broom.getInstance().getFuelCapacity());
         });
     }
 
@@ -214,14 +251,21 @@ public class PoliceSubscene extends SubScene {
      */
     private void fight() {
         btnFight.setOnMouseClicked(e -> {
-            int fightSkill = skills[1];
             Random random = new Random();
-            int points = random.nextInt(100);
-            boolean escape = (points < 50 + fightSkill * 2);
-            String statement = escape ? "You fought the police and won" : "You fought the police"
-                    + "and lost";
-            resultLabel.setText(statement);
+            int point = random.nextInt(100);
+            if (point < 50 + Player.getInstance().getSkills()[1] * 2) {
+                resultLabel.setText("Woah! You fought valiantly and won!");
+            }
+//            Pdf did not say what happened when failed to fight off the police
+//            else {
+//                resultLabel.setText("You lost! Better luck next time!");
+
+//                Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+//            }
             disableButtons();
+            creditsResultLabel.setText("Now your credits are: " + Player.getInstance().getCredits());
+            healthResultLabel.setText("Your broom health: " + Broom.getInstance().getHealth());
+            fuelResultLabel.setText("Your broom fuel: " + Broom.getInstance().getFuelCapacity());
         });
     }
 
@@ -235,7 +279,6 @@ public class PoliceSubscene extends SubScene {
             RegionMapPage.getInstance().travelTo(targetRegion);
         });
     }
-
 
     /**
      * Transitions subscene off main page
@@ -265,44 +308,7 @@ public class PoliceSubscene extends SubScene {
         btnExit.setDisable(false);
     }
 
-//    /**
-//     * Reduces fuel amount when the player flees or loses a fight
-//     * Only reduces the fuel amount if the amount left in the tank is greater than amount you
-//     * passed in
-//     * @param amount amount of fuel to lose
-//     */
-//    private void fuelLoss(int amount) {
-//        if (broom.getFuelCapacity() >= amount) {
-//            broom.setFuelCapacity(broom.getFuelCapacity() - amount);
-//        }
-//    }
-    // This should be in travelTo() method in RegionMapPage.java
-
-    /**
-     * When police attack the broom, this method will reduce the broom health by a specified amount
-     * Only works if the current broom health is greater than the amount passed in
-     *
-     * @param amount amount of health to lose
-     */
-    private void reduceBroomHealth(int amount) {
-        if (broom.getHealth() >= amount) {
-            broom.setHealth(broom.getHealth() - amount);
-        } else {
-            //Game over();
-        }
-    }
-
-    /**
-     * When police attack you, you will be fine iff the amount passed in is greater than the
-     * amount of credits you currently have
-     *
-     * @param amount amount of credits to lose
-     */
-    private void loseCredits(int amount) {
-        if (player.getCredits() >= amount) {
-            player.setCredits(player.getCredits() - amount);
-        }
-    }
 
 }
+
 

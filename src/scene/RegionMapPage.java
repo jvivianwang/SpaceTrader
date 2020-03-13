@@ -149,7 +149,7 @@ public class RegionMapPage {
             } else {
                 //Use NPCEncounterForUser() for game purpose
                 //Use NPCEncounterForTesting() for debug purpose
-                NPCEncounterForTesting(banditSubscene);
+                NPCEncounterForTesting(policeSubscene);
             }
         });
         subscene.getBtnMarket().setOnMouseClicked(event -> {

@@ -146,3 +146,7 @@ Vivian 3/13/20
 Vivian 3/13/20
 [What I've done]
 - fixed merge conflict
+
+Vivian 3/13/20
+[What I've done]
+- implement police sub scene
