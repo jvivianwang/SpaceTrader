@@ -68,7 +68,7 @@ public class PoliceSubscene extends SubScene {
      * Before you travel to the selectedRegion, if you encounter police, the police will ask random items in your broom
      * @param regionSelected the region you are about to travel to
      */
-    public void generateBanditInfo(Region regionSelected) {
+    public void generatePoliceInfo(Region regionSelected) {
         this.targetRegion = regionSelected;
         Item[] array = new Item[Broom.getInstance().getInventory().size()];
         for (int i = 0; i < array.length; i++) {
@@ -136,7 +136,7 @@ public class PoliceSubscene extends SubScene {
         btnFight.setLayoutY(700);
         btnFight.setDisable(true);
         btnExit = new YellowButton("Exit");
-        btnExit.setLayoutX(600);
+        btnExit.setLayoutX(1000);
         btnExit.setLayoutY(700);
         btnExit.setDisable(true);
         forfeit();
