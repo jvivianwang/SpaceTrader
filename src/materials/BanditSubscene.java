@@ -15,6 +15,8 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 import scene.RegionMapPage;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -28,6 +30,8 @@ public class BanditSubscene extends SubScene {
     private YellowButton btnExit;
     private int demandCredits;
     private Label banditDemandLabel;
+    private Label broomHealth;
+    private Label broomFuel;
     private Label resultLabel;
 
     private Region targetRegion;
@@ -68,6 +72,8 @@ public class BanditSubscene extends SubScene {
         btnFlee.setDisable(false);
         btnFight.setDisable(false);
         banditDemandLabel.setText("Well well well... wanna pass? Give me your money: " +  demandCredits);
+        broomHealth.setText("Your broom health: " + Broom.getInstance().getHealth());
+        broomFuel.setText("Your broom fuel: " + Broom.getInstance().getFuelCapacity());
         resultLabel.setText("");
     }
 
@@ -86,9 +92,12 @@ public class BanditSubscene extends SubScene {
     }
 
     private void displayText(AnchorPane root) {
-        banditDemandLabel = displayLabel("", "", 700, 100);
-        resultLabel = displayLabel("", "", 700, 400);
-        root.getChildren().addAll(banditDemandLabel, resultLabel);
+        banditDemandLabel = displayLabel("", "", 400, 100);
+        broomHealth = displayLabel("", "", 400, 200);
+        broomFuel = displayLabel("", "", 400, 300);
+        resultLabel = displayLabel("", "", 400, 400);
+
+        root.getChildren().addAll(banditDemandLabel, broomFuel, broomHealth, resultLabel);
     }
 
     private Label displayLabel(String name, String info, double x, double y) {
@@ -121,33 +130,57 @@ public class BanditSubscene extends SubScene {
     private void pay() {
         btnPay.setOnMouseClicked(e -> {
             if (Player.getInstance().getCredits() < demandCredits) {
+                if (Broom.getInstance().getInventory().size() == 0) {
+                    resultLabel.setText("You do not have enough credits or items to pay. Your ship get damaged");
+                    Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                } else {
+                    resultLabel.setText("You do not have enough credits, we take all your items");
+                    Broom.getInstance().resetInventory();
+                }
             } else {
                 Player.getInstance().setCredits(Player.getInstance().getCredits() - demandCredits);
                 resultLabel.setText(String.format("Successful payment! You current credit balance is: %d", Player.getInstance().getCredits()));
-                btnExit.setDisable(false);
-                btnPay.setDisable(true);
-                btnFlee.setDisable(true);
-                btnFight.setDisable(true);
             }
-
+            disableButtons();
+            banditDemandLabel.setText("Now your credits are: " + Player.getInstance().getCredits());
+            broomHealth.setText("Your broom health: " + Broom.getInstance().getHealth());
+            broomFuel.setText("Your broom fuel: " + Broom.getInstance().getFuelCapacity());
         });
     }
     private void fight() {
         btnFight.setOnMouseClicked(e -> {
-            resultLabel.setText("Fight result to be implemented");
-            btnExit.setDisable(false);
-            btnPay.setDisable(true);
-            btnFlee.setDisable(true);
-            btnFight.setDisable(true);
+            Random random = new Random();
+            int point = random.nextInt(100);
+            if (point < 50 + Player.getInstance().getSkills()[1] * 2) {
+                resultLabel.setText("Woah! You fought valiantly and won!");
+                Player.getInstance().setCredits(Player.getInstance().getCredits() + 500);
+            } else {
+                resultLabel.setText("You lost! Better luck next time!");
+                Player.getInstance().setCredits(0);
+                Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+            }
+            disableButtons();
+            banditDemandLabel.setText("Now your credits are: " + Player.getInstance().getCredits());
+            broomHealth.setText("Your broom health: " + Broom.getInstance().getHealth());
+            broomFuel.setText("Your broom fuel: " + Broom.getInstance().getFuelCapacity());
         });
     }
     private void flee() {
         btnFlee.setOnMouseClicked(e -> {
-            resultLabel.setText("Flee result to be implemented");
-            btnExit.setDisable(false);
-            btnPay.setDisable(true);
-            btnFlee.setDisable(true);
-            btnFight.setDisable(true);
+            Random random = new Random();
+            int point = random.nextInt(100);
+            if (point < 50 + Player.getInstance().getSkills()[0]) {
+                resultLabel.setText("Nice speed! Your flee was successful!!");
+                targetRegion = Player.getInstance().getCurrentRegion();
+            } else {
+                resultLabel.setText("Too slow! Better luck next time!");
+                Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                Player.getInstance().setCredits(0);
+            }
+            disableButtons();
+            banditDemandLabel.setText("Now your credits are: " + Player.getInstance().getCredits());
+            broomHealth.setText("Your broom health: " + Broom.getInstance().getHealth());
+            broomFuel.setText("Your broom fuel: " + Broom.getInstance().getFuelCapacity());
         });
     }
     private void exit() {
@@ -181,4 +214,10 @@ public class BanditSubscene extends SubScene {
         root.getChildren().addAll(btnExit, btnPay, btnFight, btnFlee);
     }
 
+    private void disableButtons() {
+        btnFlee.setDisable(true);
+        btnFight.setDisable(true);
+        btnPay.setDisable(true);
+        btnExit.setDisable(false);
+    }
 }

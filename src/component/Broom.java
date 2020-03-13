@@ -93,7 +93,7 @@ public class Broom {
 
     //resets broom inventory by creating an empty array list
     public void resetInventory() {
-        inventory = new ArrayList<Item>();
+        inventory = new ArrayList<>(cargoCapacity);
     }
 }
 
