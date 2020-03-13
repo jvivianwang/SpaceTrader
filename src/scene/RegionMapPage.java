@@ -1,5 +1,6 @@
 package scene;
 
+import component.Broom;
 import component.Player;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -8,10 +9,7 @@ import javafx.scene.layout.*;
 import component.Region;
 import materials.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class RegionMapPage {
     private static RegionMapPage single_instance = null;
@@ -130,8 +128,29 @@ public class RegionMapPage {
 
     private void travelAndMarketButtonFunction(RegionSubscene subscene) {
         subscene.getBtnTravel().setOnMouseClicked(event -> {
-            banditSubscene.generateBanditInfo(regionSelected);
-            banditSubscene.moveSubScene();
+            Random random = new Random();
+            int points = random.nextInt(100);
+            if (Player.getInstance().getDifficulty().equalsIgnoreCase("easy")) {
+                //Range 0~20 : meet bandit
+                if (points < 20) {
+                    banditSubscene.generateBanditInfo(regionSelected);
+                    banditSubscene.moveSubScene();
+                } else if (points < 40) {
+                    //Range 20~40 : meet police
+                    //If the player has no item in inventory then just change police to bandit:)
+                    if (Broom.getInstance().getInventory().size() == 0) {
+                        banditSubscene.generateBanditInfo(regionSelected);
+                        banditSubscene.moveSubScene();
+                    } else {
+                        policeSubscene.generatePoliceInfo(regionSelected);
+                        policeSubscene.moveSubScene();
+                    }
+                } else {
+                    //Range 40~100 : meet trader
+                    traderSubscene.generateTraderInfo();
+                    traderSubscene.moveSubScene();
+                }
+            }
             //change to police subScene to test out police
             //Change to NPC interaction
             //Before implement random NPC interaction in order to work on your own NPC page you shall do like these:

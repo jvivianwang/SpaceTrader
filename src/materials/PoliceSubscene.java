@@ -2,6 +2,7 @@ package materials;
 
 import component.Broom;
 import component.Player;
+import component.Region;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.SubScene;
@@ -14,22 +15,29 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 import scene.RegionMapPage;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 public class PoliceSubscene extends SubScene {
     private static final String BACKGROUND_IMAGE = "materials/image/banditBackground.jpg";
     private static final String FONT_PATH = "src/materials/font/Cochin W01 Roman.ttf";
 
-    private Item[] demandItems;
     private YellowButton btnForfeit;
     private YellowButton btnFlee;
     private YellowButton btnFight;
-    private YellowButton btnConfirmResult;
+    private YellowButton btnExit;
 
-    private Label result;
-    private Label conversation;
+    private Label resultLabel;
+    private Label PoliceDemandLabel;
 
+    private Item[] demandItems;
     private ImageView[] demandItemsView;
 
     private boolean isHidden;
+
+    private Region targetRegion;
 
     private Player player = Player.getInstance();
     private Broom broom = Broom.getInstance();
@@ -48,11 +56,48 @@ public class PoliceSubscene extends SubScene {
 
         AnchorPane root2 = (AnchorPane) this.getRoot();
 
+        displayText(root2);
         setBackgroundImage(root2);
         createButton(root2);
 
         setLayoutX(0);
         setLayoutY(-900);
+    }
+
+    /**
+     * Before you travel to the selectedRegion, if you encounter police, the police will ask random items in your broom
+     * @param regionSelected the region you are about to travel to
+     */
+    public void generateBanditInfo(Region regionSelected) {
+        this.targetRegion = regionSelected;
+        Item[] array = new Item[Broom.getInstance().getInventory().size()];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = Broom.getInstance().getInventory().get(i);
+        }
+        List<Item> shuffleList = Arrays.asList(array);
+        //Shuffle the spots
+        Collections.shuffle(shuffleList);
+
+        demandItems = new Item[array.length / 2 + 1];
+        //Lose size / 2 + 1 items
+        for (int i = 0; i < array.length / 2 + 1; i++) {
+            demandItems[i] = array[i];
+        }
+        resetScene();
+    }
+
+    /**
+     * Every time you travel, the subscene's information needs to be updated(including buttons)
+     * Disable exit button and enable every other buttons
+     */
+    private void resetScene() {
+        btnExit.setDisable(true);
+        btnForfeit.setDisable(false);
+        btnFlee.setDisable(false);
+        btnFight.setDisable(false);
+        PoliceDemandLabel.setText("Well well well... wanna pass? Give me your illegal items: ");
+        //reassign Imageview[] to update the image
+        resultLabel.setText("");
     }
 
     /**
@@ -90,11 +135,15 @@ public class PoliceSubscene extends SubScene {
         btnFight.setLayoutX(600);
         btnFight.setLayoutY(700);
         btnFight.setDisable(true);
-        btnConfirmResult = new YellowButton("Confirm Result");
-        btnConfirmResult.setLayoutX(600);
-        btnConfirmResult.setLayoutY(700);
-        btnConfirmResult.setDisable(true);
-        root.getChildren().addAll(btnForfeit, btnFlee, btnFight, btnConfirmResult);
+        btnExit = new YellowButton("Exit");
+        btnExit.setLayoutX(600);
+        btnExit.setLayoutY(700);
+        btnExit.setDisable(true);
+        forfeit();
+        flee();
+        fight();
+        exit();
+        root.getChildren().addAll(btnForfeit, btnFlee, btnFight, btnExit);
     }
 
     /**
@@ -102,21 +151,20 @@ public class PoliceSubscene extends SubScene {
      * @param root Root to add conversation and result to
      */
     private void displayText(AnchorPane root) {
-        conversation = displayLabel("", "", 700, 100);
-        result = displayLabel("", "", 700, 400);
-        root.getChildren().addAll(conversation, result);
+        PoliceDemandLabel = displayLabel("", 700, 100);
+        resultLabel = displayLabel("", 700, 400);
+        root.getChildren().addAll(PoliceDemandLabel, resultLabel);
     }
 
     /**
-     * I don't know what this does yet...comments incoming
-     * @param name
-     * @param info
+     * store a message into a "textbox" with (x,y) which the "textbox" style could be reused
+     * @param message the message you wanna show on (x,y)
      * @param x
      * @param y
-     * @return
+     * @return A Label variable (text)
      */
-    private Label displayLabel(String name, String info, double x, double y) {
-        Label temp = new Label(name + "\n" + info);
+    private Label displayLabel(String message, double x, double y) {
+        Label temp = new Label(message);
         temp.setFont(new Font(23));
         temp.setAlignment(Pos.CENTER_LEFT);
         temp.setPrefWidth(800);
@@ -128,21 +176,18 @@ public class PoliceSubscene extends SubScene {
     }
 
     /**
-     * Controls forfeit operations
-     * Player loses items and continued to desired destination
+     * Controls forfeit operations, after this, player can click exit button to continue to the targetRegion
      */
     private void forfeit() {
         btnForfeit.setOnMouseClicked(e -> {
-            broom.resetInventory();
-            result.setText("You lose the items in your inventory");
+            broom.getInventory().removeAll(Arrays.asList(demandItems));
+            resultLabel.setText("You lose the items in your inventory");
             disableButtons();
-            moveSubScene();
-            RegionMapPage.getInstance();
         });
     }
 
     /**
-     * Controls flee operations.
+     * Controls flee operations. after this, player can click exit button to continue to the targetRegion
      * Flee chance depends on pilot skill
      */
     private void flee() {
@@ -150,22 +195,20 @@ public class PoliceSubscene extends SubScene {
             int pilotSkill = skills[0];
             double escapeChance = 1 - 0.09 * (pilotSkill);
             boolean escape = escapeChance > 2; //possibly change this moving forward
-            fuelLoss(5);
+            targetRegion = player.getCurrentRegion(); // player goes back to the previous region
             if (escape) {
                 reduceBroomHealth(5);
                 loseCredits(5);
                 broom.resetInventory();
                 disableButtons();
-                result.setText("You got what you deserved. You leave with 5 less fuels, "
+                resultLabel.setText("You got what you deserved. You leave with 5 less fuels, "
                         + "credits and health");
             }
-            moveSubScene();
-            RegionMapPage.getInstance();
         });
     }
 
     /**
-     * Controls fight operation
+     * Controls fight operation, after this, player can click exit button to continue to the targetRegion
      * Computes escape chance based on fightskill
      */
     private void fight() {
@@ -175,21 +218,19 @@ public class PoliceSubscene extends SubScene {
             boolean escape = escapeChance > 2; //possibly change this moving forward
             String statement = escape ? "You fought the police and won" : "You fought the police"
                     + "and lost";
-            result.setText(statement);
+            resultLabel.setText(statement);
             disableButtons();
-            moveSubScene();
-            RegionMapPage.getInstance();
         });
     }
 
 
     /**
-     * Confirms result of the players actions.
+     * Once a action is taken, the player is able to exit the subscene.
      */
-    private void confirmResult() {
-        btnConfirmResult.setOnMouseClicked(e -> {
+    private void exit() {
+        btnExit.setOnMouseClicked(e -> {
             moveSubScene();
-            RegionMapPage.getInstance();
+            RegionMapPage.getInstance().travelTo(targetRegion);
         });
     }
 
@@ -213,25 +254,27 @@ public class PoliceSubscene extends SubScene {
     }
 
     /**
-     * Disable buttons at the end of a decision
+     * Disable buttons and enable exit button at the end of a decision
      */
     private void disableButtons() {
         btnFlee.setDisable(true);
         btnFight.setDisable(true);
         btnForfeit.setDisable(true);
+        btnExit.setDisable(false);
     }
 
-    /**
-     * Reduces fuel amount when the player flees or loses a fight
-     * Only reduces the fuel amount if the amount left in the tank is greater than amount you
-     * passed in
-     * @param amount amount of fuel to lose
-     */
-    private void fuelLoss(int amount) {
-        if (broom.getFuelCapacity() >= amount) {
-            broom.setFuelCapacity(broom.getFuelCapacity() - amount);
-        }
-    }
+//    /**
+//     * Reduces fuel amount when the player flees or loses a fight
+//     * Only reduces the fuel amount if the amount left in the tank is greater than amount you
+//     * passed in
+//     * @param amount amount of fuel to lose
+//     */
+//    private void fuelLoss(int amount) {
+//        if (broom.getFuelCapacity() >= amount) {
+//            broom.setFuelCapacity(broom.getFuelCapacity() - amount);
+//        }
+//    }
+    // This should be in travelTo() method in RegionMapPage.java
 
     /**
      * When police attack the broom, this method will reduce the broom health by a specified amount
@@ -242,6 +285,8 @@ public class PoliceSubscene extends SubScene {
     private void reduceBroomHealth(int amount) {
         if (broom.getHealth() >= amount) {
             broom.setHealth(broom.getHealth() - amount);
+        } else {
+            //Game over();
         }
     }
 

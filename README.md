@@ -133,3 +133,7 @@ Princeton 3/12/20
 [What I've done]
 - Added buttons and functionality for police subscene
 - Haven't tested it yet
+
+Jiawei 3/13/20
+[What I've done]
+- interaction encounting NPC
