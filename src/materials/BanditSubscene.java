@@ -121,7 +121,6 @@ public class BanditSubscene extends SubScene {
     private void pay() {
         btnPay.setOnMouseClicked(e -> {
             if (Player.getInstance().getCredits() < demandCredits) {
-
             } else {
                 Player.getInstance().setCredits(Player.getInstance().getCredits() - demandCredits);
                 resultLabel.setText(String.format("Successful payment! You current credit balance is: %d", Player.getInstance().getCredits()));
