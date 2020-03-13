@@ -88,4 +88,8 @@ public class Creature implements Item {
                 + ", name='" + name + '\''
                 + '}';
     }
+
+    public int getBasePrice() {
+        return this.basePrice;
+    }
 }

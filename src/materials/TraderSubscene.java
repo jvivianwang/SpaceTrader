@@ -5,6 +5,7 @@ import component.Market;
 import component.Player;
 import component.Region;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.SubScene;
 import javafx.scene.control.Alert;
@@ -32,7 +33,10 @@ public class TraderSubscene extends SubScene {
     private YellowButton btnExitOrIgnore;
     private YellowButton btnRob;
     private YellowButton btnNegotiate;
-    private Label result;
+
+    private Label creditLabel;
+    private Label priceLabel;
+    private Label resultLabel;
 
     private int creatureSelectedFromList;
     private ImageView[] creatureListImage;
@@ -55,6 +59,7 @@ public class TraderSubscene extends SubScene {
         setTraderMarket(root2);
         setBackgroundImage(root2);
         setInventory(root2);
+        displayText(root2);
 
         createButton(root2);
 
@@ -115,7 +120,10 @@ public class TraderSubscene extends SubScene {
         creatureImage.setOnMouseClicked(e -> {
             creatureSelectedFromList = creatureIndexFromList;
 //            updateBuySellBtn();
-            updateRobBuyNegotiateBtn();
+            priceLabel.setText("The item price: " + creatureList[creatureIndexFromList].getFinalPrice());
+            btnBuy.setDisable(false);
+            btnExitOrIgnore.setDisable(false);
+            btnRob.setDisable(false);
 //            updatePlayerInfo();
         });
     }
@@ -146,21 +154,6 @@ public class TraderSubscene extends SubScene {
         root.getChildren().addAll(btnRob, btnBuy, btnNegotiate, btnExitOrIgnore);
     }
 
-
-    private void updateRobBuyNegotiateBtn() {
-        if (creatureSelectedFromList != -1 ) {
-            btnBuy.setDisable(false);
-            btnNegotiate.setDisable(false);
-            btnRob.setDisable(false);
-            btnExitOrIgnore.setDisable(true);
-        } else {
-            btnBuy.setDisable(true);
-            btnNegotiate.setDisable(true);
-            btnRob.setDisable(true);
-            btnExitOrIgnore.setDisable(false);
-        }
-
-    }
 
     public void moveSubScene() {
         TranslateTransition transition = new TranslateTransition();
@@ -228,6 +221,20 @@ public class TraderSubscene extends SubScene {
         btnBuy.setDisable(true);
         btnNegotiate.setDisable(false);
         btnRob.setDisable(false);
+        creditLabel.setText("Your current credits left: " + Player.getInstance().getCredits());
+        priceLabel.setText("The item price: ");
+        resultLabel.setText("");
+    }
+
+    /**
+     * Initalizes text for label
+     * @param root Root to add conversation and result to
+     */
+    private void displayText(AnchorPane root) {
+        creditLabel = displayLabel("", 200, 300);
+        priceLabel = displayLabel("", 200, 400);
+        resultLabel = displayLabel("", 200, 500);
+        root.getChildren().addAll(creditLabel, priceLabel, resultLabel);
     }
 
     public void updateInventory() {
@@ -285,60 +292,140 @@ public class TraderSubscene extends SubScene {
                     }
                     creatureSelectedFromList = -1;
                     //updatePlayerInfo();
-                    updateRobBuyNegotiateBtn();
+                    btnBuy.setDisable(true);
+                    btnExitOrIgnore.setDisable(false);
+                    btnRob.setDisable(false);
                     updateInventory();
+                    creditLabel.setText("Your current credits left: " + Player.getInstance().getCredits());
+                    priceLabel.setText("The item price: ");
+                    resultLabel.setText("You bought a creature");
                 }
             });
     }
     private void rob() {
         btnRob.setOnMouseClicked(e -> {
-            int skillPoints = 0;
-            int price = 0;
             int random = new Random().nextInt(100);
             if (creatureSelectedFromList != -1) {
-                //skillPoints = Player.getInstance().getSkillPoints() * Player.getInstance().getDifficulty();
+                if (Player.getInstance().getDifficulty().equalsIgnoreCase("easy")) {
+                    if (random > 50 + Player.getInstance().getSkills()[1] * 2){
+                        resultLabel.setText("Get outta here now!!!");
+                        if (Broom.getInstance().getHealth() < 50) {
+                            new Alert(Alert.AlertType.NONE,
+                                    "Ooops! You don't enough space to carry the item.",
+                                    ButtonType.OK).show();
+                            Platform.exit();
+                            System.exit(0);
+                        }
+                        Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                    }
+
+                } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("medium")) {
+                    if (random > 30 + Player.getInstance().getSkills()[1] * 2){
+                        resultLabel.setText("Get outta here now!!!");
+                        if (Broom.getInstance().getHealth() < 50) {
+                            new Alert(Alert.AlertType.NONE,
+                                    "Ooops! You don't enough space to carry the item.",
+                                    ButtonType.OK).show();
+                            Platform.exit();
+                            System.exit(0);
+                        }
+                        Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 100);
+                    }
+
+                } else {
+                    if (random > 10 + Player.getInstance().getSkills()[2] * 2){
+                        resultLabel.setText("Get outta here now!!!");
+                        if (Broom.getInstance().getHealth() < 50) {
+                            new Alert(Alert.AlertType.NONE,
+                                    "Ooops! You don't enough space to carry the item.",
+                                    ButtonType.OK).show();
+                            Platform.exit();
+                            System.exit(0);
+                        }
+                        Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 150);
+                    }
+                }
             }
-//            if (Player.getInstance().getSkillPoints() < MAX_FIGHTER_SKILL_POINTS) {
-//                new Alert(Alert.AlertType.NONE,
-//                        "Ooops! You don't have enough fighter skill points.", ButtonType.OK).show();
-//            } else
-                if (Broom.getInstance().getInventory().size()
+            if (Broom.getInstance().getInventory().size()
                     >= Broom.getInstance().getCargoCapacity()) {
                 new Alert(Alert.AlertType.NONE,
                         "Ooops! You don't enough space to carry the item.", ButtonType.OK).show();
             } else {
-
-                new Alert(Alert.AlertType.NONE,
-                        "You just successfully robbed " + creatureList
-                                [creatureSelectedFromList].getName() , ButtonType.OK).show();
                 Image image = new Image("materials/image/soldOut.jpg",
                         100, 100, false, true);
-                if (creatureSelectedFromList != -1) {
-                    creatureListImage[creatureSelectedFromList].setDisable(true);
-                    creatureListImage[creatureSelectedFromList].setImage(image);
-                    Broom.getInstance().gainCreature(
-                            creatureList[creatureSelectedFromList]);
-                }
+                creatureListImage[0].setDisable(true);
+                creatureListImage[0].setImage(image);
+                Broom.getInstance().gainCreature(creatureList[0]);
                 creatureSelectedFromList = -1;
                 //updatePlayerInfo();
-                updateRobBuyNegotiateBtn();
+                updateInventory();
+                resultLabel.setText("Please don't hurt me! I'll give you anything you want!!!");
             }
-
+            priceLabel.setText("The item price: ");
+            btnBuy.setDisable(true);
+            btnExitOrIgnore.setDisable(false);
+            btnRob.setDisable(true);
+            btnNegotiate.setDisable(true);
+            for (ImageView g: creatureListImage) {
+                g.setDisable(true);
+            }
         });
 
     }
-    private void negotiate() {
 
+    private void negotiate() {
+        btnNegotiate.setOnMouseClicked(e -> {
+            Random random = new Random();
+            int point = random.nextInt(100);
+            if (Player.getInstance().getDifficulty().equalsIgnoreCase("easy")) {
+                if (point < 50 + Player.getInstance().getSkills()[2] * 2) {
+                    resultLabel.setText("Damn it.. Ok Now all items 50% off..");
+                    for(Creature g: creatureList) {
+                        g.setBasePrice(g.getBasePrice() / 2);
+                    }
+                } else {
+                    resultLabel.setText("Yo!! Now 2 X prices. You buy it or you leave now");
+                    for(Creature g: creatureList) {
+                        g.setBasePrice(g.getBasePrice() * 2);
+                    }
+                }
+            } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("medium")) {
+                if (point < 30 + Player.getInstance().getSkills()[2] * 2) {
+                    resultLabel.setText("Damn it.. Ok Now all items 50% off..");
+                    for(Creature g: creatureList) {
+                        g.setBasePrice(g.getBasePrice() / 2);
+                    }
+                } else {
+                    resultLabel.setText("Yo!! Now 2 X prices. You buy it or you leave now");
+                    for(Creature g: creatureList) {
+                        g.setBasePrice(g.getBasePrice() * 2);
+                    }
+                }
+            } else {
+                if (point < 10 + Player.getInstance().getSkills()[2] * 2) {
+                    resultLabel.setText("Damn it.. Ok Now all items 50% off..");
+                    for(Creature g: creatureList) {
+                        g.setBasePrice(g.getBasePrice() / 2);
+                    }
+                } else {
+                    resultLabel.setText("Yo!! Now 2 X prices. You buy it or you leave now");
+                    for(Creature g: creatureList) {
+                        g.setBasePrice(g.getBasePrice() * 2);
+                    }
+                }
+            }
+            priceLabel.setText("The item price: " + creatureList[creatureSelectedFromList].getFinalPrice());
+            btnBuy.setDisable(false);
+            btnNegotiate.setDisable(true);
+            btnExitOrIgnore.setDisable(false);
+            btnRob.setDisable(false);
+        });
     }
     private void exitOrIgnore() {
         btnExitOrIgnore.setOnMouseClicked(e -> {
             moveSubScene();
             RegionMapPage.getInstance().travelTo(targetRegion);
         });
-
-    }
-    private int creatureListImageClicked() {
-        return 0;
 
     }
 

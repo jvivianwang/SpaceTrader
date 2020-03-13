@@ -4,6 +4,8 @@ import component.Broom;
 import component.Player;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
@@ -38,6 +40,7 @@ public class RegionMapPage {
     private int currentSceneIndex;
 
     private Region regionSelected;
+    private int fuelCost;
 
     public static RegionMapPage getInstance() {
         if (single_instance == null) {
@@ -127,15 +130,27 @@ public class RegionMapPage {
             showSubScene(Player.getInstance().getCurrentRegion());
 
         });
+    }
 
-
+    private void calculateFuelCost() {
+        int distance =  (int) Math.sqrt(Math.pow(regionSelected.getLayoutX()
+                - Player.getInstance().getCurrentRegion().getLayoutX(), 2)
+                + Math.pow(regionSelected.getLayoutY()
+                - Player.getInstance().getCurrentRegion().getLayoutY(), 2));
+        fuelCost = (int) ((distance / 100) * (1 - 0.02 * Player.getInstance().getSkills()[0]));
     }
 
     private void travelAndMarketButtonFunction(RegionSubscene subscene) {
         subscene.getBtnTravel().setOnMouseClicked(event -> {
-            //Use NPCEncounterForUser() for game purpose
-            //Use NPCEncounterForTesting() for debug purpose
-            NPCEncounterForTesting(traderSubscene);
+            calculateFuelCost();
+            if (Broom.getInstance().getFuelCapacity() < fuelCost) {
+                new Alert(Alert.AlertType.NONE,
+                        "Ooops! You don't have enough fuel.", ButtonType.OK).show();
+            } else {
+                //Use NPCEncounterForUser() for game purpose
+                //Use NPCEncounterForTesting() for debug purpose
+                NPCEncounterForTesting(traderSubscene);
+            }
         });
         subscene.getBtnMarket().setOnMouseClicked(event -> {
             nextSceneToHide.moveSubScene();
@@ -237,6 +252,10 @@ public class RegionMapPage {
         Player.getInstance().getCurrentRegion().setRegionBackgroundToYellow();
         targetRegion.setRegionBackgroundToBlue();
         targetRegion.setDiscovered(true);
+        //Cost fuel to travel
+        //If the targetRegion is same as the currentRegion, it means the player flee back which still cost fuel
+        //So cost fuel anyway
+        Broom.getInstance().setFuelCapacity(Broom.getInstance().getFuelCapacity() - fuelCost);
         Player.getInstance().setCurrentRegion(targetRegion);
         //Set marketScene store info based on current region tech level before animation
         marketScene.updateMarket();
