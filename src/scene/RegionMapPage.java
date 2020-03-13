@@ -135,7 +135,7 @@ public class RegionMapPage {
         subscene.getBtnTravel().setOnMouseClicked(event -> {
             //Use NPCEncounterForUser() for game purpose
             //Use NPCEncounterForTesting() for debug purpose
-            NPCEncounterForTesting(traderSubscene);
+            NPCEncounterForTesting(banditSubscene);
         });
         subscene.getBtnMarket().setOnMouseClicked(event -> {
             nextSceneToHide.moveSubScene();
