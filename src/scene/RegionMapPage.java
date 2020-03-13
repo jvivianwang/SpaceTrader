@@ -3,6 +3,7 @@ package scene;
 import component.Broom;
 import component.Player;
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
@@ -128,40 +129,104 @@ public class RegionMapPage {
 
     private void travelAndMarketButtonFunction(RegionSubscene subscene) {
         subscene.getBtnTravel().setOnMouseClicked(event -> {
-            Random random = new Random();
-            int points = random.nextInt(100);
-            if (Player.getInstance().getDifficulty().equalsIgnoreCase("easy")) {
-                //Range 0~20 : meet bandit
-                if (points < 20) {
-                    banditSubscene.generateBanditInfo(regionSelected);
-                    banditSubscene.moveSubScene();
-                } else if (points < 40) {
-                    //Range 20~40 : meet police
-                    //If the player has no item in inventory then just change police to bandit:)
-                    if (Broom.getInstance().getInventory().size() == 0) {
-                        banditSubscene.generateBanditInfo(regionSelected);
-                        banditSubscene.moveSubScene();
-                    } else {
-                        policeSubscene.generatePoliceInfo(regionSelected);
-                        policeSubscene.moveSubScene();
-                    }
-                } else {
-                    //Range 40~100 : meet trader
-                    traderSubscene.generateTraderInfo();
-                    traderSubscene.moveSubScene();
-                }
-            }
-            //change to police subScene to test out police
-            //Change to NPC interaction
-            //Before implement random NPC interaction in order to work on your own NPC page you shall do like these:
-            //banditSubscene = new BanditSubscene();
-            //banditSubscene.moveSubScene();
+            //Use NPCEncounterForUser() for game purpose
+            //Use NPCEncounterForTesting() for debug purpose
+            NPCEncounterForTesting(policeSubscene);
         });
         subscene.getBtnMarket().setOnMouseClicked(event -> {
             nextSceneToHide.moveSubScene();
             nextSceneToHide = null;
+            marketScene.updatePlayerInfo();
+            marketScene.updateInventory();
             marketScene.moveSubScene();
         });
+    }
+
+    private void NPCEncounterForUser() {
+        Random random = new Random();
+        int points = random.nextInt(100);
+
+        //if (points < 50 + skill[0] * 2) {return true;}
+        //skill[0] = 0; 50%
+        //skill[0] = 5; 60%
+        //skill[0] = 3; 56%
+
+        if (Player.getInstance().getDifficulty().equalsIgnoreCase("easy")) {
+            //Range 0~20 : meet bandit
+            if (points < 20) {
+                banditSubscene.generateBanditInfo(regionSelected);
+                banditSubscene.moveSubScene();
+            } else if (points < 40) {
+                //Range 20~40 : meet police
+                //If the player has no item in inventory then just change police to bandit:)
+                if (Broom.getInstance().getInventory().size() == 0) {
+                    banditSubscene.generateBanditInfo(regionSelected);
+                    banditSubscene.moveSubScene();
+                } else {
+                    policeSubscene.generatePoliceInfo(regionSelected);
+                    policeSubscene.moveSubScene();
+                }
+            } else {
+                //Range 40~100 : meet trader
+                //traderSubscene.generateTraderInfo();
+                //traderSubscene.moveSubScene();
+            }
+        } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("medium")) {
+            //Range 0~30 : meet bandit
+            if (points < 30) {
+                banditSubscene.generateBanditInfo(regionSelected);
+                banditSubscene.moveSubScene();
+            } else if (points < 60) {
+                //Range 30~60 : meet police
+                //If the player has no item in inventory then just change police to bandit:)
+                if (Broom.getInstance().getInventory().size() == 0) {
+                    banditSubscene.generateBanditInfo(regionSelected);
+                    banditSubscene.moveSubScene();
+                } else {
+                    policeSubscene.generatePoliceInfo(regionSelected);
+                    policeSubscene.moveSubScene();
+                }
+            } else {
+                //Range 60~100 : meet trader
+                //traderSubscene.generateTraderInfo();
+                //traderSubscene.moveSubScene();
+            }
+        } else {
+            //Range 0~40 : meet bandit
+            if (points < 40) {
+                banditSubscene.generateBanditInfo(regionSelected);
+                banditSubscene.moveSubScene();
+            } else if (points < 80) {
+                //Range 40~80 : meet police
+                //If the player has no item in inventory then just change police to bandit:)
+                if (Broom.getInstance().getInventory().size() == 0) {
+                    banditSubscene.generateBanditInfo(regionSelected);
+                    banditSubscene.moveSubScene();
+                } else {
+                    policeSubscene.generatePoliceInfo(regionSelected);
+                    policeSubscene.moveSubScene();
+                }
+            } else {
+                //Range 60~100 : meet trader
+                //traderSubscene.generateTraderInfo();
+                //traderSubscene.moveSubScene();
+            }
+        }
+    }
+
+    private void NPCEncounterForTesting(BanditSubscene banditSubscene) {
+        banditSubscene.generateBanditInfo(regionSelected);
+        banditSubscene.moveSubScene();
+    }
+
+    private void NPCEncounterForTesting(TraderSubscene traderSubscene) {
+        //traderSubscene.generateBanditInfo(regionSelected);
+        //traderSubscene.moveSubScene();
+    }
+
+    private void NPCEncounterForTesting(PoliceSubscene policeSubscene) {
+        policeSubscene.generatePoliceInfo(regionSelected);
+        policeSubscene.moveSubScene();
     }
 
     public void travelTo(Region targetRegion) {
