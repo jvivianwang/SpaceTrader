@@ -132,6 +132,7 @@ public class RegionMapPage {
         subscene.getBtnTravel().setOnMouseClicked(event -> {
             banditSubscene.generateBanditInfo(regionSelected);
             banditSubscene.moveSubScene();
+            //change to police subScene to test out police
             //Change to NPC interaction
             //Before implement random NPC interaction in order to work on your own NPC page you shall do like these:
             //banditSubscene = new BanditSubscene();

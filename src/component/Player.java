@@ -19,7 +19,7 @@ public class Player {
     private Player() {
         skillPoints = 0;
         credits = 0;
-        skills = new int[]{0, 0, 0, 0};
+        skills = new int[]{0, 0, 0, 0}; //pilot,fighter,merchant,engineer
     }
 
     public String getDifficulty() {

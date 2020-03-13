@@ -1,9 +1,7 @@
 package materials;
 
 import component.Broom;
-import component.Equipment;
 import component.Player;
-import component.Region;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.SubScene;
@@ -16,27 +14,30 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 import scene.RegionMapPage;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
-
 public class PoliceSubscene extends SubScene {
     private static final String BACKGROUND_IMAGE = "materials/image/banditBackground.jpg";
     private static final String FONT_PATH = "src/materials/font/Cochin W01 Roman.ttf";
-    private boolean isHidden;
-    private YellowButton btnFF;
+
+    private Item[] demandItems;
+    private YellowButton btnForfeit;
     private YellowButton btnFlee;
     private YellowButton btnFight;
-    private YellowButton btnExit;
-    private Label banditDemandLabel;
-    private Label resultLabel;
+    private YellowButton btnConfirmResult;
 
-    private Region targetRegion;
-    private Item[] itemsDemand;
-    private ImageView[] itemsDemandImage;
+    private Label result;
+    private Label conversation;
 
+    private ImageView[] demandItemsView;
+
+    private boolean isHidden;
+
+    private Player player = Player.getInstance();
+    private Broom broom = Broom.getInstance();
+    private int[] skills = player.getSkills();
+
+    /**
+     * Creates a new police subscene
+     */
     public PoliceSubscene() {
         super(new AnchorPane(), 1600, 900);
         prefWidth(1600);
@@ -44,43 +45,20 @@ public class PoliceSubscene extends SubScene {
 
         isHidden = true;
 
+
         AnchorPane root2 = (AnchorPane) this.getRoot();
+
         setBackgroundImage(root2);
-        displayText(root2);
         createButton(root2);
 
         setLayoutX(0);
         setLayoutY(-900);
     }
 
-    public void generatePoliceInfo(Region regionSelected) {
-        this.targetRegion = regionSelected;
-        Item[] array = new Item[Broom.getInstance().getInventory().size()];
-        for (int i = 0; i < array.length; i++) {
-            array[i] = Broom.getInstance().getInventory().get(i);
-        }
-        List<Item> shuffleList = Arrays.asList(array);
-        //Shuffle the spots
-        Collections.shuffle(shuffleList);
-
-        itemsDemand = new Item[array.length / 2 + 1];
-        //Lose size / 2 + 1 items
-        for (int i = 0; i < array.length / 2 + 1; i++) {
-            itemsDemand[i] = array[i];
-        }
-        resetScene();
-    }
-
-    private void resetScene() {
-        btnExit.setDisable(true);
-        btnFF.setDisable(false);
-        btnFlee.setDisable(false);
-        btnFight.setDisable(false);
-        banditDemandLabel.setText("Well well well... wanna pass? Give me your illegal items: ");
-        //reassign Imageview[] to update the image
-        resultLabel.setText("");
-    }
-
+    /**
+     * Creates the background image for the page
+     * @param root Root to set background
+     */
     private void setBackgroundImage(AnchorPane root) {
         Image backgroundImage = new Image(BACKGROUND_IMAGE,
                 1600,
@@ -95,13 +73,48 @@ public class PoliceSubscene extends SubScene {
         root.setBackground(new Background(image));
     }
 
-    private void displayText(AnchorPane root) {
-        banditDemandLabel = displayLabel("", "", 700, 100);
-        resultLabel = displayLabel("", "", 700, 400);
-        //create Imageview[] to show the image and add to root.
-        root.getChildren().addAll(banditDemandLabel, resultLabel);
+    /**
+     * Creates buttons for player to interact with
+     * @param root Root to add buttons to
+     */
+    private void createButton(AnchorPane root) {
+        btnForfeit = new YellowButton("Forfeit");
+        btnForfeit.setLayoutX(800);
+        btnForfeit.setLayoutY(700);
+        btnForfeit.setDisable(true);
+        btnFlee = new YellowButton("Flee");
+        btnFlee.setLayoutX(400);
+        btnFlee.setLayoutY(700);
+        btnFlee.setDisable(true);
+        btnFight = new YellowButton("Fight");
+        btnFight.setLayoutX(600);
+        btnFight.setLayoutY(700);
+        btnFight.setDisable(true);
+        btnConfirmResult = new YellowButton("Confirm Result");
+        btnConfirmResult.setLayoutX(600);
+        btnConfirmResult.setLayoutY(700);
+        btnConfirmResult.setDisable(true);
+        root.getChildren().addAll(btnForfeit, btnFlee, btnFight, btnConfirmResult);
     }
 
+    /**
+     * Initalizes text for label
+     * @param root Root to add conversation and result to
+     */
+    private void displayText(AnchorPane root) {
+        conversation = displayLabel("", "", 700, 100);
+        result = displayLabel("", "", 700, 400);
+        root.getChildren().addAll(conversation, result);
+    }
+
+    /**
+     * I don't know what this does yet...comments incoming
+     * @param name
+     * @param info
+     * @param x
+     * @param y
+     * @return
+     */
     private Label displayLabel(String name, String info, double x, double y) {
         Label temp = new Label(name + "\n" + info);
         temp.setFont(new Font(23));
@@ -114,6 +127,76 @@ public class PoliceSubscene extends SubScene {
         return temp;
     }
 
+    /**
+     * Controls forfeit operations
+     * Player loses items and continued to desired destination
+     */
+    private void forfeit() {
+        btnForfeit.setOnMouseClicked(e -> {
+            broom.resetInventory();
+            result.setText("You lose the items in your inventory");
+            disableButtons();
+            moveSubScene();
+            RegionMapPage.getInstance();
+        });
+    }
+
+    /**
+     * Controls flee operations.
+     * Flee chance depends on pilot skill
+     */
+    private void flee() {
+        btnFlee.setOnMouseClicked(e -> {
+            int pilotSkill = skills[0];
+            double escapeChance = 1 - 0.09 * (pilotSkill);
+            boolean escape = escapeChance > 2; //possibly change this moving forward
+            fuelLoss(5);
+            if (escape) {
+                reduceBroomHealth(5);
+                loseCredits(5);
+                broom.resetInventory();
+                disableButtons();
+                result.setText("You got what you deserved. You leave with 5 less fuels, "
+                        + "credits and health");
+            }
+            moveSubScene();
+            RegionMapPage.getInstance();
+        });
+    }
+
+    /**
+     * Controls fight operation
+     * Computes escape chance based on fightskill
+     */
+    private void fight() {
+        btnFight.setOnMouseClicked(e -> {
+            int fightSkill = skills[1];
+            double escapeChance = 1 - 0.09 * (fightSkill);
+            boolean escape = escapeChance > 2; //possibly change this moving forward
+            String statement = escape ? "You fought the police and won" : "You fought the police"
+                    + "and lost";
+            result.setText(statement);
+            disableButtons();
+            moveSubScene();
+            RegionMapPage.getInstance();
+        });
+    }
+
+
+    /**
+     * Confirms result of the players actions.
+     */
+    private void confirmResult() {
+        btnConfirmResult.setOnMouseClicked(e -> {
+            moveSubScene();
+            RegionMapPage.getInstance();
+        });
+    }
+
+
+    /**
+     * Transitions subscene off main page
+     */
     public void moveSubScene() {
         TranslateTransition transition = new TranslateTransition();
         transition.setDuration(Duration.seconds(0.5));
@@ -129,62 +212,49 @@ public class PoliceSubscene extends SubScene {
         transition.play();
     }
 
-    private void forFeit() {
-        btnFF.setOnMouseClicked(e -> {
-            resultLabel.setText("forfeit result to be implemented");
-            btnExit.setDisable(false);
-            btnFF.setDisable(true);
-            btnFlee.setDisable(true);
-            btnFight.setDisable(true);
-        });
-    }
-    private void fight() {
-        btnFight.setOnMouseClicked(e -> {
-            resultLabel.setText("Fight result to be implemented");
-            btnExit.setDisable(false);
-            btnFF.setDisable(true);
-            btnFlee.setDisable(true);
-            btnFight.setDisable(true);
-        });
-    }
-    private void flee() {
-        btnFlee.setOnMouseClicked(e -> {
-            resultLabel.setText("Flee result to be implemented");
-            btnExit.setDisable(false);
-            btnFF.setDisable(true);
-            btnFlee.setDisable(true);
-            btnFight.setDisable(true);
-        });
-    }
-    private void exit() {
-        btnExit.setOnMouseClicked(e -> {
-            moveSubScene();
-            RegionMapPage.getInstance().travelTo(targetRegion);
-        });
+    /**
+     * Disable buttons at the end of a decision
+     */
+    private void disableButtons() {
+        btnFlee.setDisable(true);
+        btnFight.setDisable(true);
+        btnForfeit.setDisable(true);
     }
 
-    private void createButton(AnchorPane root) {
-        btnFF = new YellowButton("forFeit");
-        btnFF.setLayoutX(400);
-        btnFF.setLayoutY(700);
-        btnFF.setDisable(false);
-        btnFight = new YellowButton("Fight");
-        btnFight.setLayoutX(600);
-        btnFight.setLayoutY(700);
-        btnFight.setDisable(false);
-        btnFlee = new YellowButton("Flee");
-        btnFlee.setLayoutX(800);
-        btnFlee.setLayoutY(700);
-        btnFlee.setDisable(false);
-        btnExit = new YellowButton("Exit");
-        btnExit.setLayoutX(1000);
-        btnExit.setLayoutY(700);
-        btnExit.setDisable(true);
-        forFeit();
-        fight();
-        flee();
-        exit();
-        root.getChildren().addAll(btnExit, btnFF, btnFight, btnFlee);
+    /**
+     * Reduces fuel amount when the player flees or loses a fight
+     * Only reduces the fuel amount if the amount left in the tank is greater than amount you
+     * passed in
+     * @param amount amount of fuel to lose
+     */
+    private void fuelLoss(int amount) {
+        if (broom.getFuelCapacity() >= amount) {
+            broom.setFuelCapacity(broom.getFuelCapacity() - amount);
+        }
+    }
+
+    /**
+     * When police attack the broom, this method will reduce the broom health by a specified amount
+     * Only works if the current broom health is greater than the amount passed in
+     *
+     * @param amount amount of health to lose
+     */
+    private void reduceBroomHealth(int amount) {
+        if (broom.getHealth() >= amount) {
+            broom.setHealth(broom.getHealth() - amount);
+        }
+    }
+
+    /**
+     * When police attack you, you will be fine iff the amount passed in is greater than the
+     * amount of credits you currently have
+     *
+     * @param amount amount of credits to lose
+     */
+    private void loseCredits(int amount) {
+        if (player.getCredits() >= amount) {
+            player.setCredits(player.getCredits() - amount);
+        }
     }
 
 }
