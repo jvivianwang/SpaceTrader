@@ -59,7 +59,7 @@ public class Broom {
         return inventory;
     }
 
-    public void setHealth() {
+    public void setHealth(int health) {
         this.health = health;
     }
 
@@ -89,4 +89,10 @@ public class Broom {
     public void remove(int index) {
         inventory.remove(index);
     }
+
+    //resets broom inventory by creating an empty array list
+    public void resetInventory() {
+        inventory = new ArrayList<Item>();
+    }
 }
+

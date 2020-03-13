@@ -1,6 +1,8 @@
 package materials;
-
-import component.*;
+import component.Broom;
+import component.Creature;
+import component.Market;
+import component.Player;
 import component.Region;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
@@ -18,31 +20,25 @@ import scene.RegionMapPage;
 
 import java.util.Random;
 
+
 public class TraderSubscene extends SubScene {
+    private static final String BACKGROUND_IMAGE = "materials/image/banditBackground.jpg";
+    private static final String FONT_PATH = "src/materials/font/Cochin W01 Roman.ttf";
 
-    private static final String BACKGROUND_IMAGE = "materials/image/magicalBackground.png";
-
-    private static final int MAX_FIGHTER_SKILL_POINTS = 10;
+    private boolean isHidden;
 
     private Creature[] creatureList;
-
-    private YellowButton btnPay;
+    private YellowButton btnBuy;
     private YellowButton btnExitOrIgnore;
     private YellowButton btnRob;
     private YellowButton btnNegotiate;
-    private Creature[] tradeList;
-
     private Label result;
 
+    private int creatureSelectedFromList;
     private ImageView[] creatureListImage;
     private ImageView[] inventoryListImage;
 
-    private int creatureSelectedFromList;
-
-    private boolean isHidden;
-    private Label traderSubsceneLabel;
-
-
+    private Region targetRegion;
 
 
     public TraderSubscene() {
@@ -53,14 +49,13 @@ public class TraderSubscene extends SubScene {
         isHidden = true;
 
         creatureSelectedFromList = -1;
-
-        tradeList = new Creature[3];
+        creatureList = new Creature[3];
 
         AnchorPane root2 = (AnchorPane) this.getRoot();
         setTraderMarket(root2);
-
         setBackgroundImage(root2);
         setInventory(root2);
+
         createButton(root2);
 
         setLayoutX(0);
@@ -80,6 +75,7 @@ public class TraderSubscene extends SubScene {
                 null);
         root.setBackground(new Background(image));
     }
+
 
     private void setTraderMarket(AnchorPane root) {
         creatureListImage = new ImageView[3];
@@ -130,10 +126,10 @@ public class TraderSubscene extends SubScene {
         btnRob.setLayoutX(200);
         btnRob.setLayoutY(700);
         btnRob.setDisable(true);
-        btnPay = new YellowButton("Pay");
-        btnPay.setLayoutX(400);
-        btnPay.setLayoutY(700);
-        btnPay.setDisable(true);
+        btnBuy = new YellowButton("Buy");
+        btnBuy.setLayoutX(400);
+        btnBuy.setLayoutY(700);
+        btnBuy.setDisable(true);
         btnNegotiate = new YellowButton("Negotiate");
         btnNegotiate.setLayoutX(800);
         btnNegotiate.setLayoutY(700);
@@ -143,99 +139,22 @@ public class TraderSubscene extends SubScene {
         btnExitOrIgnore.setLayoutY(700);
 
         updateInventory();
-        transactionButtonFunction();
-        root.getChildren().addAll(btnRob, btnPay, btnNegotiate, btnExitOrIgnore);
+        buy();
+        rob();
+        exitOrIgnore();
+        negotiate();
+        root.getChildren().addAll(btnRob, btnBuy, btnNegotiate, btnExitOrIgnore);
     }
 
-    private void transactionButtonFunction() {
-        btnRob.setOnMouseClicked(e -> {
-            int skillPoints = 0;
-            int price = 0;
-            int random = new Random().nextInt(100);
-            if (creatureSelectedFromList != -1) {
-                //skillPoints = Player.getInstance().getSkillPoints() * Player.getInstance().getDifficulty();
-            }
-            if (Player.getInstance().getSkillPoints() < MAX_FIGHTER_SKILL_POINTS) {
-                new Alert(Alert.AlertType.NONE,
-                        "Ooops! You don't have enough fighter skill points.", ButtonType.OK).show();
-            } else if (Broom.getInstance().getInventory().size()
-                    >= Broom.getInstance().getCargoCapacity()) {
-                new Alert(Alert.AlertType.NONE,
-                        "Ooops! You don't enough space to carry the item.", ButtonType.OK).show();
-            } else {
-
-                new Alert(Alert.AlertType.NONE,
-                        "You just successfully robbed " + Market.getInstance().getShopList()
-                                [creatureSelectedFromList].getName() , ButtonType.OK).show();
-                Image image = new Image("materials/image/soldOut.jpg",
-                        100, 100, false, true);
-                if (creatureSelectedFromList != -1) {
-                    creatureListImage[creatureSelectedFromList].setDisable(true);
-                    creatureListImage[creatureSelectedFromList].setImage(image);
-                    Broom.getInstance().gainCreature(
-                            Market.getInstance().getShopList()[creatureSelectedFromList]);
-                }
-                creatureSelectedFromList = -1;
-                //updatePlayerInfo();
-                updateRobBuyNegotiateBtn();
-            }
-
-        });
-        btnPay.setOnMouseClicked(e -> {
-            //buy the item
-            int price = 0;
-            if (creatureSelectedFromList != -1) {
-                price = Market.getInstance().getShopList()
-                        [creatureSelectedFromList].getFinalPrice();
-            }
-            if (Player.getInstance().getCredits() < price) {
-                new Alert(Alert.AlertType.NONE,
-                        "Ooops! You don't have enough credits.", ButtonType.OK).show();
-            } else if (Broom.getInstance().getInventory().size()
-                    >= Broom.getInstance().getCargoCapacity()) {
-                new Alert(Alert.AlertType.NONE,
-                        "Ooops! You don't enough space to carry the item.", ButtonType.OK).show();
-            } else {
-
-                Player.getInstance().setCredits(Player.getInstance().getCredits() - price);
-                Image image = new Image("materials/image/soldOut.jpg",
-                        100, 100, false, true);
-                if (creatureSelectedFromList != -1) {
-                    creatureListImage[creatureSelectedFromList].setDisable(true);
-                    creatureListImage[creatureSelectedFromList].setImage(image);
-                    Broom.getInstance().gainCreature(
-                            Market.getInstance().getShopList()[creatureSelectedFromList]);
-                }
-                creatureSelectedFromList = -1;
-                //updatePlayerInfo();
-                updateRobBuyNegotiateBtn();
-                updateInventory();
-            }
-        });
-
-        btnNegotiate.setOnMouseClicked(e -> {
-
-        });
-
-        btnExitOrIgnore.setOnMouseClicked(e -> {
-            moveSubScene();
-            RegionMapPage.getInstance().showSubScene(Player.getInstance().getCurrentRegion());
-        });
-
-        btnExitOrIgnore.setOnMouseClicked(e -> {
-            moveSubScene();
-            RegionMapPage.getInstance().showSubScene(Player.getInstance().getCurrentRegion());
-        });
-    }
 
     private void updateRobBuyNegotiateBtn() {
         if (creatureSelectedFromList != -1 ) {
-            btnPay.setDisable(false);
+            btnBuy.setDisable(false);
             btnNegotiate.setDisable(false);
             btnRob.setDisable(false);
             btnExitOrIgnore.setDisable(true);
         } else {
-            btnPay.setDisable(true);
+            btnBuy.setDisable(true);
             btnNegotiate.setDisable(true);
             btnRob.setDisable(true);
             btnExitOrIgnore.setDisable(false);
@@ -260,29 +179,29 @@ public class TraderSubscene extends SubScene {
         transition.play();
     }
 
-    public void updateTraderList(){
+    public void updateCreatureList(){
         if (Player.getInstance().getCurrentRegion().getTechLevel() == 1) {
-            tradeList = new Creature[]{
+            creatureList = new Creature[]{
                     new Creature(0),
                     new Creature(6),
                     new Creature(3)
             };
         } else if (Player.getInstance().getCurrentRegion().getTechLevel() == 2 ||
                 Player.getInstance().getCurrentRegion().getTechLevel() == 3) {
-            tradeList = new Creature[] {
+            creatureList = new Creature[] {
                     new Creature(1),
                     new Creature(2),
                     new Creature(7)
             };
         } else if (Player.getInstance().getCurrentRegion().getTechLevel() == 4 ||
                 Player.getInstance().getCurrentRegion().getTechLevel() == 5) {
-            tradeList = new Creature[] {
+            creatureList = new Creature[] {
                     new Creature(2),
                     new Creature(4),
                     new Creature(5)
             };
         }else {
-            tradeList = new Creature[] {
+            creatureList = new Creature[] {
                     new Creature(1),
                     new Creature(3),
                     new Creature(6),
@@ -291,18 +210,24 @@ public class TraderSubscene extends SubScene {
     }
 
 
-    public void updateTraderMarket() {
-        updateTraderList();
+    public void generateTraderInfo(Region targetRegion) {
+        this.targetRegion = targetRegion;
+        creatureSelectedFromList = -1;
+        creatureList = new Creature[3];
+        updateCreatureList();
         updateInventory();
-        for (int i = 0; i < tradeList.length; i++) {
+        for (int i = 0; i < creatureList.length; i++) {
             Image image = new Image("materials/image/"
-                    + Market.getInstance().getShopList()[i].getName() + ".png",
+                    + creatureList[i].getName() + ".png",
                     100, 100, false, true);
             // Create the ImageView
             creatureListImage[i].setImage(image);
             creatureListImage[i].setDisable(false);
             selectFromTrader(creatureListImage[i], i);
         }
+        btnBuy.setDisable(true);
+        btnNegotiate.setDisable(false);
+        btnRob.setDisable(false);
     }
 
     public void updateInventory() {
@@ -321,8 +246,8 @@ public class TraderSubscene extends SubScene {
         }
     }
 
-    private Label displayLabel(String name, String info, double x, double y) {
-        Label temp = new Label(name + "\n" + info);
+    private Label displayLabel(String message, double x, double y) {
+        Label temp = new Label(message);
         temp.setFont(new Font(23));
         temp.setAlignment(Pos.CENTER_LEFT);
         temp.setPrefWidth(800);
@@ -332,4 +257,92 @@ public class TraderSubscene extends SubScene {
         temp.setTextFill(Color.web("#ffffff"));
         return temp;
     }
+
+    private void buy() {
+            btnBuy.setOnMouseClicked(e -> {
+                //buy the item
+                int price = 0;
+                if (creatureSelectedFromList != -1) {
+                    price = creatureList[creatureSelectedFromList].getFinalPrice();
+                }
+                if (Player.getInstance().getCredits() < price) {
+                    new Alert(Alert.AlertType.NONE,
+                            "Ooops! You don't have enough credits.", ButtonType.OK).show();
+                } else if (Broom.getInstance().getInventory().size()
+                        >= Broom.getInstance().getCargoCapacity()) {
+                    new Alert(Alert.AlertType.NONE,
+                            "Ooops! You don't enough space to carry the item.", ButtonType.OK).show();
+                } else {
+
+                    Player.getInstance().setCredits(Player.getInstance().getCredits() - price);
+                    Image image = new Image("materials/image/soldOut.jpg",
+                            100, 100, false, true);
+                    if (creatureSelectedFromList != -1) {
+                        creatureListImage[creatureSelectedFromList].setDisable(true);
+                        creatureListImage[creatureSelectedFromList].setImage(image);
+                        Broom.getInstance().gainCreature(
+                                creatureList[creatureSelectedFromList]);
+                    }
+                    creatureSelectedFromList = -1;
+                    //updatePlayerInfo();
+                    updateRobBuyNegotiateBtn();
+                    updateInventory();
+                }
+            });
+    }
+    private void rob() {
+        btnRob.setOnMouseClicked(e -> {
+            int skillPoints = 0;
+            int price = 0;
+            int random = new Random().nextInt(100);
+            if (creatureSelectedFromList != -1) {
+                //skillPoints = Player.getInstance().getSkillPoints() * Player.getInstance().getDifficulty();
+            }
+//            if (Player.getInstance().getSkillPoints() < MAX_FIGHTER_SKILL_POINTS) {
+//                new Alert(Alert.AlertType.NONE,
+//                        "Ooops! You don't have enough fighter skill points.", ButtonType.OK).show();
+//            } else
+                if (Broom.getInstance().getInventory().size()
+                    >= Broom.getInstance().getCargoCapacity()) {
+                new Alert(Alert.AlertType.NONE,
+                        "Ooops! You don't enough space to carry the item.", ButtonType.OK).show();
+            } else {
+
+                new Alert(Alert.AlertType.NONE,
+                        "You just successfully robbed " + creatureList
+                                [creatureSelectedFromList].getName() , ButtonType.OK).show();
+                Image image = new Image("materials/image/soldOut.jpg",
+                        100, 100, false, true);
+                if (creatureSelectedFromList != -1) {
+                    creatureListImage[creatureSelectedFromList].setDisable(true);
+                    creatureListImage[creatureSelectedFromList].setImage(image);
+                    Broom.getInstance().gainCreature(
+                            creatureList[creatureSelectedFromList]);
+                }
+                creatureSelectedFromList = -1;
+                //updatePlayerInfo();
+                updateRobBuyNegotiateBtn();
+            }
+
+        });
+
+    }
+    private void negotiate() {
+
+    }
+    private void exitOrIgnore() {
+        btnExitOrIgnore.setOnMouseClicked(e -> {
+            moveSubScene();
+            RegionMapPage.getInstance().travelTo(targetRegion);
+        });
+
+    }
+    private int creatureListImageClicked() {
+        return 0;
+
+    }
+
+
+
+
 }

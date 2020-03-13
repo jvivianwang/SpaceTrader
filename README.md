@@ -124,6 +124,25 @@ Vivian 3/11/20
 [What I've done]
 - update travel method in regionMapPage
 
+
+Jiawei 3/12/20
+[What I've done]
+- after Rylie created the rough structure of three NPCsubscene, I connect the subscene to the regionMapPage.
+- fixed some functionality and all the methods should be able to be reused
+
+Princeton 3/12/20
+[What I've done]
+- Added buttons and functionality for police subscene
+- Haven't tested it yet
+
+Jiawei 3/13/20
+[What I've done]
+- interaction encounting NPC
+
 Vivian 3/13/20
 [What I've done]
 - enable buy function in TraderSubscene
+
+Vivian 3/13/20
+[What I've done]
+- fixed merge conflict
