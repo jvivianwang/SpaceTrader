@@ -15,12 +15,15 @@ public class Player {
     private Equipment equipedItem;
 
 
+
     private Player() {
         skillPoints = 0;
         credits = 0;
         skills = new int[]{0, 0, 0, 0, };
         numberOfBroom = 0;
     }
+
+
 
     public int getSkillPoints() {
         return skillPoints;
@@ -95,6 +98,4 @@ public class Player {
             skills[equipedItem.getIndex()] += equipedItem.calculateSkills();
         }
     }
-
-
 }

@@ -16,8 +16,6 @@ import java.io.FileNotFoundException;
 //Commented out unused import for now
 //import javafx.scene.text.Text;
 
-
-
 public class PlayerSheetPage {
 
     private final String fontPath = "src/materials/font/Cochin W01 Roman.ttf";
@@ -128,4 +126,6 @@ public class PlayerSheetPage {
             myLabel.setFont(Font.font("Verdana", 23));
         }
     }
+
+
 }

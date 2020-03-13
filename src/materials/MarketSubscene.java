@@ -33,7 +33,7 @@ public class MarketSubscene extends SubScene {
     private ImageView[] shopEquipmentListImage;
     private ImageView equipmentImage;
 
-    //Index should be from 0 to 4 since only five creature from the list
+    // Index should be from 0 to 4 since only five creature from the list
     private int creatureIndexSelectedFromStore;
     private int indexSelectedFromBroom;
     private int equipmentIndexSelectedFromStore;
@@ -468,6 +468,7 @@ public class MarketSubscene extends SubScene {
                 new Alert(Alert.AlertType.NONE,
                         "Ooops! You don't enough space to carry the item.", ButtonType.OK).show();
             } else {
+
                 Player.getInstance().setCredits(Player.getInstance().getCredits() - price);
                 Image image = new Image("materials/image/soldOut.jpg",
                         100, 100, false, true);
@@ -524,5 +525,4 @@ public class MarketSubscene extends SubScene {
     public YellowButton getBtnExit() {
         return btnExit;
     }
-
 }

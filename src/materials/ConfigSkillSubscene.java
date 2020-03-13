@@ -1,5 +1,6 @@
 package materials;
 
+import component.Player;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;

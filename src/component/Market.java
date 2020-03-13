@@ -18,6 +18,7 @@ import java.util.List;
 public class Market {
     private static Market single_instance = null;
     private Creature[] shopList;
+    private Creature[] tradeList;
     private Equipment[] equipmentList;
 
     private Market() {
@@ -27,6 +28,9 @@ public class Market {
 
     public Creature[] getShopList() {
         return shopList;
+    }
+    public Creature[] getTradeList() {
+        return tradeList;
     }
 
     public Equipment[] getEquipmentList() {

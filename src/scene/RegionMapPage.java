@@ -8,6 +8,7 @@ import javafx.scene.layout.*;
 import component.Region;
 import materials.MarketSubscene;
 import materials.RegionSubscene;
+import materials.TraderSubscene;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,12 +25,15 @@ public class RegionMapPage {
 
     private ArrayList<Region> regionList;
 
+
     //Trick for the animation of subscene
     private RegionSubscene subscene1;
     private RegionSubscene subscene2;
     private RegionSubscene nextSceneToHide;
 
     private MarketSubscene marketScene;
+
+    private TraderSubscene traderSubscene;
 
     private int currentSceneIndex;
 
@@ -117,12 +121,13 @@ public class RegionMapPage {
 
         travelAndMarketButtonFunction(subscene1);
         travelAndMarketButtonFunction(subscene2);
-
         marketScene.getBtnExit().setOnMouseClicked(e -> {
             marketScene.moveSubScene();
             showSubScene(Player.getInstance().getCurrentRegion());
 
         });
+
+
     }
 
     private void travelAndMarketButtonFunction(RegionSubscene subscene) {
@@ -131,6 +136,14 @@ public class RegionMapPage {
             //Change to NPC interaction (del travelTo() in line 130)
             //banditSubscene = new BanditSubscene(100);
             //banditSubscene.moveSubScene();
+
+            traderSubscene = new TraderSubscene();
+            traderSubscene.moveSubScene();
+            traderSubscene.updateTraderMarket();
+
+
+
+            mainPane.getChildren().add(traderSubscene);
         });
         subscene.getBtnMarket().setOnMouseClicked(event -> {
             nextSceneToHide.moveSubScene();
@@ -150,8 +163,8 @@ public class RegionMapPage {
         showSubScene(targetRegion);
     }
 
-
-    private void showSubScene(Region targetRegion) {
+    //changed to public from private
+    public void showSubScene(Region targetRegion) {
         if (nextSceneToHide != null) {
             nextSceneToHide.moveSubScene();
         }

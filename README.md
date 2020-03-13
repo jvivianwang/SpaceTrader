@@ -123,3 +123,7 @@ Jiawei 3/9/20
 Vivian 3/11/20
 [What I've done]
 - update travel method in regionMapPage
+
+Vivian 3/13/20
+[What I've done]
+- enable buy function in TraderSubscene
