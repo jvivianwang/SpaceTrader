@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Random;
 
 public class PoliceSubscene extends SubScene {
-    private static final String BACKGROUND_IMAGE = "materials/image/banditBackground.jpg";
+    private static final String BACKGROUND_IMAGE = "materials/image/banditBackground2.jpg";
     private static final String FONT_PATH = "src/materials/font/Cochin W01 Roman.ttf";
 
     private YellowButton btnForfeit;
@@ -79,7 +79,8 @@ public class PoliceSubscene extends SubScene {
     }
 
     /**
-     * Before you travel to the selectedRegion, if you encounter police, the police will ask random items in your broom
+     * Before you travel to the selectedRegion, if you encounter police,
+     * the police will ask random items in your broom
      * @param regionSelected the region you are about to travel to
      */
     public void generatePoliceInfo(Region regionSelected) {
@@ -189,7 +190,8 @@ public class PoliceSubscene extends SubScene {
         healthResultLabel = displayLabel("", 100, 500);
         creditsResultLabel = displayLabel("", 100, 550);
         fuelResultLabel = displayLabel("", 100, 600);
-        root.getChildren().addAll(PoliceDemandLabel, resultLabel, healthResultLabel, creditsResultLabel,
+        root.getChildren().addAll(PoliceDemandLabel, resultLabel,
+                healthResultLabel, creditsResultLabel,
                 fuelResultLabel);
     }
 
@@ -268,9 +270,12 @@ public class PoliceSubscene extends SubScene {
             targetRegion = Player.getInstance().getCurrentRegion();
             //Enable exit button
             disableButtons();
-            creditsResultLabel.setText("Now your credits are: " + Player.getInstance().getCredits());
-            healthResultLabel.setText("Your broom health: " + Broom.getInstance().getHealth());
-            fuelResultLabel.setText("Your broom fuel: " + Broom.getInstance().getFuelCapacity());
+            creditsResultLabel.setText("Now your credits are: "
+                    + Player.getInstance().getCredits());
+            healthResultLabel.setText("Your broom health: "
+                    + Broom.getInstance().getHealth());
+            fuelResultLabel.setText("Your broom fuel: "
+                    + Broom.getInstance().getFuelCapacity());
         });
     }
 
@@ -278,9 +283,11 @@ public class PoliceSubscene extends SubScene {
      * [M6_Fight_SP_Option 3/13/20]
      *  Fighter skill affects likelihood of success of fighting space-police
      * [M6_Fight_SP_Option 3/13/20]
-     *  Successful fighting: Player should keep all inventory items and continue to intended destination
-     * ----------------------------------------------------------------------------------------------------
-     * Assumption: Unsuccessful fighting: Player lose all credits, and have ship health lowered.
+     *  Successful fighting: Player should keep all inventory
+     *  items and continue to intended destination
+     * ---------------------------------------------------------------------
+     * Assumption: Unsuccessful fighting: Player lose all credits,
+     * and have ship health lowered.
      */
     private void fight() {
         btnFight.setOnMouseClicked(e -> {
@@ -307,8 +314,10 @@ public class PoliceSubscene extends SubScene {
             }
             //Enable exit button
             disableButtons();
-            creditsResultLabel.setText("Now your credits are: " + Player.getInstance().getCredits());
-            healthResultLabel.setText("Your broom health: " + Broom.getInstance().getHealth());
+            creditsResultLabel.setText("Now your credits are: "
+                    + Player.getInstance().getCredits());
+            healthResultLabel.setText("Your broom health: "
+                    + Broom.getInstance().getHealth());
             fuelResultLabel.setText("Your broom fuel: " + Broom.getInstance().getFuelCapacity());
         });
     }

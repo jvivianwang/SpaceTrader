@@ -21,7 +21,7 @@ import java.util.Random;
 
 
 public class BanditSubscene extends SubScene {
-    private static final String BACKGROUND_IMAGE = "materials/image/banditBackground.jpg";
+    private static final String BACKGROUND_IMAGE = "materials/image/banditBackground2.jpg";
     private boolean isHidden;
     private YellowButton btnPay;
     private YellowButton btnFlee;
@@ -81,7 +81,8 @@ public class BanditSubscene extends SubScene {
         btnContinueNoPay.setDisable(true);
         btnFlee.setDisable(false);
         btnFight.setDisable(false);
-        banditDemandLabel.setText("Well well well... wanna pass? Give me your money: " +  demandCredits);
+        banditDemandLabel.setText("Well well well... wanna pass? Give me your money: "
+                +  demandCredits);
         broomHealth.setText("Your broom health: " + Broom.getInstance().getHealth());
         broomFuel.setText("Your broom fuel: " + Broom.getInstance().getFuelCapacity());
         resultLabel.setText("");
@@ -112,12 +113,13 @@ public class BanditSubscene extends SubScene {
      */
     private void displayText(AnchorPane root) {
         banditDemandLabel = displayLabel("", 400, 100);
-        creditLabel = displayLabel("", 400,200);
+        creditLabel = displayLabel("", 400, 200);
         broomHealth = displayLabel("", 400, 300);
         broomFuel = displayLabel("", 400, 400);
         resultLabel = displayLabel("", 400, 500);
 
-        root.getChildren().addAll(banditDemandLabel, creditLabel, broomFuel, broomHealth, resultLabel);
+        root.getChildren().addAll(banditDemandLabel, creditLabel,
+                broomFuel, broomHealth, resultLabel);
     }
 
     /**
@@ -140,7 +142,8 @@ public class BanditSubscene extends SubScene {
     }
 
     /**
-     * Move the subscene up and down with its own algorithm which determines moving up or moving down
+     * Move the subscene up and down with its own algorithm
+     * which determines moving up or moving down
      */
     public void moveSubScene() {
         TranslateTransition transition = new TranslateTransition();
@@ -159,7 +162,8 @@ public class BanditSubscene extends SubScene {
 
     /**
      * [M6_Pay_Bandit_Option 3/13/20]
-     *  When paying bandit, player should lose the specified number of credits and continue to intended destination
+     *  When paying bandit, player should lose the
+     *  specified number of credits and continue to intended destination
      */
     private void pay() {
         btnPay.setOnMouseClicked(e -> {
@@ -172,7 +176,8 @@ public class BanditSubscene extends SubScene {
             } else {
                 //Paid
                 Player.getInstance().setCredits(Player.getInstance().getCredits() - demandCredits);
-                resultLabel.setText(String.format("Successful payment! You current credit balance is: %d",
+                resultLabel.setText(String.format("Successful payment! "
+                                + "You current credit balance is: %d",
                         Player.getInstance().getCredits()));
                 //Enable exit button
                 disableButtons();
@@ -185,7 +190,8 @@ public class BanditSubscene extends SubScene {
 
     /**
      * [M6_Pay_Bandit_Option 3/12/20]
-     *  If player can’t afford Bandit demands but chooses not to flee or fight, then player loses entire inventory,
+     *  If player can’t afford Bandit demands but chooses not to flee or
+     *  fight, then player loses entire inventory,
      *  cargo space updated, then continues to intended destination
      * [M6_Pay_Bandit_Option 3/12/20]
      *  If player can’t afford the demand and has no items (and chooses not to flee or fight),
@@ -224,9 +230,11 @@ public class BanditSubscene extends SubScene {
      * [M6_Fight_Bandit_Option 3/13/20]
      *  Fighter skill affects likelihood of success of fighting bandit
      * [M6_Fight_Bandit_Option 3/13/20]
-     *  Successful fighting: Player granted additional credits and continues traveling to intended destination
+     *  Successful fighting: Player granted additional credits and
+     *  continues traveling to intended destination
      * [M6_Fight_Bandit_Option 3/13/20]
-     *  Unsuccessful fighting: Player should lose all credits and ship’s health should be lowered
+     *  Unsuccessful fighting: Player should lose all credits and
+     *  ship’s health should be lowered
      */
     private void fight() {
         btnFight.setOnMouseClicked(e -> {

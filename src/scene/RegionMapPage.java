@@ -3,7 +3,6 @@ package scene;
 import component.Broom;
 import component.Player;
 import javafx.scene.Scene;
-import javafx.scene.SubScene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
@@ -256,7 +255,8 @@ public class RegionMapPage {
         targetRegion.setRegionBackgroundToBlue();
         targetRegion.setDiscovered(true);
         //Cost fuel to travel
-        //If the targetRegion is same as the currentRegion, it means the player flee back which still cost fuel
+        //If the targetRegion is same as the currentRegion,
+        // it means the player flee back which still cost fuel
         //So cost fuel anyway
         Broom.getInstance().setFuelCapacity(Broom.getInstance().getFuelCapacity() - fuelCost);
         Player.getInstance().setCurrentRegion(targetRegion);

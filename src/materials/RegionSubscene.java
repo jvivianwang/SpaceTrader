@@ -79,7 +79,8 @@ public class RegionSubscene extends SubScene {
         coordinate = displayLabel("Coordinate", coordinateInfo, 20, 450);
         fuelRemain = displayLabel("Fuel Remain", fuelRemainInfo, 20, 550);
 
-        root.getChildren().addAll(regionName, techLevel, description, distance, coordinate, fuelRemain);
+        root.getChildren().addAll(regionName, techLevel,
+                description, distance, coordinate, fuelRemain);
     }
 
     public void setDisplayInfo(Region regionSelect) {

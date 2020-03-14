@@ -22,7 +22,7 @@ import java.util.Random;
 
 
 public class TraderSubscene extends SubScene {
-    private static final String BACKGROUND_IMAGE = "materials/image/banditBackground.jpg";
+    private static final String BACKGROUND_IMAGE = "materials/image/banditBackground2.jpg";
 
     private boolean isHidden;
 
@@ -94,7 +94,7 @@ public class TraderSubscene extends SubScene {
             creatureListImage[i] = new ImageView(new Image("materials/image/empty.png",
                     100, 100, false, true));
             creatureListImage[i].setLayoutX(100 + 200 * i);
-            creatureListImage[i].setLayoutY(75 );
+            creatureListImage[i].setLayoutY(75);
             root.getChildren().add(creatureListImage[i]);
         }
     }
@@ -126,14 +126,16 @@ public class TraderSubscene extends SubScene {
     }
 
     /**
-     * Every time we click the image we store the index of the image so that we can easily access it later
+     * Every time we click the image we store the index of the image
+     * so that we can easily access it later
      * @param creatureImage The image shown in the store
      * @param creatureIndexFromList The index of the image
      */
     private void selectFromTrader(ImageView creatureImage, int creatureIndexFromList) {
         creatureImage.setOnMouseClicked(e -> {
             creatureSelectedFromList = creatureIndexFromList;
-            priceLabel.setText("The item price: " + creatureList[creatureIndexFromList].getFinalPrice());
+            priceLabel.setText("The item price: "
+                    + creatureList[creatureIndexFromList].getFinalPrice());
             btnBuy.setDisable(false);
         });
     }
@@ -169,7 +171,8 @@ public class TraderSubscene extends SubScene {
     }
 
     /**
-     * Move the subscene up and down with its own algorithm which determines moving up or moving down
+     * Move the subscene up and down with its own
+     * algorithm which determines moving up or moving down
      */
     public void moveSubScene() {
         TranslateTransition transition = new TranslateTransition();
@@ -191,32 +194,33 @@ public class TraderSubscene extends SubScene {
     /**
      * Update/refresh the shopList
      */
-    public void updateCreatureList(){
+    public void updateCreatureList() {
         if (Player.getInstance().getCurrentRegion().getTechLevel() == 1) {
-            creatureList = new Creature[]{
-                    new Creature(0),
-                    new Creature(6),
-                    new Creature(3)
+            creatureList =
+            new Creature[]{
+                new Creature(0),
+                new Creature(6),
+                new Creature(3)
             };
-        } else if (Player.getInstance().getCurrentRegion().getTechLevel() == 2 ||
-                Player.getInstance().getCurrentRegion().getTechLevel() == 3) {
+        } else if (Player.getInstance().getCurrentRegion().getTechLevel() == 2
+                || Player.getInstance().getCurrentRegion().getTechLevel() == 3) {
             creatureList = new Creature[] {
-                    new Creature(1),
-                    new Creature(2),
-                    new Creature(7)
+                new Creature(1),
+                new Creature(2),
+                new Creature(7)
             };
-        } else if (Player.getInstance().getCurrentRegion().getTechLevel() == 4 ||
-                Player.getInstance().getCurrentRegion().getTechLevel() == 5) {
+        } else if (Player.getInstance().getCurrentRegion().getTechLevel() == 4
+                || Player.getInstance().getCurrentRegion().getTechLevel() == 5) {
             creatureList = new Creature[] {
-                    new Creature(2),
-                    new Creature(4),
-                    new Creature(5)
+                new Creature(2),
+                new Creature(4),
+                new Creature(5)
             };
-        }else {
+        } else {
             creatureList = new Creature[] {
-                    new Creature(1),
-                    new Creature(3),
-                    new Creature(6),
+                new Creature(1),
+                new Creature(3),
+                new Creature(6),
             };
         }
     }
@@ -336,7 +340,8 @@ public class TraderSubscene extends SubScene {
                     btnNegotiate.setDisable(true);
                 }
                 updateInventory();
-                creditLabel.setText("Your current credits left: " + Player.getInstance().getCredits());
+                creditLabel.setText("Your current credits left: "
+                        + Player.getInstance().getCredits());
                 priceLabel.setText("The item price: ");
                 resultLabel.setText("You bought a creature");
             }
@@ -357,7 +362,7 @@ public class TraderSubscene extends SubScene {
             int random = new Random().nextInt(100);
             //Unsuccessful robbing
             if (Player.getInstance().getDifficulty().equalsIgnoreCase("easy")) {
-                if (random > 50 + Player.getInstance().getSkills()[1] * 2){
+                if (random > 50 + Player.getInstance().getSkills()[1] * 2) {
                     resultLabel.setText("Get outta here now!!!");
                     if (Broom.getInstance().getHealth() <= 50) {
                         new Alert(Alert.AlertType.NONE,
@@ -370,7 +375,7 @@ public class TraderSubscene extends SubScene {
                 }
 
             } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("medium")) {
-                if (random > 30 + Player.getInstance().getSkills()[1] * 2){
+                if (random > 30 + Player.getInstance().getSkills()[1] * 2) {
                     resultLabel.setText("Get outta here now!!!");
                     if (Broom.getInstance().getHealth() <= 100) {
                         new Alert(Alert.AlertType.NONE,
@@ -383,7 +388,7 @@ public class TraderSubscene extends SubScene {
                 }
 
             } else {
-                if (random > 10 + Player.getInstance().getSkills()[2] * 2){
+                if (random > 10 + Player.getInstance().getSkills()[2] * 2) {
                     resultLabel.setText("Get outta here now!!!");
                     if (Broom.getInstance().getHealth() <= 150) {
                         new Alert(Alert.AlertType.NONE,
@@ -441,13 +446,13 @@ public class TraderSubscene extends SubScene {
                 //Successful negotiation
                 if (point < 50 + Player.getInstance().getSkills()[2] * 2) {
                     resultLabel.setText("Damn it.. Ok Now all items 50% off..");
-                    for(Creature g: creatureList) {
+                    for (Creature g: creatureList) {
                         g.setBasePrice(g.getBasePrice() / 2);
                     }
                 } else {
                     //Unsuccessful negotiation
                     resultLabel.setText("Yo!! Now 2 X prices. You buy it or you leave now");
-                    for(Creature g: creatureList) {
+                    for (Creature g: creatureList) {
                         g.setBasePrice(g.getBasePrice() * 2);
                     }
                 }
@@ -455,13 +460,13 @@ public class TraderSubscene extends SubScene {
                 //Successful negotiation
                 if (point < 30 + Player.getInstance().getSkills()[2] * 2) {
                     resultLabel.setText("Damn it.. Ok Now all items 50% off..");
-                    for(Creature g: creatureList) {
+                    for (Creature g: creatureList) {
                         g.setBasePrice(g.getBasePrice() / 2);
                     }
                 } else {
                     //Unsuccessful negotiation
                     resultLabel.setText("Yo!! Now 2 X prices. You buy it or you leave now");
-                    for(Creature g: creatureList) {
+                    for (Creature g: creatureList) {
                         g.setBasePrice(g.getBasePrice() * 2);
                     }
                 }
@@ -469,18 +474,19 @@ public class TraderSubscene extends SubScene {
                 //Successful negotiation
                 if (point < 10 + Player.getInstance().getSkills()[2] * 2) {
                     resultLabel.setText("Damn it.. Ok Now all items 50% off..");
-                    for(Creature g: creatureList) {
+                    for (Creature g: creatureList) {
                         g.setBasePrice(g.getBasePrice() / 2);
                     }
                 } else {
                     //Unsuccessful negotiation
                     resultLabel.setText("Yo!! Now 2 X prices. You buy it or you leave now");
-                    for(Creature g: creatureList) {
+                    for (Creature g: creatureList) {
                         g.setBasePrice(g.getBasePrice() * 2);
                     }
                 }
             }
-            priceLabel.setText("The item price: " + creatureList[creatureSelectedFromList].getFinalPrice());
+            priceLabel.setText("The item price: "
+                    + creatureList[creatureSelectedFromList].getFinalPrice());
             btnBuy.setDisable(true);
             btnExitOrIgnore.setDisable(false);
             btnRob.setDisable(false);
