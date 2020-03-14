@@ -37,6 +37,7 @@ public class TraderSubscene extends SubScene {
     private Label resultLabel;
 
     private int creatureSelectedFromList;
+    private int creatureOnSaleLeft;
     private ImageView[] creatureListImage;
     private ImageView[] inventoryListImage;
 
@@ -235,6 +236,7 @@ public class TraderSubscene extends SubScene {
         this.targetRegion = targetRegion;
         creatureSelectedFromList = -1;
         creatureList = new Creature[3];
+        creatureOnSaleLeft = 3;
         updateCreatureList();
         updateInventory();
         for (int i = 0; i < creatureList.length; i++) {
@@ -326,6 +328,7 @@ public class TraderSubscene extends SubScene {
                 if (creatureSelectedFromList != -1) {
                     creatureListImage[creatureSelectedFromList].setDisable(true);
                     creatureListImage[creatureSelectedFromList].setImage(image);
+                    creatureOnSaleLeft--;
                     Broom.getInstance().gainCreature(
                             creatureList[creatureSelectedFromList]);
                 }
@@ -333,7 +336,7 @@ public class TraderSubscene extends SubScene {
                 //updatePlayerInfo();
                 btnBuy.setDisable(true);
                 btnExitOrIgnore.setDisable(false);
-                if (creatureList.length > 0) {
+                if (creatureOnSaleLeft > 0) {
                     btnRob.setDisable(false);
                 } else {
                     btnRob.setDisable(true);
@@ -485,8 +488,12 @@ public class TraderSubscene extends SubScene {
                     }
                 }
             }
-            priceLabel.setText("The item price: "
-                    + creatureList[creatureSelectedFromList].getFinalPrice());
+            if (creatureSelectedFromList != -1) {
+                priceLabel.setText("The item price: "
+                        + creatureList[creatureSelectedFromList].getFinalPrice());
+            } else {
+                priceLabel.setText("The item price: ");
+            }
             btnBuy.setDisable(true);
             btnExitOrIgnore.setDisable(false);
             btnRob.setDisable(false);
