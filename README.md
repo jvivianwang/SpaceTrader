@@ -150,3 +150,7 @@ Vivian 3/13/20
 Vivian 3/13/20
 [What I've done]
 - implement police sub scene
+
+Jiawei 3/13/20
+[What I've done]
+- Organize and fix the rest M6 implementation

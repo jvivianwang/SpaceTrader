@@ -1,5 +1,6 @@
 package materials;
 
+import component.Broom;
 import component.Player;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
@@ -23,12 +24,14 @@ public class RegionSubscene extends SubScene {
     private Label description;
     private Label distance;
     private Label coordinate;
+    private Label fuelRemain;
 
     private String regionNameInfo;
     private String techLevelInfo;
     private String descriptionInfo;
     private String distanceInfo;
     private String coordinateInfo;
+    private String fuelRemainInfo;
 
     private YellowButton btnTravel;
     private YellowButton btnMarket;
@@ -67,14 +70,16 @@ public class RegionSubscene extends SubScene {
         descriptionInfo = "UNKNOWN";
         distanceInfo = "UNKNOWN";
         coordinateInfo = "UNKNOWN";
+        fuelRemainInfo = "UNKNOWN";
 
-        regionName = displayLabel("Region Name", regionNameInfo, 20, 100);
-        techLevel = displayLabel("Tech Level", techLevelInfo, 20, 200);
-        description = displayLabel("Description", descriptionInfo, 20, 300);
-        distance = displayLabel("Distance", distanceInfo, 20, 400);
-        coordinate = displayLabel("Coordinate", coordinateInfo, 20, 500);
+        regionName = displayLabel("Region Name", regionNameInfo, 20, 50);
+        techLevel = displayLabel("Tech Level", techLevelInfo, 20, 150);
+        description = displayLabel("Description", descriptionInfo, 20, 250);
+        distance = displayLabel("Distance", distanceInfo, 20, 350);
+        coordinate = displayLabel("Coordinate", coordinateInfo, 20, 450);
+        fuelRemain = displayLabel("Fuel Remain", fuelRemainInfo, 20, 550);
 
-        root.getChildren().addAll(regionName, techLevel, description, distance, coordinate);
+        root.getChildren().addAll(regionName, techLevel, description, distance, coordinate, fuelRemain);
     }
 
     public void setDisplayInfo(Region regionSelect) {
@@ -82,6 +87,7 @@ public class RegionSubscene extends SubScene {
         coordinateInfo = regionSelect.getCoordinate();
         distanceInfo = calculateDistance(Player.getInstance().getCurrentRegion(), regionSelect)
                 + "";
+        fuelRemainInfo = Broom.getInstance().getFuelCapacity() + "";
         if (regionSelect.isDiscovered()) {
             techLevelInfo = regionSelect.getTechLevel() + "";
             descriptionInfo = regionSelect.getDescription();
@@ -99,6 +105,8 @@ public class RegionSubscene extends SubScene {
         distance.setTextFill(Color.web("#ffffff"));
         coordinate.setText("Coordinate: " + "\n" + coordinateInfo);
         coordinate.setTextFill(Color.web("#ffffff"));
+        fuelRemain.setText("Fuel Remain: " + "\n" + fuelRemainInfo);
+        fuelRemain.setTextFill(Color.web("#ffffff"));
 
     }
 
@@ -106,9 +114,9 @@ public class RegionSubscene extends SubScene {
         btnTravel = new YellowButton("Travel");
         btnMarket = new YellowButton("Market");
         btnTravel.setLayoutX(80);
-        btnTravel.setLayoutY(600);
+        btnTravel.setLayoutY(650);
         btnMarket.setLayoutX(80);
-        btnMarket.setLayoutY(700);
+        btnMarket.setLayoutY(750);
 
         root.getChildren().add(btnTravel);
         root.getChildren().add(btnMarket);

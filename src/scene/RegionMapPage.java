@@ -149,7 +149,7 @@ public class RegionMapPage {
             } else {
                 //Use NPCEncounterForUser() for game purpose
                 //Use NPCEncounterForTesting() for debug purpose
-                NPCEncounterForTesting(policeSubscene);
+                NPCEncounterForUser();
             }
         });
         subscene.getBtnMarket().setOnMouseClicked(event -> {
@@ -161,14 +161,17 @@ public class RegionMapPage {
         });
     }
 
+    /**
+     * [M6_General_Encounters 3/13/20]
+     * NPC encounters occur during travel, interrupting travel between regions
+     * [M6_Bandit_Encounters 3/13/20]
+     * Game difficulty increases bandit encounters
+     * [M6_Space_Police_Encounter 3/13/20]
+     * Game difficulty increases space-police encounters
+     */
     private void NPCEncounterForUser() {
         Random random = new Random();
         int points = random.nextInt(100);
-
-        //if (points < 50 + skill[0] * 2) {return true;}
-        //skill[0] = 0; 50%
-        //skill[0] = 5; 60%
-        //skill[0] = 3; 56%
 
         if (Player.getInstance().getDifficulty().equalsIgnoreCase("easy")) {
             //Range 0~20 : meet bandit

@@ -4,8 +4,11 @@ import component.Broom;
 import component.Player;
 import component.Region;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.SubScene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,14 +40,8 @@ public class PoliceSubscene extends SubScene {
 
     private Item[] demandItems;
     private ImageView[] demandItemsView;
-
     private boolean isHidden;
-
     private Region targetRegion;
-
-    private Player player = Player.getInstance();
-    private Broom broom = Broom.getInstance();
-    private int[] skills = player.getSkills();
 
     /**
      * Creates a new police subscene
@@ -65,6 +62,10 @@ public class PoliceSubscene extends SubScene {
         setLayoutY(-900);
     }
 
+    /**
+     * set list images to empty.png in the current root
+     * @param root the root we update the demandList Image
+     */
     private void setDemandMarket(AnchorPane root) {
         demandItemsView = new ImageView[3];
         for (int i = 0; i < demandItemsView.length; i++) {
@@ -72,7 +73,7 @@ public class PoliceSubscene extends SubScene {
             demandItemsView[i] = new ImageView(new Image("materials/image/empty.png",
                     100, 100, false, true));
             demandItemsView[i].setLayoutX(100 + 200 * i);
-            demandItemsView[i].setLayoutY(75 );
+            demandItemsView[i].setLayoutY(200);
             root.getChildren().add(demandItemsView[i]);
         }
     }
@@ -96,6 +97,10 @@ public class PoliceSubscene extends SubScene {
         resetScene();
     }
 
+    /**
+     * [Space_Police_Encounter 3/13/20]
+     *  SP demand item(s) for forfeiture
+     */
     private void updateCreatureList() {
         Item[] array = new Item[Broom.getInstance().getInventory().size()];
         for (int i = 0; i < array.length; i++) {
@@ -106,10 +111,7 @@ public class PoliceSubscene extends SubScene {
         Collections.shuffle(shuffleList);
         demandItems = new Item[array.length / 2 + 1];
         //Lose size / 2 + 1 items
-        for (int i = 0; i < array.length / 2 + 1; i++) {
-            demandItems[i] = array[i];
-        }
-
+        System.arraycopy(array, 0, demandItems, 0, array.length / 2 + 1);
     }
 
 
@@ -123,7 +125,7 @@ public class PoliceSubscene extends SubScene {
         btnForfeit.setDisable(false);
         btnFlee.setDisable(false);
         btnFight.setDisable(false);
-        PoliceDemandLabel.setText("Well well well... wanna pass? Give me your illegal items: ");
+        PoliceDemandLabel.setText("Well well well... wanna pass? Give me your illegal items");
         //reassign Imageview[] to update the image\
         healthResultLabel.setText("Your broom health: " + Broom.getInstance().getHealth());
         fuelResultLabel.setText("Your broom fuel: " + Broom.getInstance().getFuelCapacity());
@@ -157,15 +159,15 @@ public class PoliceSubscene extends SubScene {
         btnForfeit = new YellowButton("Forfeit");
         btnForfeit.setLayoutX(800);
         btnForfeit.setLayoutY(700);
-        btnForfeit.setDisable(true);
+        btnForfeit.setDisable(false);
         btnFlee = new YellowButton("Flee");
         btnFlee.setLayoutX(400);
         btnFlee.setLayoutY(700);
-        btnFlee.setDisable(true);
+        btnFlee.setDisable(false);
         btnFight = new YellowButton("Fight");
         btnFight.setLayoutX(600);
         btnFight.setLayoutY(700);
-        btnFight.setDisable(true);
+        btnFight.setDisable(false);
         btnExit = new YellowButton("Exit");
         btnExit.setLayoutX(1000);
         btnExit.setLayoutY(700);
@@ -178,11 +180,11 @@ public class PoliceSubscene extends SubScene {
     }
 
     /**
-     * Initalizes text for label
+     * Initialize text for label
      * @param root Root to add conversation and result to
      */
     private void displayText(AnchorPane root) {
-        PoliceDemandLabel = displayLabel("", 100, 400);
+        PoliceDemandLabel = displayLabel("", 100, 100);
         resultLabel = displayLabel("", 100, 450);
         healthResultLabel = displayLabel("", 100, 500);
         creditsResultLabel = displayLabel("", 100, 550);
@@ -194,8 +196,8 @@ public class PoliceSubscene extends SubScene {
     /**
      * store a message into a "textbox" with (x,y) which the "textbox" style could be reused
      * @param message the message you wanna show on (x,y)
-     * @param x
-     * @param y
+     * @param x the x coordinate
+     * @param y the y coordinate
      * @return A Label variable (text)
      */
     private Label displayLabel(String message, double x, double y) {
@@ -211,19 +213,29 @@ public class PoliceSubscene extends SubScene {
     }
 
     /**
-     * Controls forfeit operations, after this, player can click exit button to continue to the targetRegion
+     * [M6_Forfeit_To_SP_Option 3/13/20]
+     * Specified item(s) removed from player's inventory,
+     * cargo space updated, and player continues to intended destination
      */
     private void forfeit() {
         btnForfeit.setOnMouseClicked(e -> {
-            broom.getInventory().removeAll(Arrays.asList(demandItems));
+            //lose items
+            Broom.getInstance().getInventory().removeAll(Arrays.asList(demandItems));
             resultLabel.setText("You lose the items in your inventory");
+            //Enable exit button
             disableButtons();
         });
     }
 
     /**
-     * Controls flee operations. after this, player can click exit button to continue to the targetRegion
-     * Flee chance depends on pilot skill
+     * [M6_Flee_SP_Option 3/13/20]
+     *  Pilot skill affects likelihood of success of fleeing
+     * [M6_Flee_SP_Option 3/13/20]
+     *  Successful fleeing: Player should return to original region and lose fuel
+     * [M6_Flee_SP_Option 3/13/20]
+     *  Unsuccessful fleeing: Player should have specified items confiscated from inventory,
+     *  cargo space updated, lose additional credits as a fine, and have ship health lowered.
+     *  Return to the original region.
      */
     private void flee() {
         btnFlee.setOnMouseClicked(e -> {
@@ -231,13 +243,30 @@ public class PoliceSubscene extends SubScene {
             int point = random.nextInt(100);
             if (point < 50 + Player.getInstance().getSkills()[0]) {
                 resultLabel.setText("Nice speed! Your flee was successful!!");
-                targetRegion = Player.getInstance().getCurrentRegion();
             } else {
                 resultLabel.setText("Too slow! Better luck next time!");
-                Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
-                Player.getInstance().setCredits(Player.getInstance().getCredits() - 500);
+                //Health below zero Game Over
+                if (Broom.getInstance().getHealth() <= 50) {
+                    new Alert(Alert.AlertType.NONE,
+                            "Broom Destroyed Game Over.", ButtonType.OK).show();
+                    Platform.exit();
+                    System.exit(0);
+                } else {
+                    //lose health
+                    Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                }
+                //Lose credits
+                if (Player.getInstance().getCredits() < 500) {
+                    Player.getInstance().setCredits(0);
+                } else {
+                    Player.getInstance().setCredits(Player.getInstance().getCredits() - 500);
+                }
+                //Lose items
                 Broom.getInstance().getInventory().removeAll(Arrays.asList(demandItems));
             }
+            //Return to the original region
+            targetRegion = Player.getInstance().getCurrentRegion();
+            //Enable exit button
             disableButtons();
             creditsResultLabel.setText("Now your credits are: " + Player.getInstance().getCredits());
             healthResultLabel.setText("Your broom health: " + Broom.getInstance().getHealth());
@@ -246,22 +275,37 @@ public class PoliceSubscene extends SubScene {
     }
 
     /**
-     * Controls fight operation, after this, player can click exit button to continue to the targetRegion
-     * Computes escape chance based on fightskill
+     * [M6_Fight_SP_Option 3/13/20]
+     *  Fighter skill affects likelihood of success of fighting space-police
+     * [M6_Fight_SP_Option 3/13/20]
+     *  Successful fighting: Player should keep all inventory items and continue to intended destination
+     * ----------------------------------------------------------------------------------------------------
+     * Assumption: Unsuccessful fighting: Player lose all credits, and have ship health lowered.
      */
     private void fight() {
         btnFight.setOnMouseClicked(e -> {
             Random random = new Random();
             int point = random.nextInt(100);
+            //Successful fighting
             if (point < 50 + Player.getInstance().getSkills()[1] * 2) {
                 resultLabel.setText("Woah! You fought valiantly and won!");
+            } else {
+                //Unsuccessful fighting
+                resultLabel.setText("You lost! Better luck next time!");
+                //Lose all credits
+                Player.getInstance().setCredits(0);
+                //Health below zero Game Over
+                if (Broom.getInstance().getHealth() <= 50) {
+                    new Alert(Alert.AlertType.NONE,
+                            "Broom Destroyed Game Over.", ButtonType.OK).show();
+                    Platform.exit();
+                    System.exit(0);
+                } else {
+                    //lose health
+                    Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                }
             }
-//            Pdf did not say what happened when failed to fight off the police
-//            else {
-//                resultLabel.setText("You lost! Better luck next time!");
-
-//                Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
-//            }
+            //Enable exit button
             disableButtons();
             creditsResultLabel.setText("Now your credits are: " + Player.getInstance().getCredits());
             healthResultLabel.setText("Your broom health: " + Broom.getInstance().getHealth());
