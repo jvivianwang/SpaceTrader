@@ -24,6 +24,12 @@ import java.util.List;
 import java.util.Random;
 
 public class PoliceSubscene extends SubScene {
+
+    private static DimensionsHandler dim = new DimensionsHandler();
+    private static final int HEIGHT = dim.getHeight();
+    private static final int WIDTH = dim.getWidth();
+    private static final int FONTSIZE = dim.getFontsize();
+
     private static final String BACKGROUND_IMAGE = "materials/image/banditBackground2.jpg";
     private static final String FONT_PATH = "src/materials/font/Cochin W01 Roman.ttf";
 
@@ -35,7 +41,7 @@ public class PoliceSubscene extends SubScene {
     private Label healthResultLabel;
     private Label creditsResultLabel;
     private Label fuelResultLabel;
-    private Label PoliceDemandLabel;
+    private Label policeDemandLabel;
     private Label resultLabel;
 
     private Item[] demandItems;
@@ -47,9 +53,9 @@ public class PoliceSubscene extends SubScene {
      * Creates a new police subscene
      */
     public PoliceSubscene() {
-        super(new AnchorPane(), 1600, 900);
-        prefWidth(1600);
-        prefHeight(900);
+        super(new AnchorPane(), WIDTH, HEIGHT);
+        prefWidth(WIDTH);
+        prefHeight(HEIGHT);
 
         isHidden = true;
         AnchorPane root2 = (AnchorPane) this.getRoot();
@@ -58,8 +64,8 @@ public class PoliceSubscene extends SubScene {
         setBackgroundImage(root2);
         createButton(root2);
 
-        setLayoutX(0);
-        setLayoutY(-900);
+        setLayoutX(dim.customWidth((0)));
+        setLayoutY(-HEIGHT);
     }
 
     /**
@@ -71,9 +77,9 @@ public class PoliceSubscene extends SubScene {
         for (int i = 0; i < demandItemsView.length; i++) {
             //set default images to earthdragon just because the imageview cant be null
             demandItemsView[i] = new ImageView(new Image("materials/image/empty.png",
-                    100, 100, false, true));
-            demandItemsView[i].setLayoutX(100 + 200 * i);
-            demandItemsView[i].setLayoutY(200);
+                    dim.customWidth(100), dim.customHeight(100), false, true));
+            demandItemsView[i].setLayoutX(dim.customWidth(100 + 200 * i));
+            demandItemsView[i].setLayoutY(dim.customWidth((200)));
             root.getChildren().add(demandItemsView[i]);
         }
     }
@@ -89,7 +95,7 @@ public class PoliceSubscene extends SubScene {
         for (int i = 0; i < demandItems.length; i++) {
             Image image = new Image("materials/image/"
                     + demandItems[i].getName() + ".png",
-                    100, 100, false, true);
+                    dim.customWidth(100), dim.customHeight(100), false, true);
             // Create the ImageView
             demandItemsView[i].setImage(image);
             demandItemsView[i].setDisable(false);
@@ -126,7 +132,7 @@ public class PoliceSubscene extends SubScene {
         btnForfeit.setDisable(false);
         btnFlee.setDisable(false);
         btnFight.setDisable(false);
-        PoliceDemandLabel.setText("Well well well... wanna pass? Give me your illegal items");
+        policeDemandLabel.setText("Well well well... wanna pass? Give me your illegal items");
         //reassign Imageview[] to update the image\
         healthResultLabel.setText("Your broom health: " + Broom.getInstance().getHealth());
         fuelResultLabel.setText("Your broom fuel: " + Broom.getInstance().getFuelCapacity());
@@ -140,8 +146,8 @@ public class PoliceSubscene extends SubScene {
      */
     private void setBackgroundImage(AnchorPane root) {
         Image backgroundImage = new Image(BACKGROUND_IMAGE,
-                1600,
-                900,
+                WIDTH,
+                HEIGHT,
                 false,
                 true);
         BackgroundImage image = new BackgroundImage(backgroundImage,
@@ -158,20 +164,20 @@ public class PoliceSubscene extends SubScene {
      */
     private void createButton(AnchorPane root) {
         btnForfeit = new YellowButton("Forfeit");
-        btnForfeit.setLayoutX(800);
-        btnForfeit.setLayoutY(700);
+        btnForfeit.setLayoutX(dim.customWidth((800)));
+        btnForfeit.setLayoutY(dim.customWidth((700)));
         btnForfeit.setDisable(false);
         btnFlee = new YellowButton("Flee");
-        btnFlee.setLayoutX(400);
-        btnFlee.setLayoutY(700);
+        btnFlee.setLayoutX(dim.customWidth((400)));
+        btnFlee.setLayoutY(dim.customWidth((700)));
         btnFlee.setDisable(false);
         btnFight = new YellowButton("Fight");
-        btnFight.setLayoutX(600);
-        btnFight.setLayoutY(700);
+        btnFight.setLayoutX(dim.customWidth((600)));
+        btnFight.setLayoutY(dim.customWidth((700)));
         btnFight.setDisable(false);
         btnExit = new YellowButton("Exit");
-        btnExit.setLayoutX(1000);
-        btnExit.setLayoutY(700);
+        btnExit.setLayoutX(dim.customWidth((1000)));
+        btnExit.setLayoutY(dim.customWidth((700)));
         btnExit.setDisable(true);
         forfeit();
         flee();
@@ -185,12 +191,12 @@ public class PoliceSubscene extends SubScene {
      * @param root Root to add conversation and result to
      */
     private void displayText(AnchorPane root) {
-        PoliceDemandLabel = displayLabel("", 100, 100);
-        resultLabel = displayLabel("", 100, 450);
-        healthResultLabel = displayLabel("", 100, 500);
-        creditsResultLabel = displayLabel("", 100, 550);
-        fuelResultLabel = displayLabel("", 100, 600);
-        root.getChildren().addAll(PoliceDemandLabel, resultLabel,
+        policeDemandLabel = displayLabel("", dim.customWidth(100), dim.customHeight(100));
+        resultLabel = displayLabel("", dim.customWidth(100), dim.customHeight(450));
+        healthResultLabel = displayLabel("", dim.customWidth(100), dim.customHeight(500));
+        creditsResultLabel = displayLabel("", dim.customWidth(100), dim.customHeight(550));
+        fuelResultLabel = displayLabel("", dim.customWidth(100), dim.customHeight(600));
+        root.getChildren().addAll(policeDemandLabel, resultLabel,
                 healthResultLabel, creditsResultLabel,
                 fuelResultLabel);
     }
@@ -204,10 +210,10 @@ public class PoliceSubscene extends SubScene {
      */
     private Label displayLabel(String message, double x, double y) {
         Label temp = new Label(message);
-        temp.setFont(new Font(23));
+        temp.setFont(new Font(FONTSIZE));
         temp.setAlignment(Pos.CENTER_LEFT);
-        temp.setPrefWidth(800);
-        temp.setPrefHeight(200);
+        temp.setPrefWidth(dim.customWidth((800)));
+        temp.setPrefHeight(dim.customHeight((200)));
         temp.setLayoutX(x);
         temp.setLayoutY(y);
         temp.setTextFill(Color.web("#ffffff"));
@@ -342,10 +348,10 @@ public class PoliceSubscene extends SubScene {
         transition.setNode(this);
         if (isHidden) {
             //setToY(y) is move down y units instead move to y coordinate.
-            transition.setToY(900);
+            transition.setToY(HEIGHT);
             isHidden = false;
         } else {
-            transition.setToY(-900);
+            transition.setToY(-HEIGHT);
             isHidden = true;
         }
         transition.play();

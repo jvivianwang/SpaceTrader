@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import materials.ConfigSkillSubscene;
+import materials.DimensionsHandler;
 import materials.YellowButton;
 
 //Commented out unused labels for now
@@ -12,8 +13,10 @@ import materials.YellowButton;
 
 public class ConfigPage {
 
-    private static final int HEIGHT = 900;
-    private static final int WIDTH = 1600;
+    private static DimensionsHandler dim = new DimensionsHandler();
+    private static final int HEIGHT = dim.getHeight();
+    private static final int WIDTH = dim.getWidth();
+    private static final int FONTSIZE = dim.getFontsize();
     private AnchorPane mainPane;
     private Scene mainScene;
 
@@ -60,14 +63,14 @@ public class ConfigPage {
 
     private void createYellowButtons() {
         YellowButton btnEasy = new YellowButton("Easy");
-        btnEasy.setLayoutX(500);
-        btnEasy.setLayoutY(700);
+        btnEasy.setLayoutX(dim.customWidth((500)));
+        btnEasy.setLayoutY(dim.customHeight((700)));
         YellowButton btnMed = new YellowButton("Medium");
-        btnMed.setLayoutX(700);
-        btnMed.setLayoutY(700);
+        btnMed.setLayoutX(dim.customWidth((700)));
+        btnMed.setLayoutY(dim.customHeight((700)));
         YellowButton btnHard = new YellowButton("Hard");
-        btnHard.setLayoutX(900);
-        btnHard.setLayoutY(700);
+        btnHard.setLayoutX(dim.customWidth((900)));
+        btnHard.setLayoutY(dim.customHeight((700)));
 
         buttonPressed(btnEasy, easySubScene);
         buttonPressed(btnMed, medSubScene);

@@ -17,6 +17,11 @@ import java.io.FileNotFoundException;
 
 public class MarketSubscene extends SubScene {
 
+    private static DimensionsHandler dim = new DimensionsHandler();
+    private static final int HEIGHT = dim.getHeight();
+    private static final int WIDTH = dim.getWidth();
+    private static final int FONTSIZE = dim.getFontsize();
+
     private static final String BACKGROUND_IMAGE = "materials/image/magicalBackground.png";
     private static final String FONT_PATH = "src/materials/font/SEASRN__.ttf";
 
@@ -47,9 +52,9 @@ public class MarketSubscene extends SubScene {
     private Label engineerLabel;
 
     public MarketSubscene() {
-        super(new AnchorPane(), 1600, 900);
-        prefWidth(1600);
-        prefHeight(900);
+        super(new AnchorPane(), WIDTH, HEIGHT);
+        prefWidth(WIDTH);
+        prefHeight(HEIGHT);
 
         isHidden = true;
         equipmenSlotSelected = false;
@@ -68,18 +73,17 @@ public class MarketSubscene extends SubScene {
         setBackgroundImage(root2);
         createButton(root2);
 
-        setLayoutX(0);
-        setLayoutY(-900);
-    }
+        setLayoutX(dim.customWidth((0)));
+        setLayoutY(-HEIGHT);    }
 
     private void setMarket(AnchorPane root) {
         shopListImage = new ImageView[5];
         for (int i = 0; i < shopListImage.length; i++) {
             //set default images to earthdragon just because the imageview cant be null
             shopListImage[i] = new ImageView(new Image("materials/image/empty.png",
-                    100, 100, false, true));
-            shopListImage[i].setLayoutX(200);
-            shopListImage[i].setLayoutY(50 + 150 * i);
+                    dim.customWidth(100), dim.customHeight(100), false, true));
+            shopListImage[i].setLayoutX(dim.customWidth((200)));
+            shopListImage[i].setLayoutY(dim.customHeight(50 + 150 * i));
             root.getChildren().add(shopListImage[i]);
         }
     }
@@ -89,9 +93,9 @@ public class MarketSubscene extends SubScene {
         for (int i = 0; i < shopEquipmentListImage.length; i++) {
             //set default images to earthdragon just because the imageview cant be null
             shopEquipmentListImage[i] = new ImageView(new Image("materials/image/empty.png",
-                    100, 100, false, true));
-            shopEquipmentListImage[i].setLayoutX(450 + 200 * i);
-            shopEquipmentListImage[i].setLayoutY(550);
+                    dim.customWidth(100), dim.customHeight(100), false, true));
+            shopEquipmentListImage[i].setLayoutX(dim.customWidth(450 + 200 * i));
+            shopEquipmentListImage[i].setLayoutY(dim.customHeight((550)));
             root.getChildren().add(shopEquipmentListImage[i]);
         }
     }
@@ -101,9 +105,9 @@ public class MarketSubscene extends SubScene {
         ImageView[] boarder = new ImageView[9];
         for (int i = 0; i < boarder.length; i++) {
             boarder[i] = new ImageView(new Image("materials/image/emptyBoarder.png",
-                    100, 100, false, true));
-            boarder[i].setLayoutX(1000 + (i % 3) * 150);
-            boarder[i].setLayoutY(50 + (i / 3) * 150);
+                    dim.customWidth(100), dim.customHeight(100), false, true));
+            boarder[i].setLayoutX(dim.customWidth(1000 + (i % 3) * 150));
+            boarder[i].setLayoutY(dim.customHeight(50 + (i / 3) * 150));
             root.getChildren().add(boarder[i]);
         }
 
@@ -111,24 +115,28 @@ public class MarketSubscene extends SubScene {
         inventoryListImage = new ImageView[9];
         for (int i = 0; i < inventoryListImage.length; i++) {
             inventoryListImage[i] = new ImageView(new Image("materials/image/empty.png",
-                    100, 100, false, true));
-            inventoryListImage[i].setLayoutX(1000 + (i % 3) * 150);
-            inventoryListImage[i].setLayoutY(50 + (i / 3) * 150);
+                    dim.customWidth(100), dim.customHeight(100), false, true));
+            inventoryListImage[i].setLayoutX(dim.customWidth(1000 + (i % 3) * 150));
+            inventoryListImage[i].setLayoutY(dim.customHeight(50 + (i / 3) * 150));
             root.getChildren().add(inventoryListImage[i]);
         }
     }
 
     private void setEquipSlot(AnchorPane root) {
-        Image equipSlot = new Image("materials/image/emptyBoarder.png", 150, 150,
+        Image equipSlot = new Image("materials/image/emptyBoarder.png",
+                dim.customWidth(150),
+                dim.customHeight(150),
                 false, true);
         ImageView equipSlotView = new ImageView(equipSlot);
-        equipSlotView.setLayoutX(1125);
-        equipSlotView.setLayoutY(450);
+        equipSlotView.setLayoutX(dim.customWidth((1125)));
+        equipSlotView.setLayoutY(dim.customHeight((450)));
 
-        equipmentImage = new ImageView(new Image("materials/image/empty.png", 150, 150,
+        equipmentImage = new ImageView(new Image("materials/image/empty.png",
+                dim.customWidth(150),
+                dim.customHeight(150),
                 false, true));
-        equipmentImage.setLayoutX(1125);
-        equipmentImage.setLayoutY(450);
+        equipmentImage.setLayoutX(dim.customWidth((1125)));
+        equipmentImage.setLayoutY(dim.customHeight((450)));
         equipmentImage.setOnMouseClicked(e -> {
             if (Player.getInstance().getEquippmentItem() != null) {
                 equipmenSlotSelected = true;
@@ -149,12 +157,12 @@ public class MarketSubscene extends SubScene {
         credits.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
                 + " BURLYWOOD; -fx-border-width: 2px");
         try {
-            credits.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
+            credits.setFont(Font.loadFont(new FileInputStream(FONT_PATH), FONTSIZE));
         } catch (FileNotFoundException e) {
-            credits.setFont(Font.font("Verdana", 23));
+            credits.setFont(Font.font("Verdana", FONTSIZE));
         }
-        credits.setLayoutX(450);
-        credits.setLayoutY(50);
+        credits.setLayoutX(dim.customWidth((450)));
+        credits.setLayoutY(dim.customHeight((50)));
 
         inventorySize = new Label("# of Creatures in your broom: "
                 + Broom.getInstance().getInventory().size());
@@ -162,24 +170,24 @@ public class MarketSubscene extends SubScene {
         inventorySize.setStyle("-fx-border-color: SADDLEBROWN ; "
                 + "-fx-background-color: BURLYWOOD; -fx-border-width: 2px");
         try {
-            inventorySize.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
+            inventorySize.setFont(Font.loadFont(new FileInputStream(FONT_PATH), FONTSIZE));
         } catch (FileNotFoundException e) {
-            inventorySize.setFont(Font.font("Verdana", 23));
+            inventorySize.setFont(Font.font("Verdana", FONTSIZE));
         }
-        inventorySize.setLayoutX(450);
-        inventorySize.setLayoutY(100);
+        inventorySize.setLayoutX(dim.customWidth((450)));
+        inventorySize.setLayoutY(dim.customHeight((100)));
 
         price = new Label("The price of selected creature: ");
         price.setStyle("-fx-font-weight: bold");
         price.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
                 + "BURLYWOOD; -fx-border-width: 2px");
         try {
-            price.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
+            price.setFont(Font.loadFont(new FileInputStream(FONT_PATH), FONTSIZE));
         } catch (FileNotFoundException e) {
-            price.setFont(Font.font("Verdana", 23));
+            price.setFont(Font.font("Verdana", FONTSIZE));
         }
-        price.setLayoutX(450);
-        price.setLayoutY(150);
+        price.setLayoutX(dim.customWidth((450)));
+        price.setLayoutY(dim.customHeight((150)));
 
 
 
@@ -188,48 +196,48 @@ public class MarketSubscene extends SubScene {
         pilotLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
                 + "BURLYWOOD; -fx-border-width: 2px");
         try {
-            pilotLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
+            pilotLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), FONTSIZE));
         } catch (FileNotFoundException e) {
-            pilotLabel.setFont(Font.font("Verdana", 23));
+            pilotLabel.setFont(Font.font("Verdana", FONTSIZE));
         }
-        pilotLabel.setLayoutX(450);
-        pilotLabel.setLayoutY(250);
+        pilotLabel.setLayoutX(dim.customWidth((450)));
+        pilotLabel.setLayoutY(dim.customHeight((250)));
 
         fighterLabel = new Label("Fighter skills: " + Player.getInstance().getSkills()[1]);
         fighterLabel.setStyle("-fx-font-weight: bold");
         fighterLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
                 + "BURLYWOOD; -fx-border-width: 2px");
         try {
-            fighterLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
+            fighterLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), FONTSIZE));
         } catch (FileNotFoundException e) {
-            fighterLabel.setFont(Font.font("Verdana", 23));
+            fighterLabel.setFont(Font.font("Verdana", FONTSIZE));
         }
-        fighterLabel.setLayoutX(450);
-        fighterLabel.setLayoutY(300);
+        fighterLabel.setLayoutX(dim.customWidth((450)));
+        fighterLabel.setLayoutY(dim.customHeight((300)));
 
         merchantLabel = new Label("Merchant skills: " + Player.getInstance().getSkills()[2]);
         merchantLabel.setStyle("-fx-font-weight: bold");
         merchantLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
                 + "BURLYWOOD; -fx-border-width: 2px");
         try {
-            merchantLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
+            merchantLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), FONTSIZE));
         } catch (FileNotFoundException e) {
-            merchantLabel.setFont(Font.font("Verdana", 23));
+            merchantLabel.setFont(Font.font("Verdana", FONTSIZE));
         }
-        merchantLabel.setLayoutX(450);
-        merchantLabel.setLayoutY(350);
+        merchantLabel.setLayoutX(dim.customWidth((450)));
+        merchantLabel.setLayoutY(dim.customHeight((350)));
 
         engineerLabel = new Label("Engineer skills: " + Player.getInstance().getSkills()[3]);
         engineerLabel.setStyle("-fx-font-weight: bold");
         engineerLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
                 + " BURLYWOOD; -fx-border-width: 2px");
         try {
-            engineerLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
+            engineerLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), FONTSIZE));
         } catch (FileNotFoundException e) {
-            engineerLabel.setFont(Font.font("Verdana", 23));
+            engineerLabel.setFont(Font.font("Verdana", FONTSIZE));
         }
-        engineerLabel.setLayoutX(450);
-        engineerLabel.setLayoutY(400);
+        engineerLabel.setLayoutX(dim.customWidth((450)));
+        engineerLabel.setLayoutY(dim.customHeight((400)));
 
         root.getChildren().addAll(
                 credits, inventorySize, price, pilotLabel,
@@ -309,7 +317,7 @@ public class MarketSubscene extends SubScene {
         for (int i = 0; i < Market.getInstance().getShopList().length; i++) {
             Image image = new Image("materials/image/"
                     + Market.getInstance().getShopList()[i].getName() + ".png",
-                    100, 100, false, true);
+                    dim.customWidth(100), dim.customHeight(100), false, true);
             // Create the ImageView
             shopListImage[i].setImage(image);
             shopListImage[i].setDisable(false);
@@ -323,12 +331,12 @@ public class MarketSubscene extends SubScene {
                 Image image = new Image(
                             "materials/image/"
                                     + Broom.getInstance().getInventory().get(i).getName() + ".png",
-                            100, 100, false, true);
+                        dim.customWidth(100), dim.customHeight(100), false, true);
                 inventoryListImage[i].setImage(image);
                 selectFromInventory(inventoryListImage[i], i);
             } else {
                 Image image = new Image("materials/image/empty.png",
-                        100, 100, false, true);
+                        dim.customWidth(100), dim.customHeight(100), false, true);
                 inventoryListImage[i].setImage(image);
             }
         }
@@ -340,7 +348,7 @@ public class MarketSubscene extends SubScene {
             Image image = new Image(
                     "materials/image/" + Market.getInstance().
                             getEquipmentList()[i].getName() + ".png",
-                    100, 100, false, true);
+                    dim.customWidth(100), dim.customHeight(100), false, true);
             // Create the ImageView
             shopEquipmentListImage[i].setImage(image);
             shopEquipmentListImage[i].setDisable(false);
@@ -354,11 +362,11 @@ public class MarketSubscene extends SubScene {
             image = new Image(
                     "materials/image/" + Player.getInstance().
                             getEquippmentItem().getName() + ".png",
-                    150, 150, false, true);
+                    dim.customWidth(150), dim.customHeight(150), false, true);
         } else {
             image = new Image(
                     "materials/image/empty.png",
-                    150, 150, false, true);
+                    dim.customWidth(150), dim.customHeight(150), false, true);
         }
         equipmentImage.setImage(image);
     }
@@ -393,8 +401,8 @@ public class MarketSubscene extends SubScene {
 
     private void setBackgroundImage(AnchorPane root) {
         Image backgroundImage = new Image(BACKGROUND_IMAGE,
-                1600,
-                900,
+                WIDTH,
+                HEIGHT,
                 false,
                 true);
         BackgroundImage image = new BackgroundImage(backgroundImage,
@@ -412,10 +420,10 @@ public class MarketSubscene extends SubScene {
 
         if (isHidden) {
             //setToY(y) is move down y units instead move to y coordinate.
-            transition.setToY(900);
+            transition.setToY(HEIGHT);
             isHidden = false;
         } else {
-            transition.setToY(-900);
+            transition.setToY(-HEIGHT);
             isHidden = true;
         }
 
@@ -424,23 +432,23 @@ public class MarketSubscene extends SubScene {
 
     private void createButton(AnchorPane root) {
         btnExit = new YellowButton("Exit");
-        btnExit.setLayoutX(800);
-        btnExit.setLayoutY(700);
+        btnExit.setLayoutX(dim.customWidth((800)));
+        btnExit.setLayoutY(dim.customHeight((700)));
         btnBuy = new YellowButton("Buy");
-        btnBuy.setLayoutX(400);
-        btnBuy.setLayoutY(700);
+        btnBuy.setLayoutX(dim.customWidth((400)));
+        btnBuy.setLayoutY(dim.customHeight((700)));
         btnBuy.setDisable(true);
         btnSell = new YellowButton("Sell");
-        btnSell.setLayoutX(600);
-        btnSell.setLayoutY(700);
+        btnSell.setLayoutX(dim.customWidth((600)));
+        btnSell.setLayoutY(dim.customHeight((700)));
         btnSell.setDisable(true);
         btnEquip = new YellowButton("Equip");
-        btnEquip.setLayoutX(1000);
-        btnEquip.setLayoutY(700);
+        btnEquip.setLayoutX(dim.customWidth((1000)));
+        btnEquip.setLayoutY(dim.customHeight((700)));
         btnEquip.setDisable(true);
         btnUnequip = new YellowButton("Unequip");
-        btnUnequip.setLayoutX(1200);
-        btnUnequip.setLayoutY(700);
+        btnUnequip.setLayoutX(dim.customWidth((1200)));
+        btnUnequip.setLayoutY(dim.customHeight((700)));
         btnUnequip.setDisable(true);
 
         transactionButtonFunction();
@@ -471,7 +479,7 @@ public class MarketSubscene extends SubScene {
 
                 Player.getInstance().setCredits(Player.getInstance().getCredits() - price);
                 Image image = new Image("materials/image/soldOut.jpg",
-                        100, 100, false, true);
+                        dim.customWidth(100), dim.customHeight(100), false, true);
                 if (creatureIndexSelectedFromStore != -1) {
                     shopListImage[creatureIndexSelectedFromStore].setDisable(true);
                     shopListImage[creatureIndexSelectedFromStore].setImage(image);

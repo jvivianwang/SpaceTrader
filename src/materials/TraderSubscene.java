@@ -22,6 +22,12 @@ import java.util.Random;
 
 
 public class TraderSubscene extends SubScene {
+
+    private static DimensionsHandler dim = new DimensionsHandler();
+    private static final int HEIGHT = dim.getHeight();
+    private static final int WIDTH = dim.getWidth();
+    private static final int FONTSIZE = dim.getFontsize();
+
     private static final String BACKGROUND_IMAGE = "materials/image/banditBackground2.jpg";
 
     private boolean isHidden;
@@ -45,9 +51,9 @@ public class TraderSubscene extends SubScene {
 
 
     public TraderSubscene() {
-        super(new AnchorPane(), 1600, 900);
-        prefWidth(1600);
-        prefHeight(900);
+        super(new AnchorPane(), WIDTH, HEIGHT);
+        prefWidth(WIDTH);
+        prefHeight(HEIGHT);
 
         isHidden = true;
 
@@ -63,7 +69,7 @@ public class TraderSubscene extends SubScene {
         createButton(root2);
 
         setLayoutX(0);
-        setLayoutY(-900);
+        setLayoutY(-HEIGHT);
     }
 
     /**
@@ -72,8 +78,8 @@ public class TraderSubscene extends SubScene {
      */
     private void setBackgroundImage(AnchorPane root) {
         Image backgroundImage = new Image(BACKGROUND_IMAGE,
-                1600,
-                900,
+                WIDTH,
+                HEIGHT,
                 false,
                 true);
         BackgroundImage image = new BackgroundImage(backgroundImage,
@@ -93,9 +99,9 @@ public class TraderSubscene extends SubScene {
         for (int i = 0; i < creatureListImage.length; i++) {
             //set default images to earthdragon just because the imageview cant be null
             creatureListImage[i] = new ImageView(new Image("materials/image/empty.png",
-                    100, 100, false, true));
-            creatureListImage[i].setLayoutX(100 + 200 * i);
-            creatureListImage[i].setLayoutY(75);
+                    dim.customWidth(100), dim.customHeight(100), false, true));
+            creatureListImage[i].setLayoutX(dim.customWidth(100 + 200 * i));
+            creatureListImage[i].setLayoutY(dim.customHeight((75)));
             root.getChildren().add(creatureListImage[i]);
         }
     }
@@ -105,23 +111,23 @@ public class TraderSubscene extends SubScene {
      * @param root the root we try to access
      */
     private void setInventory(AnchorPane root) {
-        //The boarder
-        ImageView[] boarder = new ImageView[9];
-        for (int i = 0; i < boarder.length; i++) {
-            boarder[i] = new ImageView(new Image("materials/image/emptyBoarder.png",
-                    100, 100, false, true));
-            boarder[i].setLayoutX(1000 + (i % 3) * 150);
-            boarder[i].setLayoutY(50 + (i / 3) * 150);
-            root.getChildren().add(boarder[i]);
+        //The border
+        ImageView[] border = new ImageView[9];
+        for (int i = 0; i < border.length; i++) {
+            border[i] = new ImageView(new Image("materials/image/emptyBoarder.png",
+                    dim.customWidth(100), dim.customHeight(100), false, true));
+            border[i].setLayoutX(dim.customWidth(1000 + (i % 3) * 150));
+            border[i].setLayoutY(dim.customHeight(50 + (i / 3) * 150));
+            root.getChildren().add(border[i]);
         }
 
-        //The image inside boarder
+        //The image inside border
         inventoryListImage = new ImageView[9];
         for (int i = 0; i < inventoryListImage.length; i++) {
             inventoryListImage[i] = new ImageView(new Image("materials/image/empty.png",
-                    100, 100, false, true));
-            inventoryListImage[i].setLayoutX(1000 + (i % 3) * 150);
-            inventoryListImage[i].setLayoutY(50 + (i / 3) * 150);
+                    dim.customWidth(100), dim.customHeight(100), false, true));
+            inventoryListImage[i].setLayoutX(dim.customWidth(1000 + (i % 3) * 150));
+            inventoryListImage[i].setLayoutY(dim.customHeight(50 + (i / 3) * 150));
             root.getChildren().add(inventoryListImage[i]);
         }
     }
@@ -147,21 +153,21 @@ public class TraderSubscene extends SubScene {
      */
     private void createButton(AnchorPane root) {
         btnRob = new YellowButton("Rob");
-        btnRob.setLayoutX(200);
-        btnRob.setLayoutY(700);
+        btnRob.setLayoutX(dim.customWidth((200)));
+        btnRob.setLayoutY(dim.customHeight((700)));
         btnRob.setDisable(true);
         btnBuy = new YellowButton("Buy");
-        btnBuy.setLayoutX(400);
-        btnBuy.setLayoutY(700);
+        btnBuy.setLayoutX(dim.customWidth((400)));
+        btnBuy.setLayoutY(dim.customHeight((700)));
         btnBuy.setDisable(true);
         btnNegotiate = new YellowButton("Negotiate");
-        btnNegotiate.setLayoutX(800);
-        btnNegotiate.setLayoutY(700);
+        btnNegotiate.setLayoutX(dim.customWidth((800)));
+        btnNegotiate.setLayoutY(dim.customHeight((700)));
         btnNegotiate.setDisable(true);
         btnExitOrIgnore = new YellowButton("Exit or Ignore");
-        btnExitOrIgnore.setLayoutX(1200);
-        btnExitOrIgnore.setLayoutY(700);
-        btnExitOrIgnore.setPrefWidth(300);
+        btnExitOrIgnore.setLayoutX(dim.customWidth((1200)));
+        btnExitOrIgnore.setLayoutY(dim.customHeight((700)));
+        btnExitOrIgnore.setPrefWidth(dim.customWidth((300)));
 
         updateInventory();
         buy();
@@ -182,10 +188,10 @@ public class TraderSubscene extends SubScene {
 
         if (isHidden) {
             //setToY(y) is move down y units instead move to y coordinate.
-            transition.setToY(900);
+            transition.setToY(HEIGHT);
             isHidden = false;
         } else {
-            transition.setToY(-900);
+            transition.setToY(-HEIGHT);
             isHidden = true;
         }
 
@@ -242,7 +248,7 @@ public class TraderSubscene extends SubScene {
         for (int i = 0; i < creatureList.length; i++) {
             Image image = new Image("materials/image/"
                     + creatureList[i].getName() + ".png",
-                    100, 100, false, true);
+                    dim.customWidth(100), dim.customHeight(100), false, true);
             // Create the ImageView
             creatureListImage[i].setImage(image);
             creatureListImage[i].setDisable(false);
@@ -261,9 +267,9 @@ public class TraderSubscene extends SubScene {
      * @param root Root to add conversation and result to
      */
     private void displayText(AnchorPane root) {
-        creditLabel = displayLabel("", 200, 300);
-        priceLabel = displayLabel("", 200, 400);
-        resultLabel = displayLabel("", 200, 500);
+        creditLabel = displayLabel("", dim.customWidth(200), dim.customHeight(300));
+        priceLabel = displayLabel("", dim.customWidth(200), dim.customHeight(400));
+        resultLabel = displayLabel("", dim.customWidth(200), dim.customHeight(500));
         root.getChildren().addAll(creditLabel, priceLabel, resultLabel);
     }
 
@@ -276,11 +282,11 @@ public class TraderSubscene extends SubScene {
                 Image image = new Image(
                         "materials/image/"
                                 + Broom.getInstance().getInventory().get(i).getName() + ".png",
-                        100, 100, false, true);
+                        dim.customWidth(100), dim.customHeight(100), false, true);
                 inventoryListImage[i].setImage(image);
             } else {
                 Image image = new Image("materials/image/empty.png",
-                        100, 100, false, true);
+                        dim.customWidth(100), dim.customHeight(100), false, true);
                 inventoryListImage[i].setImage(image);
             }
         }
@@ -295,10 +301,10 @@ public class TraderSubscene extends SubScene {
      */
     private Label displayLabel(String message, double x, double y) {
         Label temp = new Label(message);
-        temp.setFont(new Font(23));
+        temp.setFont(new Font(FONTSIZE));
         temp.setAlignment(Pos.CENTER_LEFT);
-        temp.setPrefWidth(800);
-        temp.setPrefHeight(200);
+        temp.setPrefWidth(dim.customWidth((800)));
+        temp.setPrefHeight(dim.customHeight((200)));
         temp.setLayoutX(x);
         temp.setLayoutY(y);
         temp.setTextFill(Color.web("#ffffff"));
@@ -324,7 +330,7 @@ public class TraderSubscene extends SubScene {
 
                 Player.getInstance().setCredits(Player.getInstance().getCredits() - price);
                 Image image = new Image("materials/image/soldOut.jpg",
-                        100, 100, false, true);
+                        dim.customWidth(100), dim.customHeight(100), false, true);
                 if (creatureSelectedFromList != -1) {
                     creatureListImage[creatureSelectedFromList].setDisable(true);
                     creatureListImage[creatureSelectedFromList].setImage(image);
@@ -410,7 +416,7 @@ public class TraderSubscene extends SubScene {
                         "Ooops! You don't enough space to carry the item.", ButtonType.OK).show();
             } else {
                 Image image = new Image("materials/image/soldOut.jpg",
-                        100, 100, false, true);
+                        dim.customWidth(100), dim.customHeight(100), false, true);
                 creatureListImage[0].setDisable(true);
                 creatureListImage[0].setImage(image);
                 //Trader’s item added to player inventory

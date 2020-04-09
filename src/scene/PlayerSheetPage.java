@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import materials.DimensionsHandler;
 import materials.YellowButton;
 
 import java.io.FileInputStream;
@@ -18,9 +19,12 @@ import java.io.FileNotFoundException;
 
 public class PlayerSheetPage {
 
+    private static DimensionsHandler dim = new DimensionsHandler();
+    private static final int HEIGHT = dim.getHeight();
+    private static final int WIDTH = dim.getWidth();
+    private static final int FONTSIZE = dim.getFontsize();
+
     private final String fontPath = "src/materials/font/Cochin W01 Roman.ttf";
-    private static final int HEIGHT = 900;
-    private static final int WIDTH = 1600;
     private AnchorPane mainPane;
     private Scene mainScene;
     private YellowButton btnNextPage;
@@ -52,33 +56,33 @@ public class PlayerSheetPage {
     private void createInfo() {
 
         Label name = displayInfo("Player Name: " + Player.getInstance().getName(),
-                680,
-                40);
+                dim.customWidth(680),
+                dim.customHeight(40));
         Label credits = displayInfo("Player Credits: " + Player.getInstance().getCredits(),
-                280,
-                170);
+                dim.customWidth(280),
+                dim.customHeight(170));
         Label skillPointsLeft = displayInfo("Player Skills: "
                         + Player.getInstance().getSkillPoints(),
-                680,
-                170);
+                dim.customWidth(680),
+                dim.customHeight(170));
         Label pilot = displayInfo("Pilot Skill Level: " + Player.getInstance().getSkills()[0],
-                1080,
-                170);
+                dim.customWidth(1080),
+                dim.customHeight(170));
         Label fighter = displayInfo("Fighter Skill Level: " + Player.getInstance().getSkills()[1],
-                280,
-                320);
+                dim.customWidth(280),
+                dim.customHeight(320));
         Label merchant = displayInfo("Merchant Skill Level: " + Player.getInstance().getSkills()[2],
-                1080,
-                320);
+                dim.customWidth(1080),
+                dim.customHeight(320));
         Label engineer = displayInfo("Engineer Skill Level: " + Player.getInstance().getSkills()[3],
-                680,
-                320);
+                dim.customWidth(680),
+                dim.customHeight(320));
         Image image = new Image("materials/image/broom.png");
         ImageView imageView = new ImageView(image);
-        imageView.setLayoutX(730);
-        imageView.setLayoutY(470);
-        imageView.setFitHeight(250);
-        imageView.setFitWidth(250);
+        imageView.setLayoutX(dim.customWidth((730)));
+        imageView.setLayoutY(dim.customHeight((470)));
+        imageView.setFitHeight(dim.customHeight((250)));
+        imageView.setFitWidth(dim.customWidth((250)));
 
         mainPane.getChildren().addAll(name,
                 credits,
@@ -94,8 +98,8 @@ public class PlayerSheetPage {
         Label temp = new Label(name);
         setLabelFont(temp);
         temp.setAlignment(Pos.CENTER);
-        temp.setPrefWidth(325);
-        temp.setPrefHeight(100);
+        temp.setPrefWidth(dim.customWidth((325)));
+        temp.setPrefHeight(dim.customHeight((100)));
         temp.setLayoutX(x);
         temp.setLayoutY(y);
         temp.setStyle("-fx-font-weight: bold");
@@ -106,9 +110,9 @@ public class PlayerSheetPage {
 
     private void createButton() {
         btnNextPage  = new YellowButton("BEGIN GAME");
-        btnNextPage.setLayoutX(750);
-        btnNextPage.setLayoutY(750);
-        btnNextPage.setPrefWidth(200);
+        btnNextPage.setLayoutX(dim.customWidth((750)));
+        btnNextPage.setLayoutY(dim.customHeight((750)));
+        btnNextPage.setPrefWidth(dim.customWidth((200)));
         mainPane.getChildren().add(btnNextPage);
     }
 
@@ -121,9 +125,9 @@ public class PlayerSheetPage {
     }
     private void setLabelFont(Label myLabel) {
         try {
-            myLabel.setFont(Font.loadFont(new FileInputStream(fontPath), 30));
+            myLabel.setFont(Font.loadFont(new FileInputStream(fontPath), dim.customHeight(30)));
         } catch (FileNotFoundException e) {
-            myLabel.setFont(Font.font("Verdana", 23));
+            myLabel.setFont(Font.font("Verdana", FONTSIZE));
         }
     }
 

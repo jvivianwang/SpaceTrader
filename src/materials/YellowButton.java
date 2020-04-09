@@ -26,11 +26,15 @@ public class YellowButton extends Button {
 
     private boolean isReleased;
 
+    private static DimensionsHandler dim = new DimensionsHandler();
+    private static final int FONTSIZE = dim.getFontsize();
+    private static final int PRESS_OFFSET = dim.getPressOffset();
+
     public YellowButton(String text) {
         setText(text);
         setButtonFont();
-        setPrefWidth(150);
-        setPrefHeight(50);
+        setPrefWidth(dim.customWidth((150)));
+        setPrefHeight(dim.customHeight((50)));
         setStyle(buttonFreeStyle);
 
         isReleased = true;
@@ -40,22 +44,22 @@ public class YellowButton extends Button {
 
     private void setButtonFont() {
         try {
-            setFont(Font.loadFont(new FileInputStream(fontPath), 23));
+            setFont(Font.loadFont(new FileInputStream(fontPath), FONTSIZE));
         } catch (FileNotFoundException e) {
-            setFont(Font.font("Verdana", 23));
+            setFont(Font.font("Verdana", FONTSIZE));
         }
     }
 
     public void setButtonStyle() {
         if (isReleased) {
             setStyle(buttonPressedStyle);
-            setPrefHeight(60);
-            setLayoutY(getLayoutY() + 10);
+            setPrefHeight(dim.customHeight((60)));
+            setLayoutY(getLayoutY() + PRESS_OFFSET);
             isReleased = false;
         } else {
             setStyle(buttonFreeStyle);
-            setPrefHeight(50);
-            setLayoutY(getLayoutY() - 10);
+            setPrefHeight(dim.customHeight((50)));
+            setLayoutY(getLayoutY() - PRESS_OFFSET);
             isReleased = true;
         }
     }

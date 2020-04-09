@@ -17,6 +17,11 @@ import java.io.FileNotFoundException;
 
 public class InfoLabel extends Label {
 
+    private static DimensionsHandler dim = new DimensionsHandler();
+    private static final int HEIGHT = dim.getHeight();
+    private static final int WIDTH = dim.getWidth();
+    private static final int FONTSIZE = dim.getFontsize();
+
     private boolean hasSkillPoints;
 
     private static BackgroundImage backgroundImageReleased;
@@ -32,8 +37,8 @@ public class InfoLabel extends Label {
             + "/textBackgroundFulled.png";
 
     public InfoLabel(String text) {
-        setPrefWidth(150);
-        setPrefHeight(150);
+        setPrefWidth(dim.customWidth(150));
+        setPrefHeight(dim.customHeight(150));
         setText(text);
         setWrapText(true);
         setLabelFont();
@@ -42,15 +47,29 @@ public class InfoLabel extends Label {
         hasSkillPoints = true;
         initializeButtonListeners();
 
-        backgroundImageReleased = new BackgroundImage(new Image(BACKGROUND_IMAGE_RELEASED, 150,
-                150, false, true), BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
-        backgroundImagePressed = new BackgroundImage(new Image(BACKGROUND_IMAGE_PRESSED, 150,
-                150, false, true), BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
-        backgroundImageFulled = new BackgroundImage(new Image(BACKGROUND_IMAGE_FULLED, 150,
-                150, false, true), BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
+        backgroundImageReleased = new BackgroundImage(new Image(BACKGROUND_IMAGE_RELEASED,
+                dim.customWidth(150),
+                dim.customHeight(150),
+                false, true),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                null);
+        backgroundImagePressed = new BackgroundImage(new Image(BACKGROUND_IMAGE_PRESSED,
+                dim.customWidth(150),
+                dim.customHeight(150),
+                false, true), BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                null);
+        backgroundImageFulled = new BackgroundImage(new Image(BACKGROUND_IMAGE_FULLED,
+                dim.customWidth(150),
+                dim.customHeight(150),
+                false, true),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                null);
         setBackground(new Background(backgroundImageReleased));
     }
 
@@ -60,16 +79,16 @@ public class InfoLabel extends Label {
 
     private void setLabelFont() {
         try {
-            setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
+            setFont(Font.loadFont(new FileInputStream(FONT_PATH), FONTSIZE));
         } catch (FileNotFoundException e) {
-            setFont(Font.font("Verdana", 23));
+            setFont(Font.font("Verdana", FONTSIZE));
         }
     }
 
     private void initializeButtonListeners() {
         setOnMousePressed(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                setLayoutY(getLayoutY() + 10);
+                setLayoutY(getLayoutY() + dim.customWidth(10));
                 if (hasSkillPoints) {
                     setBackground(new Background(backgroundImagePressed));
                 } else {
@@ -79,7 +98,7 @@ public class InfoLabel extends Label {
         });
         setOnMouseReleased(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
-                setLayoutY(getLayoutY() - 10);
+                setLayoutY(getLayoutY() - dim.customWidth(10));
                 setBackground(new Background(backgroundImageReleased));
             }
         });

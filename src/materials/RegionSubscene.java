@@ -15,6 +15,17 @@ import javafx.util.Duration;
 
 public class RegionSubscene extends SubScene {
 
+    private static DimensionsHandler dim = new DimensionsHandler();
+
+    private static final int HEIGHT = dim.getHeight();
+
+    private static final int WIDTH = dim.getWidth();
+
+    private static final int FONTSIZE = dim.getFontsize();
+
+    private static final int SUBSCENE_WIDTH = dim.customWidth(300);
+
+
     private static final String BACKGROUND_IMAGE = "materials/image/configSubsceneBG.png";
 
     private boolean isHidden;
@@ -37,13 +48,13 @@ public class RegionSubscene extends SubScene {
     private YellowButton btnMarket;
 
     public RegionSubscene() {
-        super(new AnchorPane(), 300, 900);
-        prefHeight(900);
-        prefWidth(300);
+        super(new AnchorPane(), SUBSCENE_WIDTH, HEIGHT);
+        prefHeight(HEIGHT);
+        prefWidth(SUBSCENE_WIDTH);
 
         Image backgroundImage = new Image(BACKGROUND_IMAGE,
-                300,
-                900,
+                SUBSCENE_WIDTH,
+                HEIGHT,
                 false,
                 true);
         BackgroundImage image = new BackgroundImage(backgroundImage,
@@ -60,7 +71,7 @@ public class RegionSubscene extends SubScene {
 
         isHidden = true;
 
-        setLayoutX(1900);
+        setLayoutX(WIDTH + SUBSCENE_WIDTH);
         setLayoutY(0);
     }
 
@@ -72,12 +83,18 @@ public class RegionSubscene extends SubScene {
         coordinateInfo = "UNKNOWN";
         fuelRemainInfo = "UNKNOWN";
 
-        regionName = displayLabel("Region Name", regionNameInfo, 20, 50);
-        techLevel = displayLabel("Tech Level", techLevelInfo, 20, 150);
-        description = displayLabel("Description", descriptionInfo, 20, 250);
-        distance = displayLabel("Distance", distanceInfo, 20, 350);
-        coordinate = displayLabel("Coordinate", coordinateInfo, 20, 450);
-        fuelRemain = displayLabel("Fuel Remain", fuelRemainInfo, 20, 550);
+        regionName = displayLabel("Region Name", regionNameInfo,
+                dim.customWidth(20), dim.customHeight(50));
+        techLevel = displayLabel("Tech Level", techLevelInfo,
+                dim.customWidth(20), dim.customHeight(150));
+        description = displayLabel("Description", descriptionInfo,
+                dim.customWidth(20), dim.customHeight(250));
+        distance = displayLabel("Distance", distanceInfo,
+                dim.customWidth(20), dim.customHeight(350));
+        coordinate = displayLabel("Coordinate", coordinateInfo,
+                dim.customWidth(20), dim.customHeight(450));
+        fuelRemain = displayLabel("Fuel Remain", fuelRemainInfo,
+                dim.customWidth(20), dim.customHeight(550));
 
         root.getChildren().addAll(regionName, techLevel,
                 description, distance, coordinate, fuelRemain);
@@ -108,16 +125,15 @@ public class RegionSubscene extends SubScene {
         coordinate.setTextFill(Color.web("#ffffff"));
         fuelRemain.setText("Fuel Remain: " + "\n" + fuelRemainInfo);
         fuelRemain.setTextFill(Color.web("#ffffff"));
-
     }
 
     private void createButton(AnchorPane root) {
         btnTravel = new YellowButton("Travel");
         btnMarket = new YellowButton("Market");
-        btnTravel.setLayoutX(80);
-        btnTravel.setLayoutY(650);
-        btnMarket.setLayoutX(80);
-        btnMarket.setLayoutY(750);
+        btnTravel.setLayoutX(dim.customWidth(80));
+        btnTravel.setLayoutY(dim.customHeight(650));
+        btnMarket.setLayoutX(dim.customWidth(80));
+        btnMarket.setLayoutY(dim.customHeight(750));
 
         root.getChildren().add(btnTravel);
         root.getChildren().add(btnMarket);
@@ -135,10 +151,10 @@ public class RegionSubscene extends SubScene {
 
         if (isHidden) {
             //setToY(y) is move down y units instead move to y coordinate.
-            transition.setToX(-600);
+            transition.setToX(-dim.customWidth(600));
             isHidden = false;
         } else {
-            transition.setToX(600);
+            transition.setToX(dim.customWidth(600));
             isHidden = true;
         }
 
@@ -147,10 +163,10 @@ public class RegionSubscene extends SubScene {
 
     public Label displayLabel(String name, String info, double x, double y) {
         Label temp = new Label(name + "\n" + info);
-        temp.setFont(new Font(23));
+        temp.setFont(new Font(FONTSIZE));
         temp.setAlignment(Pos.CENTER_LEFT);
-        temp.setPrefWidth(280);
-        temp.setPrefHeight(100);
+        temp.setPrefWidth(dim.customWidth(280));
+        temp.setPrefHeight(dim.customHeight(100));
         temp.setLayoutX(x);
         temp.setLayoutY(y);
         return temp;

@@ -5,11 +5,15 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import materials.DimensionsHandler;
 
 public class WelcomePage {
 
-    private static final int HEIGHT = 900;
-    private static final int WIDTH = 1600;
+    private static DimensionsHandler dim = new DimensionsHandler();
+    private static final int HEIGHT = dim.getHeight();
+    private static final int WIDTH = dim.getWidth();
+    private static final int FONTSIZE = dim.getFontsize();
+
     private AnchorPane mainPane;
     private Scene mainScene;
 
@@ -45,8 +49,8 @@ public class WelcomePage {
                 WIDTH / 8,
                 true,
                 false);
-        //space dimensions: 1600 x 900 px
-        Image space = new Image("materials/image/testBackground.jpg",
+        //background dimensions: 1600 x 900 px
+        Image background = new Image("materials/image/testBackground.jpg",
                 WIDTH, HEIGHT,
                 true,
                 true);
@@ -55,22 +59,21 @@ public class WelcomePage {
                 WIDTH / 8,
                 true,
                 false);
-
-        gc.drawImage(space, 0, 0);
-        gc.drawImage(play, 600, 250);
+        int buttonDimX = dim.customWidth(600);
+        int buttonDimY = dim.customHeight(250);
+        gc.drawImage(background, 0, 0);
+        gc.drawImage(play, buttonDimX, buttonDimY);
         gc.drawImage(title, 0, 0);
 
         canvas.setOnMouseMoved(e -> {
-            double x = 1400 - e.getX();
-            double y = 700 - e.getY();
+            double x = dim.customWidth(1400) - e.getX();
+            double y = dim.customHeight(700) - e.getY();
 
-            gc.drawImage(space, 0, 0);
-            gc.drawImage(play, 600, 250);
+            gc.drawImage(background, 0, 0);
+            gc.drawImage(play, buttonDimX, buttonDimY);
             gc.drawImage(title, 0, 0);
             gc.drawImage(magic, x, y);
         });
-
-
     }
 
     public Canvas getCanvas() {

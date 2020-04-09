@@ -154,3 +154,7 @@ Vivian 3/13/20
 Jiawei 3/13/20
 [What I've done]
 - Organize and fix the rest M6 implementation
+
+Paulina 4/8/2020
+[What I've done]
+- implemented DimensionsHandler to make the game resize to screen dimensions

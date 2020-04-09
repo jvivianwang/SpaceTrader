@@ -6,10 +6,17 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
+import materials.DimensionsHandler;
 
 import java.util.Random;
 
 public class Region extends Label {
+
+    private static DimensionsHandler dim = new DimensionsHandler();
+    private static final int HEIGHT = dim.getHeight();
+    private static final int WIDTH = dim.getWidth();
+    private static final int FONTSIZE = dim.getFontsize();
+    private static final int REGION_DIM = dim.customWidth(150);
 
     private static BackgroundImage regionBackground;
 
@@ -28,18 +35,19 @@ public class Region extends Label {
         this.description = description;
         isDiscovered = false;
 
-        setLayoutX(260 * (regionSpot / 2) + random.nextInt(110));
-        setLayoutY(450 * (regionSpot % 2) + random.nextInt(300));
-        setPrefWidth(150);
-        setPrefHeight(150);
+        setLayoutX(dim.customWidth(260 * (regionSpot / 2) + random.nextInt(110)));
+        setLayoutY(dim.customHeight(450 * (regionSpot % 2) + random.nextInt(300)));
+        setPrefHeight(REGION_DIM);
+        setPrefWidth(REGION_DIM);
 
         //image name matches region name.
         setRegionBackgroundToYellow();
     }
 
+
     public void setRegionBackgroundToYellow() {
         Image image = new Image("materials/image/N" + regionName + ".png",
-                150, 150, false, true);
+                REGION_DIM, REGION_DIM, false, true);
         regionBackground = new BackgroundImage(image,
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT, null);
@@ -48,7 +56,7 @@ public class Region extends Label {
 
     public void setRegionBackgroundToBlue() {
         Image image = new Image("materials/image/N" + regionName + "Blue.png",
-                150, 150, false,
+                REGION_DIM, REGION_DIM, false,
                 true);
         regionBackground = new BackgroundImage(image,
                 BackgroundRepeat.NO_REPEAT,

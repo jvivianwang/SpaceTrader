@@ -5,7 +5,7 @@ import materials.Item;
 import java.util.ArrayList;
 
 public class Broom {
-    private static Broom single_instance = null;
+    private static Broom singleInstance = null;
 
     private String name;
     private int cargoCapacity;
@@ -22,14 +22,14 @@ public class Broom {
     }
 
     public static Broom getInstance() {
-        if (single_instance == null) {
+        if (singleInstance == null) {
             synchronized (Broom.class) {
-                if (single_instance == null) {
-                    single_instance = new Broom();
+                if (singleInstance == null) {
+                    singleInstance = new Broom();
                 }
             }
         }
-        return single_instance;
+        return singleInstance;
     }
 
     public void setName(String name) {

@@ -25,6 +25,11 @@ import java.io.FileNotFoundException;
 
 public class ConfigSkillSubscene extends SubScene {
 
+    private static DimensionsHandler dim = new DimensionsHandler();
+    private static final int HEIGHT = dim.getHeight();
+    private static final int WIDTH = dim.getWidth();
+    private static final int FONTSIZE = dim.getFontsize();
+
     private static final String FONT_PATH = "src/materials/font/SEASRN__.ttf";
     private static final String BACKGROUND_IMAGE = "materials/image/configSubsceneBG.png";
     private static final String BROOM_PATH = "materials/image/broom.png";
@@ -43,9 +48,9 @@ public class ConfigSkillSubscene extends SubScene {
     private boolean selected;
 
     public ConfigSkillSubscene(String difficulty) {
-        super(new AnchorPane(), 1200, 600);
-        prefHeight(1200);
-        prefWidth(600);
+        super(new AnchorPane(), dim.customWidth(1200), dim.customHeight(600));
+        prefHeight(dim.customHeight(600));
+        prefWidth(dim.customWidth(1200));
 
         AnchorPane root2 = (AnchorPane) this.getRoot();
 
@@ -60,14 +65,14 @@ public class ConfigSkillSubscene extends SubScene {
         //Create layout for skill bar and buttons.
         createSkillAllocate(root2);
 
-        setLayoutX(200);
-        setLayoutY(-700);
+        setLayoutX(dim.customWidth((200)));
+        setLayoutY(dim.customHeight((-700)));
     }
 
     private void setBackgroundImage(AnchorPane root) {
         Image backgroundImage = new Image(BACKGROUND_IMAGE,
-                1200,
-                600,
+                dim.customWidth(1200),
+                dim.customHeight(600),
                 false,
                 true);
         BackgroundImage image = new BackgroundImage(backgroundImage,
@@ -90,11 +95,13 @@ public class ConfigSkillSubscene extends SubScene {
             skillPoints = 8;
         }
         skills = new int[]{0, 0, 0, 0};
-        creditsStat = displayInfo("Credits ", credits, 775, 100);
+        creditsStat = displayInfo("Credits ", credits,
+                dim.customWidth(775), dim.customHeight(100));
         creditsStat.setStyle("-fx-font-weight: bold");
         creditsStat.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
                 + "BURLYWOOD; -fx-border-width: 2px");
-        skillPointsStat = displayInfo("Skill Points ", skillPoints, 775, 165);
+        skillPointsStat = displayInfo("Skill Points ", skillPoints,
+                dim.customWidth(775), dim.customHeight(165));
         skillPointsStat.setStyle("-fx-font-weight: bold");
         skillPointsStat.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: "
                 + "BURLYWOOD; -fx-border-width: 2px");
@@ -114,11 +121,11 @@ public class ConfigSkillSubscene extends SubScene {
         SkillBar engineerBar = createSkillBar(SkillImage.ENGINEER, 3);
 
         YellowButton btnReset = new YellowButton("Reset");
-        btnReset.setLayoutX(800);
-        btnReset.setLayoutY(500);
+        btnReset.setLayoutX(dim.customWidth((800)));
+        btnReset.setLayoutY(dim.customHeight((500)));
         btnConfirm = new YellowButton("Confirm");
-        btnConfirm.setLayoutX(1000);
-        btnConfirm.setLayoutY(500);
+        btnConfirm.setLayoutX(dim.customWidth((1000)));
+        btnConfirm.setLayoutY(dim.customHeight((500)));
 
         root.getChildren().addAll(pilotLabel,
                 fighterLabel,
@@ -149,15 +156,15 @@ public class ConfigSkillSubscene extends SubScene {
 
     private SkillBar createSkillBar(SkillImage skillImageType, int skillIndex) {
         SkillBar temp = new SkillBar(skillImageType);
-        temp.setLayoutX(100 + skillIndex * 175);
-        temp.setLayoutY(375);
+        temp.setLayoutX(dim.customWidth(100 + skillIndex * 175));
+        temp.setLayoutY(dim.customHeight((375)));
         return temp;
     }
 
     private InfoLabel createInfoLabel(String skillName, int skillIndex) {
         InfoLabel temp = new InfoLabel(skillName);
-        temp.setLayoutX(75 + skillIndex * 175);
-        temp.setLayoutY(400);
+        temp.setLayoutX(dim.customWidth(75 + skillIndex * 175));
+        temp.setLayoutY(dim.customHeight((400)));
         return temp;
     }
 
@@ -169,8 +176,8 @@ public class ConfigSkillSubscene extends SubScene {
                     skills[skillIndex]++;
                     skillPoints--;
                     skillPointsStat.setText("Skill Points: " + skillPoints);
-                    bar.setLayoutY(bar.getLayoutY() - 10);
-                    bar.setPrefHeight(bar.getHeight() + 10);
+                    bar.setLayoutY(bar.getLayoutY() - dim.customHeight(10));
+                    bar.setPrefHeight(bar.getHeight() + dim.customHeight(10));
                     bar.setText(skills[skillIndex] + "");
                 } else {
                     button.setHasSkillPoints(false);
@@ -180,8 +187,8 @@ public class ConfigSkillSubscene extends SubScene {
     }
 
     private void reset(InfoLabel button, SkillBar bar) {
-        bar.setLayoutY(375);
-        bar.setPrefHeight(0);
+        bar.setLayoutY(dim.customHeight((375)));
+        bar.setPrefHeight(dim.customHeight((0)));
         bar.setText(0 + "");
         button.setHasSkillPoints(true);
         setName("");
@@ -198,10 +205,10 @@ public class ConfigSkillSubscene extends SubScene {
 
         if (isHidden) {
             //setToY(y) is move down y units instead move to y coordinate.
-            transition.setToY(750);
+            transition.setToY(dim.customHeight(750));
             isHidden = false;
         } else {
-            transition.setToY(-750);
+            transition.setToY(-dim.customHeight(750));
             isHidden = true;
         }
 
@@ -215,18 +222,18 @@ public class ConfigSkillSubscene extends SubScene {
         nameLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color: "
                 + "BURLYWOOD; -fx-border-width: 2px");
         try {
-            nameLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
+            nameLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), FONTSIZE));
         } catch (FileNotFoundException e) {
-            nameLabel.setFont(Font.font("Verdana", 23));
+            nameLabel.setFont(Font.font("Verdana", FONTSIZE));
         }
         //nameLabel.setStyle("-fx-background-color: blue");
         TextField inputName = new TextField();
-        inputName.setPrefWidth(250);
-        inputName.setPrefHeight(30);
-        inputName.setLayoutX(875);
-        inputName.setLayoutY(54.5);
-        nameLabel.setLayoutX(775);
-        nameLabel.setLayoutY(53);
+        inputName.setPrefWidth(dim.customWidth((250)));
+        inputName.setPrefHeight(dim.customHeight((30)));
+        inputName.setLayoutX(dim.customWidth((875)));
+        inputName.setLayoutY(dim.customHeight((54.5)));
+        nameLabel.setLayoutX(dim.customWidth((775)));
+        nameLabel.setLayoutY(dim.customHeight((53)));
         anchorPane.getChildren().add(nameLabel);
         anchorPane.getChildren().add(inputName);
         setName(inputName.getText());
@@ -241,23 +248,23 @@ public class ConfigSkillSubscene extends SubScene {
         shipLabel.setStyle("-fx-border-color: SADDLEBROWN ; -fx-background-color:"
                 + " BURLYWOOD; -fx-border-width: 2px");
         try {
-            shipLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
+            shipLabel.setFont(Font.loadFont(new FileInputStream(FONT_PATH), FONTSIZE));
         } catch (FileNotFoundException e) {
-            shipLabel.setFont(Font.font("Verdana", 23));
+            shipLabel.setFont(Font.font("Verdana", FONTSIZE));
         }
         //shipLabel.setStyle("-fx-background-color: blue");
         broomCheckBox = new CheckBox();
         //checkBox.setStyle("-fx-border-color: blue");
         Image broom = new Image(BROOM_PATH);
         ImageView broomView = new ImageView(broom);
-        shipLabel.setLayoutX(775);
-        shipLabel.setLayoutY(250);
-        broomCheckBox.setLayoutX(950);
-        broomCheckBox.setLayoutY(300);
-        broomView.setLayoutX(890);
-        broomView.setLayoutY(300);
-        broomView.setFitHeight(200);
-        broomView.setFitWidth(200);
+        shipLabel.setLayoutX(dim.customWidth((775)));
+        shipLabel.setLayoutY(dim.customHeight((250)));
+        broomCheckBox.setLayoutX(dim.customWidth((950)));
+        broomCheckBox.setLayoutY(dim.customHeight((300)));
+        broomView.setLayoutX(dim.customWidth((890)));
+        broomView.setLayoutY(dim.customHeight((300)));
+        broomView.setFitHeight(dim.customHeight((200)));
+        broomView.setFitWidth(dim.customWidth((200)));
         anchorPane.getChildren().add(shipLabel);
         anchorPane.getChildren().add(broomCheckBox);
         anchorPane.getChildren().add(broomView);
@@ -272,14 +279,14 @@ public class ConfigSkillSubscene extends SubScene {
     public Label displayInfo(String name, int info, double x, double y) {
         Label temp = new Label(name + " " + info);
         try {
-            temp.setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
+            temp.setFont(Font.loadFont(new FileInputStream(FONT_PATH), FONTSIZE));
         } catch (FileNotFoundException e) {
-            temp.setFont(Font.font("Verdana", 23));
+            temp.setFont(Font.font("Verdana", FONTSIZE));
         }
         temp.setAlignment(Pos.CENTER);
         //temp.setStyle("-fx-background-color: blue");
-        temp.setPrefWidth(325);
-        temp.setPrefHeight(50);
+        temp.setPrefWidth(dim.customWidth((325)));
+        temp.setPrefHeight(dim.customHeight((50)));
         temp.setLayoutX(x);
         temp.setLayoutY(y);
         return temp;

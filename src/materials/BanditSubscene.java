@@ -21,6 +21,12 @@ import java.util.Random;
 
 
 public class BanditSubscene extends SubScene {
+
+    private static DimensionsHandler dim = new DimensionsHandler();
+    private static final int HEIGHT = dim.getHeight();
+    private static final int WIDTH = dim.getWidth();
+    private static final int FONTSIZE = dim.getFontsize();
+
     private static final String BACKGROUND_IMAGE = "materials/image/banditBackground2.jpg";
     private boolean isHidden;
     private YellowButton btnPay;
@@ -38,9 +44,9 @@ public class BanditSubscene extends SubScene {
     private Region targetRegion;
 
     public BanditSubscene() {
-        super(new AnchorPane(), 1600, 900);
-        prefWidth(1600);
-        prefHeight(900);
+        super(new AnchorPane(), WIDTH, HEIGHT);
+        prefWidth(WIDTH);
+        prefHeight(HEIGHT);
 
         isHidden = true;
 
@@ -49,8 +55,8 @@ public class BanditSubscene extends SubScene {
         displayText(root2);
         createButton(root2);
 
-        setLayoutX(0);
-        setLayoutY(-900);
+        setLayoutX(dim.customWidth((0)));
+        setLayoutY(-HEIGHT);
     }
 
     /**
@@ -95,8 +101,8 @@ public class BanditSubscene extends SubScene {
      */
     private void setBackgroundImage(AnchorPane root) {
         Image backgroundImage = new Image(BACKGROUND_IMAGE,
-                1600,
-                900,
+                WIDTH,
+                HEIGHT,
                 false,
                 true);
         BackgroundImage image = new BackgroundImage(backgroundImage,
@@ -112,11 +118,11 @@ public class BanditSubscene extends SubScene {
      * @param root the root where we display the text (text box)
      */
     private void displayText(AnchorPane root) {
-        banditDemandLabel = displayLabel("", 400, 100);
-        creditLabel = displayLabel("", 400, 200);
-        broomHealth = displayLabel("", 400, 300);
-        broomFuel = displayLabel("", 400, 400);
-        resultLabel = displayLabel("", 400, 500);
+        banditDemandLabel = displayLabel("", dim.customWidth(400), dim.customHeight(100));
+        creditLabel = displayLabel("", dim.customWidth(400), dim.customHeight(200));
+        broomHealth = displayLabel("", dim.customWidth(400), dim.customHeight(300));
+        broomFuel = displayLabel("", dim.customWidth(400), dim.customHeight(400));
+        resultLabel = displayLabel("", dim.customWidth(400), dim.customHeight(500));
 
         root.getChildren().addAll(banditDemandLabel, creditLabel,
                 broomFuel, broomHealth, resultLabel);
@@ -131,10 +137,10 @@ public class BanditSubscene extends SubScene {
      */
     private Label displayLabel(String message, double x, double y) {
         Label temp = new Label(message);
-        temp.setFont(new Font(23));
+        temp.setFont(new Font(FONTSIZE));
         temp.setAlignment(Pos.CENTER_LEFT);
-        temp.setPrefWidth(800);
-        temp.setPrefHeight(200);
+        temp.setPrefWidth(dim.customWidth(800));
+        temp.setPrefHeight(dim.customHeight(200));
         temp.setLayoutX(x);
         temp.setLayoutY(y);
         temp.setTextFill(Color.web("#ffffff"));
@@ -151,10 +157,10 @@ public class BanditSubscene extends SubScene {
         transition.setNode(this);
         if (isHidden) {
             //setToY(y) is move down y units instead move to y coordinate.
-            transition.setToY(900);
+            transition.setToY(HEIGHT);
             isHidden = false;
         } else {
-            transition.setToY(-900);
+            transition.setToY(-HEIGHT);
             isHidden = true;
         }
         transition.play();
@@ -371,25 +377,25 @@ public class BanditSubscene extends SubScene {
      */
     private void createButton(AnchorPane root) {
         btnPay = new YellowButton("Pay");
-        btnPay.setLayoutX(400);
-        btnPay.setLayoutY(700);
+        btnPay.setLayoutX(dim.customWidth((400)));
+        btnPay.setLayoutY(dim.customHeight((700)));
         btnPay.setDisable(false);
         btnFight = new YellowButton("Fight");
-        btnFight.setLayoutX(600);
-        btnFight.setLayoutY(700);
+        btnFight.setLayoutX(dim.customWidth((600)));
+        btnFight.setLayoutY(dim.customHeight((700)));
         btnFight.setDisable(false);
         btnFlee = new YellowButton("Flee");
-        btnFlee.setLayoutX(800);
-        btnFlee.setLayoutY(700);
+        btnFlee.setLayoutX(dim.customWidth((800)));
+        btnFlee.setLayoutY(dim.customHeight((700)));
         btnFlee.setDisable(false);
         btnContinueNoPay = new YellowButton("ConsistNoPay");
-        btnContinueNoPay.setPrefWidth(250);
-        btnContinueNoPay.setLayoutX(1000);
-        btnContinueNoPay.setLayoutY(700);
+        btnContinueNoPay.setPrefWidth(dim.customWidth((250)));
+        btnContinueNoPay.setLayoutX(dim.customWidth((1000)));
+        btnContinueNoPay.setLayoutY(dim.customHeight((700)));
         btnContinueNoPay.setDisable(true);
         btnExit = new YellowButton("Exit");
-        btnExit.setLayoutX(1300);
-        btnExit.setLayoutY(700);
+        btnExit.setLayoutX(dim.customWidth((1300)));
+        btnExit.setLayoutY(dim.customHeight((700)));
         btnExit.setDisable(true);
         pay();
         fight();

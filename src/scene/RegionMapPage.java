@@ -15,10 +15,12 @@ import materials.*;
 import java.util.*;
 
 public class RegionMapPage {
-    private static RegionMapPage single_instance = null;
+    private static RegionMapPage singleInstance = null;
 
-    private static final int HEIGHT = 900;
-    private static final int WIDTH = 1600;
+    private static DimensionsHandler dim = new DimensionsHandler();
+    private static final int HEIGHT = dim.getHeight();
+    private static final int WIDTH = dim.getWidth();
+    private static final int FONTSIZE = dim.getFontsize();
     private AnchorPane mainPane;
     private Scene mainScene;
 
@@ -42,14 +44,14 @@ public class RegionMapPage {
     private int fuelCost;
 
     public static RegionMapPage getInstance() {
-        if (single_instance == null) {
+        if (singleInstance == null) {
             synchronized (RegionMapPage.class) {
-                if (single_instance == null) {
-                    single_instance = new RegionMapPage();
+                if (singleInstance == null) {
+                    singleInstance = new RegionMapPage();
                 }
             }
         }
-        return single_instance;
+        return singleInstance;
     }
 
     private RegionMapPage() {
@@ -146,9 +148,9 @@ public class RegionMapPage {
                 new Alert(Alert.AlertType.NONE,
                         "Ooops! You don't have enough fuel.", ButtonType.OK).show();
             } else {
-                //Use NPCEncounterForUser() for game purpose
-                //Use NPCEncounterForTesting() for debug purpose
-                NPCEncounterForUser();
+                //Use npcEncounterForUser() for game purpose
+                //Use npcEncounterForTesting() for debug purpose
+                npcEncounterForUser();
             }
         });
         subscene.getBtnMarket().setOnMouseClicked(event -> {
@@ -168,7 +170,7 @@ public class RegionMapPage {
      * [M6_Space_Police_Encounter 3/13/20]
      * Game difficulty increases space-police encounters
      */
-    private void NPCEncounterForUser() {
+    private void npcEncounterForUser() {
         Random random = new Random();
         int points = random.nextInt(100);
 
@@ -235,17 +237,17 @@ public class RegionMapPage {
         }
     }
 
-    private void NPCEncounterForTesting(BanditSubscene banditSubscene) {
+    private void npcEncounterForTesting(BanditSubscene banditSubscene) {
         banditSubscene.generateBanditInfo(regionSelected);
         banditSubscene.moveSubScene();
     }
 
-    private void NPCEncounterForTesting(TraderSubscene traderSubscene) {
+    private void npcEncounterForTesting(TraderSubscene traderSubscene) {
         traderSubscene.generateTraderInfo(regionSelected);
         traderSubscene.moveSubScene();
     }
 
-    private void NPCEncounterForTesting(PoliceSubscene policeSubscene) {
+    private void npcEncounterForTesting(PoliceSubscene policeSubscene) {
         policeSubscene.generatePoliceInfo(regionSelected);
         policeSubscene.moveSubScene();
     }

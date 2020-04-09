@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Market {
-    private static Market single_instance = null;
+    private static Market singleInstance = null;
     private Creature[] shopList;
     private Creature[] tradeList;
     private Equipment[] equipmentList;
@@ -92,13 +92,13 @@ public class Market {
     }
 
     public static Market getInstance() {
-        if (single_instance == null) {
+        if (singleInstance == null) {
             synchronized (Market.class) {
-                if (single_instance == null) {
-                    single_instance = new Market();
+                if (singleInstance == null) {
+                    singleInstance = new Market();
                 }
             }
         }
-        return single_instance;
+        return singleInstance;
     }
 }

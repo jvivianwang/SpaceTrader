@@ -111,9 +111,9 @@ public class Main extends Application {
                 Player.getInstance().setName(subscene.getNameValue().getText());
                 //create broom
                 Broom.getInstance();
-                if (Player.getInstance().getDifficulty().equalsIgnoreCase("easy")){
+                if (Player.getInstance().getDifficulty().equalsIgnoreCase("easy")) {
                     Broom.getInstance().setHealth(2000);
-                } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("medium")){
+                } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("medium")) {
                     Broom.getInstance().setHealth(1000);
                 } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("hard")) {
                     Broom.getInstance().setHealth(500);
