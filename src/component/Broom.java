@@ -12,6 +12,8 @@ public class Broom {
     private int fuelCapacity;
     private ArrayList<Item> inventory;
     private int health;
+    private boolean unicorn;
+
 
     private Broom() {
         health = 1000;
@@ -19,6 +21,7 @@ public class Broom {
         //itemInventory.length == cargoCapacity;
         cargoCapacity = 9;
         inventory = new ArrayList<>(cargoCapacity);
+        unicorn = false;
     }
 
     public static Broom getInstance() {
@@ -94,6 +97,16 @@ public class Broom {
     //resets broom inventory by creating an empty array list
     public void resetInventory() {
         inventory = new ArrayList<>(cargoCapacity);
+    }
+
+    public void setUnicorn(boolean unicorn) {
+        this.unicorn = unicorn;
+    }
+    public boolean getUnicorn() {
+        return unicorn;
+    }
+    public void reset() {
+        singleInstance = new Broom();
     }
 }
 

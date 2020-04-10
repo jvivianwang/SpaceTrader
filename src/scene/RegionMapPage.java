@@ -370,4 +370,6 @@ public class RegionMapPage {
     public Scene getMainScene() {
         return mainScene;
     }
+    public MarketSubscene getMarketScene() {return marketScene;}
+    public void reset() {singleInstance = new RegionMapPage();}
 }

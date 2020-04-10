@@ -13,6 +13,7 @@ import materials.YellowButton;
 
 public class ConfigPage {
 
+    private static ConfigPage singleInstance = null;
     private static DimensionsHandler dim = new DimensionsHandler();
     private static final int HEIGHT = dim.getHeight();
     private static final int WIDTH = dim.getWidth();
@@ -27,6 +28,17 @@ public class ConfigPage {
 
     private ConfigSkillSubscene nextSceneToHide;
     private YellowButton nextButtonToRelease;
+
+    public static ConfigPage getInstance() {
+        if (singleInstance == null) {
+            synchronized (PlayerSheetPage.class) {
+                if (singleInstance == null) {
+                    singleInstance = new ConfigPage();
+                }
+            }
+        }
+        return singleInstance;
+    }
 
     public ConfigPage() {
         mainPane = new AnchorPane();
@@ -129,4 +141,6 @@ public class ConfigPage {
     public void setHardSubScene(ConfigSkillSubscene hardSubScene) {
         this.hardSubScene = hardSubScene;
     }
+    public void reset(){singleInstance = new ConfigPage();}
+
 }

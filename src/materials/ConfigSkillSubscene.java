@@ -1,19 +1,21 @@
 package materials;
 
+import application.Main;
+import component.Broom;
+import component.Player;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 
 import javafx.scene.SubScene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import scene.PlayerSheetPage;
 
 
 import java.io.FileInputStream;
@@ -126,6 +128,49 @@ public class ConfigSkillSubscene extends SubScene {
         btnConfirm = new YellowButton("Confirm");
         btnConfirm.setLayoutX(dim.customWidth((1000)));
         btnConfirm.setLayoutY(dim.customHeight((500)));
+        btnConfirm.setOnMouseClicked(e -> {
+            if (nameValue.getText().trim().isEmpty()
+                    && !broomCheckBox.isSelected()) {
+                //subscene.nameValue.setStyle("-fx-border-color: red");
+                Alert a = new Alert(Alert.AlertType.NONE,
+                        "Please enter your name and select your broom", ButtonType.OK);
+
+                a.show();
+
+            } else if (nameValue.getText().trim().isEmpty()) {
+                //subscene.nameValue.setStyle("-fx-border-color: red");
+                Alert a = new Alert(Alert.AlertType.NONE,
+                        "Please enter your name", ButtonType.OK);
+
+                a.show();
+
+            } else if (!broomCheckBox.isSelected()) {
+                //subscene.nameValue.setStyle("-fx-border-color: red");
+                Alert a = new Alert(Alert.AlertType.NONE,
+                        "Please select your broom", ButtonType.OK);
+
+                a.show();
+
+            } else {
+                Player.getInstance().reset();
+                Player.getInstance().setDifficulty(difficulty);
+                Player.getInstance().setCredits(credits);
+                Player.getInstance().setSkillPoints(skillPoints);
+                Player.getInstance().setSkills(skills);
+                Player.getInstance().setName(nameValue.getText());
+                //create broom
+                Broom.getInstance().reset();
+                if (Player.getInstance().getDifficulty().equalsIgnoreCase("easy")) {
+                    Broom.getInstance().setHealth(2000);
+                } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("medium")) {
+                    Broom.getInstance().setHealth(1000);
+                } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("hard")) {
+                    Broom.getInstance().setHealth(500);
+                }
+                PlayerSheetPage.getInstance().reset();
+                Main.setScene(PlayerSheetPage.getInstance().getMainScene());
+            }
+        });
 
         root.getChildren().addAll(pilotLabel,
                 fighterLabel,

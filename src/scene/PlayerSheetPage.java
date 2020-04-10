@@ -1,5 +1,8 @@
 package scene;
 
+import application.Main;
+import component.Broom;
+import component.Market;
 import component.Player;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,6 +22,7 @@ import java.io.FileNotFoundException;
 
 public class PlayerSheetPage {
 
+    private static PlayerSheetPage singleInstance = null;
     private static DimensionsHandler dim = new DimensionsHandler();
     private static final int HEIGHT = dim.getHeight();
     private static final int WIDTH = dim.getWidth();
@@ -28,10 +32,22 @@ public class PlayerSheetPage {
     private AnchorPane mainPane;
     private Scene mainScene;
     private YellowButton btnNextPage;
+    private YellowButton btnNewGame;
+    private boolean health;
+    private boolean unicorn;
 
+    public static PlayerSheetPage getInstance() {
+        if (singleInstance == null) {
+            synchronized (PlayerSheetPage.class) {
+                if (singleInstance == null) {
+                    singleInstance = new PlayerSheetPage();
+                }
+            }
+        }
+        return singleInstance;
+    }
 
-
-    public PlayerSheetPage() {
+    private PlayerSheetPage() {
         mainPane = new AnchorPane();
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         createBackground();
@@ -109,11 +125,39 @@ public class PlayerSheetPage {
     }
 
     private void createButton() {
-        btnNextPage  = new YellowButton("BEGIN GAME");
-        btnNextPage.setLayoutX(dim.customWidth((750)));
-        btnNextPage.setLayoutY(dim.customHeight((750)));
-        btnNextPage.setPrefWidth(dim.customWidth((200)));
-        mainPane.getChildren().add(btnNextPage);
+        if ((Broom.getInstance().getHealth() <= 0)|| Broom.getInstance().getUnicorn()) {
+            System.out.println(Broom.getInstance().getHealth() + "" +Broom.getInstance().getUnicorn());
+            btnNewGame  = new YellowButton("NEW GAME");
+            btnNewGame.setLayoutX(dim.customWidth((750)));
+            btnNewGame.setLayoutY(dim.customHeight((750)));
+            btnNewGame.setPrefWidth(dim.customWidth((200)));
+            btnNewGame.setOnMouseClicked(e -> {
+                ConfigPage.getInstance().reset();
+                System.out.println("button pressed");
+                Player.getInstance().reset();
+                System.out.println("p reset");
+                Broom.getInstance().reset();
+                System.out.println("b reset");
+                Market.getInstance().reset();
+                System.out.println("m reset");
+                RegionMapPage.getInstance().reset();
+                System.out.println("rmp reset");
+                Main.setScene(ConfigPage.getInstance().getMainScene());
+                System.out.println("cp swii");
+            });
+            mainPane.getChildren().add(btnNewGame);
+        } else {
+            System.out.println(Broom.getInstance().getHealth() + "" +Broom.getInstance().getUnicorn());
+            btnNextPage  = new YellowButton("NEXT PAGE");
+            btnNextPage.setLayoutX(dim.customWidth((750)));
+            btnNextPage.setLayoutY(dim.customHeight((750)));
+            btnNextPage.setPrefWidth(dim.customWidth((200)));
+            btnNextPage.setOnMouseClicked(e -> {
+                RegionMapPage.getInstance().reset();
+                Main.setScene(RegionMapPage.getInstance().getMainScene());
+            });
+            mainPane.getChildren().add(btnNextPage);
+        }
     }
 
     public Scene getMainScene() {
@@ -123,6 +167,9 @@ public class PlayerSheetPage {
     public YellowButton getBtnNextPage() {
         return btnNextPage;
     }
+    public YellowButton getBtnNewGame() {
+        return btnNewGame;
+    }
     private void setLabelFont(Label myLabel) {
         try {
             myLabel.setFont(Font.loadFont(new FileInputStream(fontPath), dim.customHeight(30)));
@@ -130,6 +177,5 @@ public class PlayerSheetPage {
             myLabel.setFont(Font.font("Verdana", FONTSIZE));
         }
     }
-
-
+    public void reset(){singleInstance = new PlayerSheetPage();}
 }

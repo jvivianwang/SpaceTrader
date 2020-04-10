@@ -162,3 +162,7 @@ Paulina 4/8/2020
 Rylie and Vivian 4/9/2020
 [what we've done]
 -added a refuel button with correct implementation 
+
+Rylie and Vivian and 4/10/2020
+[what we've done]
+-created end game screen

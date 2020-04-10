@@ -16,12 +16,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import scene.PlayerSheetPage;
 import scene.RegionMapPage;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class PoliceSubscene extends SubScene {
 
@@ -254,14 +252,16 @@ public class PoliceSubscene extends SubScene {
             } else {
                 resultLabel.setText("Too slow! Better luck next time!");
                 //Health below zero Game Over
-                if (Broom.getInstance().getHealth() <= 50) {
-                    new Alert(Alert.AlertType.NONE,
-                            "Broom Destroyed Game Over.", ButtonType.OK).show();
-                    Platform.exit();
-                    System.exit(0);
-                } else {
-                    //lose health
-                    Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                //Health below zero Game Over
+                if (Broom.getInstance().getHealth() <= 0) {
+                    Alert alert = new Alert(Alert.AlertType.NONE,
+                            "Better luck next time! You died.", ButtonType.OK);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        PlayerSheetPage.getInstance().reset();
+                        application.Main.setScene(PlayerSheetPage.getInstance().getMainScene());
+                    }
                 }
                 //Lose credits
                 if (Player.getInstance().getCredits() < 500) {
@@ -307,15 +307,16 @@ public class PoliceSubscene extends SubScene {
                 resultLabel.setText("You lost! Better luck next time!");
                 //Lose all credits
                 Player.getInstance().setCredits(0);
+                Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
                 //Health below zero Game Over
-                if (Broom.getInstance().getHealth() <= 50) {
-                    new Alert(Alert.AlertType.NONE,
-                            "Broom Destroyed Game Over.", ButtonType.OK).show();
-                    Platform.exit();
-                    System.exit(0);
-                } else {
-                    //lose health
-                    Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                if (Broom.getInstance().getHealth() <= 0) {
+                    Alert alert = new Alert(Alert.AlertType.NONE,
+                            "Better luck next time! You died.", ButtonType.OK);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        PlayerSheetPage.getInstance().reset();
+                        application.Main.setScene(PlayerSheetPage.getInstance().getMainScene());
+                    }
                 }
             }
             //Enable exit button
