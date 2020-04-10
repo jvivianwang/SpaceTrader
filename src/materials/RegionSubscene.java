@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import java.text.DecimalFormat;
 
 public class RegionSubscene extends SubScene {
 
@@ -36,6 +37,7 @@ public class RegionSubscene extends SubScene {
     private Label distance;
     private Label coordinate;
     private Label fuelRemain;
+    private Label shipHealth;
 
     private String regionNameInfo;
     private String techLevelInfo;
@@ -43,10 +45,12 @@ public class RegionSubscene extends SubScene {
     private String distanceInfo;
     private String coordinateInfo;
     private String fuelRemainInfo;
+    private String shipHealthInfo;
 
     private YellowButton btnTravel;
     private YellowButton btnRefuel;
     private YellowButton btnMarket;
+    private YellowButton btnRepair;
 
     public RegionSubscene() {
         super(new AnchorPane(), SUBSCENE_WIDTH, HEIGHT);
@@ -83,6 +87,7 @@ public class RegionSubscene extends SubScene {
         distanceInfo = "UNKNOWN";
         coordinateInfo = "UNKNOWN";
         fuelRemainInfo = "UNKNOWN";
+        shipHealthInfo = "UNKNOWN";
 
         regionName = displayLabel("Region Name", regionNameInfo,
                 dim.customWidth(20), dim.customHeight(50));
@@ -96,9 +101,11 @@ public class RegionSubscene extends SubScene {
                 dim.customWidth(20), dim.customHeight(450));
         fuelRemain = displayLabel("Fuel Remain", fuelRemainInfo,
                 dim.customWidth(20), dim.customHeight(550));
+        shipHealth = displayLabel("Broom Health", shipHealthInfo,
+                dim.customWidth(20), dim.customHeight(650));
 
         root.getChildren().addAll(regionName, techLevel,
-                description, distance, coordinate, fuelRemain);
+                description, distance, coordinate, fuelRemain, shipHealth);
     }
 
     public void setDisplayInfo(Region regionSelect) {
@@ -107,6 +114,7 @@ public class RegionSubscene extends SubScene {
         distanceInfo = calculateDistance(Player.getInstance().getCurrentRegion(), regionSelect)
                 + "";
         fuelRemainInfo = Broom.getInstance().getFuelCapacity() + " /1000";
+        shipHealthInfo = Broom.getInstance().getHealthString();
         if (regionSelect.isDiscovered()) {
             techLevelInfo = regionSelect.getTechLevel() + "";
             descriptionInfo = regionSelect.getDescription();
@@ -126,22 +134,28 @@ public class RegionSubscene extends SubScene {
         coordinate.setTextFill(Color.web("#ffffff"));
         fuelRemain.setText("Fuel Remain: " + "\n" + fuelRemainInfo);
         fuelRemain.setTextFill(Color.web("#ffffff"));
+        shipHealth.setText("Broom Health: " + '\n' + shipHealthInfo);
+        shipHealth.setTextFill(Color.web("#ffffff"));
     }
 
     private void createButton(AnchorPane root) {
         btnTravel = new YellowButton("Travel");
         btnRefuel = new YellowButton("Refuel");
         btnMarket = new YellowButton("Market");
+        btnRepair = new YellowButton("Repair");
         btnTravel.setLayoutX(dim.customWidth(80));
         btnTravel.setLayoutY(dim.customHeight(680));
         btnRefuel.setLayoutX(dim.customWidth(80));
         btnRefuel.setLayoutY(dim.customHeight(740));
         btnMarket.setLayoutX(dim.customWidth(80));
         btnMarket.setLayoutY(dim.customHeight(800));
+        btnRepair.setLayoutX(dim.customWidth(80));
+        btnRepair.setLayoutX(dim.customHeight(860));
 
         root.getChildren().add(btnTravel);
         root.getChildren().add(btnRefuel);
         root.getChildren().add(btnMarket);
+        root.getChildren().add(btnRepair);
     }
 
     private int calculateDistance(Region r1, Region r2) {
@@ -186,4 +200,8 @@ public class RegionSubscene extends SubScene {
     public YellowButton getBtnMarket() {
         return btnMarket;
     }
+    public YellowButton getBtnRepair() {
+        return btnRepair;
+    }
+
 }

@@ -199,6 +199,23 @@ public class RegionMapPage {
             }
             }
         });
+        subscene.getBtnRepair().setOnMouseClicked(event -> {
+            if (Broom.getInstance().getHealth() >= 1000) { //max broom health
+                Alert alert = new Alert(Alert.AlertType.NONE, "Your broom is already"
+                + "at max health!", ButtonType.OK);
+            } else {
+                int cost = (int) Math.round(100 - Player.getInstance().getSkills()[3]*0.9);
+                if (Player.getInstance().getCredits() > cost) {
+                    Player.getInstance().setCredits(Player.getInstance().getCredits() - cost);
+                    Alert a = new Alert(Alert.AlertType.NONE,
+                            "You've healed your ship by 50 hp!", ButtonType.OK);
+                    a.show();
+                } else {
+                    Alert a = new Alert(Alert.AlertType.NONE, "You can't afford"
+                    + "this. Broke boiiiiiii!!");
+                }
+            }
+        });
     }
 
 
@@ -321,10 +338,11 @@ public class RegionMapPage {
                 subscene1.getBtnTravel().setDisable(true);
                 subscene1.getBtnRefuel().setDisable(false);
                 subscene1.getBtnMarket().setDisable(false);
+                subscene1.getBtnRepair().setDisable(false);
             } else {
                 subscene1.getBtnTravel().setDisable(false);
                 subscene1.getBtnRefuel().setDisable(false);
-                subscene1.getBtnMarket().setDisable(true);
+                subscene1.getBtnRepair().setDisable(false);
             }
             subscene1.moveSubScene();
             nextSceneToHide = subscene1;
@@ -335,10 +353,12 @@ public class RegionMapPage {
                 subscene2.getBtnTravel().setDisable(true);
                 subscene2.getBtnRefuel().setDisable(false);
                 subscene2.getBtnMarket().setDisable(false);
+                subscene1.getBtnRepair().setDisable(false);
             } else {
                 subscene2.getBtnTravel().setDisable(false);
                 subscene2.getBtnRefuel().setDisable(false);
                 subscene2.getBtnMarket().setDisable(true);
+                subscene1.getBtnRepair().setDisable(false);
             }
             nextSceneToHide = subscene2;
         }

@@ -2,6 +2,7 @@ package component;
 
 import materials.Item;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Broom {
@@ -66,6 +67,15 @@ public class Broom {
 
     public int getHealth() {
         return health;
+    }
+
+    public String getHealthString() {
+        DecimalFormat df = new DecimalFormat("#");
+        return df.format(Broom.getInstance().getHealth());
+    }
+
+    public void repair() {
+        health+=50;
     }
 
     public void gainCreature(Creature creature) {

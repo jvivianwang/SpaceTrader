@@ -15,7 +15,6 @@ import scene.WelcomePage;
 
 import java.io.File;
 
-
 //Commented out imports we haven't used yet
 //import javafx.embed.swing.JFXPanel;
 //import javafx.event.ActionEvent;
