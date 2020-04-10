@@ -160,7 +160,48 @@ public class RegionMapPage {
             marketScene.updateInventory();
             marketScene.moveSubScene();
         });
+        subscene.getBtnRefuel().setOnMouseClicked(event -> {
+            if (Broom.getInstance().getFuelCapacity() >= 1000) {
+                Alert a = new Alert(Alert.AlertType.NONE,
+                        "Your current fuel is greater than the capacity!", ButtonType.OK);
+
+                a.show();
+            } else {
+                int cost = 1000 - Broom.getInstance().getFuelCapacity();
+                if (Player.getInstance().getCredits() > 0) {
+                    System.out.println(Broom.getInstance().getFuelCapacity());
+                    if (Player.getInstance().getCredits() > cost) {
+                        Player.getInstance().setCredits(Player.getInstance().getCredits() - cost);
+                        Broom.getInstance().setFuelCapacity(1000);
+
+                        System.out.println(Broom.getInstance().getFuelCapacity());
+
+                        Alert a = new Alert(Alert.AlertType.NONE,
+                                "You've refueled to full capacity!", ButtonType.OK);
+
+                        a.show();
+                        showSubScene(Player.getInstance().getCurrentRegion());
+                    } else {
+                        Broom.getInstance().setFuelCapacity(Broom.getInstance().getFuelCapacity() + Player.getInstance().getCredits());
+                        Player.getInstance().setCredits(0);
+                        Alert a = new Alert(Alert.AlertType.NONE,
+                                "You've increased your fuel to" + Broom.getInstance().getFuelCapacity() + "!", ButtonType.OK);
+
+                        a.show();
+                        showSubScene(Player.getInstance().getCurrentRegion());
+                    }
+                } else {
+                    Alert a = new Alert(Alert.AlertType.NONE,
+                            "Your current fuel is greater than the capacity!", ButtonType.OK);
+
+                    a.show();
+                    showSubScene(Player.getInstance().getCurrentRegion());
+            }
+            }
+        });
     }
+
+
 
     /**
      * [M6_General_Encounters 3/13/20]
@@ -278,9 +319,11 @@ public class RegionMapPage {
             subscene1.setDisplayInfo(targetRegion);
             if (targetRegion == Player.getInstance().getCurrentRegion()) {
                 subscene1.getBtnTravel().setDisable(true);
+                subscene1.getBtnRefuel().setDisable(false);
                 subscene1.getBtnMarket().setDisable(false);
             } else {
                 subscene1.getBtnTravel().setDisable(false);
+                subscene1.getBtnRefuel().setDisable(false);
                 subscene1.getBtnMarket().setDisable(true);
             }
             subscene1.moveSubScene();
@@ -290,9 +333,11 @@ public class RegionMapPage {
             subscene2.moveSubScene();
             if (targetRegion == Player.getInstance().getCurrentRegion()) {
                 subscene2.getBtnTravel().setDisable(true);
+                subscene2.getBtnRefuel().setDisable(false);
                 subscene2.getBtnMarket().setDisable(false);
             } else {
                 subscene2.getBtnTravel().setDisable(false);
+                subscene2.getBtnRefuel().setDisable(false);
                 subscene2.getBtnMarket().setDisable(true);
             }
             nextSceneToHide = subscene2;

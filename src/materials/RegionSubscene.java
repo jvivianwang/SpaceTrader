@@ -45,6 +45,7 @@ public class RegionSubscene extends SubScene {
     private String fuelRemainInfo;
 
     private YellowButton btnTravel;
+    private YellowButton btnRefuel;
     private YellowButton btnMarket;
 
     public RegionSubscene() {
@@ -105,7 +106,7 @@ public class RegionSubscene extends SubScene {
         coordinateInfo = regionSelect.getCoordinate();
         distanceInfo = calculateDistance(Player.getInstance().getCurrentRegion(), regionSelect)
                 + "";
-        fuelRemainInfo = Broom.getInstance().getFuelCapacity() + "";
+        fuelRemainInfo = Broom.getInstance().getFuelCapacity() + " /1000";
         if (regionSelect.isDiscovered()) {
             techLevelInfo = regionSelect.getTechLevel() + "";
             descriptionInfo = regionSelect.getDescription();
@@ -129,13 +130,17 @@ public class RegionSubscene extends SubScene {
 
     private void createButton(AnchorPane root) {
         btnTravel = new YellowButton("Travel");
+        btnRefuel = new YellowButton("Refuel");
         btnMarket = new YellowButton("Market");
         btnTravel.setLayoutX(dim.customWidth(80));
-        btnTravel.setLayoutY(dim.customHeight(650));
+        btnTravel.setLayoutY(dim.customHeight(680));
+        btnRefuel.setLayoutX(dim.customWidth(80));
+        btnRefuel.setLayoutY(dim.customHeight(740));
         btnMarket.setLayoutX(dim.customWidth(80));
-        btnMarket.setLayoutY(dim.customHeight(750));
+        btnMarket.setLayoutY(dim.customHeight(800));
 
         root.getChildren().add(btnTravel);
+        root.getChildren().add(btnRefuel);
         root.getChildren().add(btnMarket);
     }
 
@@ -174,6 +179,9 @@ public class RegionSubscene extends SubScene {
 
     public YellowButton getBtnTravel() {
         return btnTravel;
+    }
+    public YellowButton getBtnRefuel() {
+        return btnRefuel;
     }
     public YellowButton getBtnMarket() {
         return btnMarket;

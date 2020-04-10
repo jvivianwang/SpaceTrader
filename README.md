@@ -158,3 +158,7 @@ Jiawei 3/13/20
 Paulina 4/8/2020
 [What I've done]
 - implemented DimensionsHandler to make the game resize to screen dimensions
+
+Rylie and Vivian 4/9/2020
+[what we've done]
+-added a refuel button with correct implementation 
