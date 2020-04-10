@@ -16,8 +16,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import scene.PlayerSheetPage;
 import scene.RegionMapPage;
 
+import java.util.Optional;
 import java.util.Random;
 
 
@@ -284,6 +286,17 @@ public class TraderSubscene extends SubScene {
                                 + Broom.getInstance().getInventory().get(i).getName() + ".png",
                         dim.customWidth(100), dim.customHeight(100), false, true);
                 inventoryListImage[i].setImage(image);
+                if (Broom.getInstance().getInventory().get(i).getName().equals("Unicorn")) {
+                    Broom.getInstance().setUnicorn(true);
+                    Alert alert = new Alert(Alert.AlertType.NONE,
+                            "CONGRATULATIONS! You obtained the unicorn and won the game!", ButtonType.OK);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        PlayerSheetPage.getInstance().reset();
+                        application.Main.setScene(PlayerSheetPage.getInstance().getMainScene());
+                    }
+
+                }
             } else {
                 Image image = new Image("materials/image/empty.png",
                         dim.customWidth(100), dim.customHeight(100), false, true);
@@ -373,39 +386,48 @@ public class TraderSubscene extends SubScene {
             if (Player.getInstance().getDifficulty().equalsIgnoreCase("easy")) {
                 if (random > 50 + Player.getInstance().getSkills()[1] * 2) {
                     resultLabel.setText("Get outta here now!!!");
-                    if (Broom.getInstance().getHealth() <= 50) {
-                        new Alert(Alert.AlertType.NONE,
-                                "Broom Destroyed Game Over.", ButtonType.OK).show();
-                        Platform.exit();
-                        System.exit(0);
-                    } else {
-                        Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                    Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                    //Health below zero Game Over
+                    if (Broom.getInstance().getHealth() <= 0) {
+                        Alert alert = new Alert(Alert.AlertType.NONE,
+                                "Better luck next time! You died.", ButtonType.OK);
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            PlayerSheetPage.getInstance().reset();
+                            application.Main.setScene(PlayerSheetPage.getInstance().getMainScene());
+                        }
                     }
                 }
 
             } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("medium")) {
                 if (random > 30 + Player.getInstance().getSkills()[1] * 2) {
                     resultLabel.setText("Get outta here now!!!");
-                    if (Broom.getInstance().getHealth() <= 100) {
-                        new Alert(Alert.AlertType.NONE,
-                                "Broom Destroyed Game Over.", ButtonType.OK).show();
-                        Platform.exit();
-                        System.exit(0);
-                    } else {
-                        Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 100);
+                    Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 100);
+                    //Health below zero Game Over
+                    if (Broom.getInstance().getHealth() <= 0) {
+                        Alert alert = new Alert(Alert.AlertType.NONE,
+                                "Better luck next time! You died.", ButtonType.OK);
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            PlayerSheetPage.getInstance().reset();
+                            application.Main.setScene(PlayerSheetPage.getInstance().getMainScene());
+                        }
                     }
                 }
 
             } else {
                 if (random > 10 + Player.getInstance().getSkills()[2] * 2) {
                     resultLabel.setText("Get outta here now!!!");
-                    if (Broom.getInstance().getHealth() <= 150) {
-                        new Alert(Alert.AlertType.NONE,
-                                "Broom Destroyed Game Over.", ButtonType.OK).show();
-                        Platform.exit();
-                        System.exit(0);
-                    } else {
-                        Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 150);
+                    Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 150);
+                    //Health below zero Game Over
+                    if (Broom.getInstance().getHealth() <= 0) {
+                        Alert alert = new Alert(Alert.AlertType.NONE,
+                                "Better luck next time! You died.", ButtonType.OK);
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            PlayerSheetPage.getInstance().reset();
+                            application.Main.setScene(PlayerSheetPage.getInstance().getMainScene());
+                        }
                     }
                 }
             }

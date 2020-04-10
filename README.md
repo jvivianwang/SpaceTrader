@@ -163,7 +163,6 @@ Rylie and Vivian 4/9/2020
 [what we've done]
 -added a refuel button with correct implementation 
 
-Princeton 4/10/20
-[What we've done]
--Added a repair ship button
--Cost decreases based on engineer skill
+Rylie and Vivian and 4/10/2020
+[what we've done]
+-created end game screen

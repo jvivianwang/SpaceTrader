@@ -17,6 +17,7 @@ public class Player {
 
 
 
+
     private Player() {
         skillPoints = 0;
         credits = 0;
@@ -100,4 +101,7 @@ public class Player {
             skills[equipedItem.getIndex()] += equipedItem.calculateSkills();
         }
     }
+    public void reset(){
+        singleInstance = new Player();
+    };
 }

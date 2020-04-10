@@ -101,4 +101,7 @@ public class Market {
         }
         return singleInstance;
     }
+    public void reset() {
+        singleInstance = new Market();
+    }
 }

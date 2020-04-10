@@ -15,8 +15,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import scene.PlayerSheetPage;
 import scene.RegionMapPage;
 
+import java.util.Optional;
 import java.util.Random;
 
 
@@ -209,14 +211,16 @@ public class BanditSubscene extends SubScene {
             if (Broom.getInstance().getInventory().size() <= 0) {
                 resultLabel.setText("You do not have any items we can take. Your ship get damaged");
                 //Health below zero Game Over
-                if (Broom.getInstance().getHealth() <= 50) {
-                    new Alert(Alert.AlertType.NONE,
-                            "Broom Destroyed Game Over.", ButtonType.OK).show();
-                    Platform.exit();
-                    System.exit(0);
-                } else {
-                    //lose health
-                    Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                //Health below zero Game Over
+                if (Broom.getInstance().getHealth() <= 0) {
+                    Alert alert = new Alert(Alert.AlertType.NONE,
+                            "Better luck next time! You died.", ButtonType.OK);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        PlayerSheetPage.getInstance().reset();
+                        application.Main.setScene(PlayerSheetPage.getInstance().getMainScene());
+                    }
                 }
             } else {
                 //Player has items
@@ -256,14 +260,16 @@ public class BanditSubscene extends SubScene {
                 //lose all credits
                 Player.getInstance().setCredits(0);
                 //Health below zero Game Over
-                if (Broom.getInstance().getHealth() <= 50) {
-                    new Alert(Alert.AlertType.NONE,
-                            "Broom Destroyed Game Over.", ButtonType.OK).show();
-                    Platform.exit();
-                    System.exit(0);
-                } else {
-                    //lose health
-                    Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 500);
+                //Health below zero Game Over
+                if (Broom.getInstance().getHealth() <= 0) {
+                    Alert alert = new Alert(Alert.AlertType.NONE,
+                            "Better luck next time! You died.", ButtonType.OK);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        PlayerSheetPage.getInstance().reset();
+                        application.Main.setScene(PlayerSheetPage.getInstance().getMainScene());
+                    }
                 }
             }
             //Enable Exit button
@@ -298,14 +304,16 @@ public class BanditSubscene extends SubScene {
                     //Unsuccessful fleeing
                     resultLabel.setText("Too slow! Better luck next time!");
                     //Health below zero Game Over
-                    if (Broom.getInstance().getHealth() <= 50) {
-                        new Alert(Alert.AlertType.NONE,
-                                "Broom Destroyed Game Over.", ButtonType.OK).show();
-                        Platform.exit();
-                        System.exit(0);
-                    } else {
-                        //lose health
-                        Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                    Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 50);
+                    //Health below zero Game Over
+                    if (Broom.getInstance().getHealth() <= 0) {
+                        Alert alert = new Alert(Alert.AlertType.NONE,
+                                "Better luck next time! You died.", ButtonType.OK);
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            PlayerSheetPage.getInstance().reset();
+                            application.Main.setScene(PlayerSheetPage.getInstance().getMainScene());
+                        }
                     }
                     //lose credits
                     Player.getInstance().setCredits(0);
@@ -319,14 +327,16 @@ public class BanditSubscene extends SubScene {
                     //Unsuccessful fleeing
                     resultLabel.setText("Too slow! Better luck next time!");
                     //Health below zero Game Over
-                    if (Broom.getInstance().getHealth() <= 100) {
-                        new Alert(Alert.AlertType.NONE,
-                                "Broom Destroyed Game Over.", ButtonType.OK).show();
-                        Platform.exit();
-                        System.exit(0);
-                    } else {
-                        //lose health
-                        Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 100);
+                    Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 100);
+                    //Health below zero Game Over
+                    if (Broom.getInstance().getHealth() <= 0) {
+                        Alert alert = new Alert(Alert.AlertType.NONE,
+                                "Better luck next time! You died.", ButtonType.OK);
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            PlayerSheetPage.getInstance().reset();
+                            application.Main.setScene(PlayerSheetPage.getInstance().getMainScene());
+                        }
                     }
                     //lose credits
                     Player.getInstance().setCredits(0);
@@ -340,14 +350,16 @@ public class BanditSubscene extends SubScene {
                     //Unsuccessful fleeing
                     resultLabel.setText("Too slow! Better luck next time!");
                     //Health below zero Game Over
-                    if (Broom.getInstance().getHealth() <= 150) {
-                        new Alert(Alert.AlertType.NONE,
-                                "Broom Destroyed Game Over.", ButtonType.OK).show();
-                        Platform.exit();
-                        System.exit(0);
-                    } else {
-                        //lose health
-                        Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 150);
+                    Broom.getInstance().setHealth(Broom.getInstance().getHealth() - 150);
+                    //Health below zero Game Over
+                    if (Broom.getInstance().getHealth() <= 0) {
+                        Alert alert = new Alert(Alert.AlertType.NONE,
+                                "Better luck next time! You died.", ButtonType.OK);
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            PlayerSheetPage.getInstance().reset();
+                            application.Main.setScene(PlayerSheetPage.getInstance().getMainScene());
+                        }
                     }
                     //lose credits
                     Player.getInstance().setCredits(0);

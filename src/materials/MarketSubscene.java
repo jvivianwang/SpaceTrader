@@ -11,9 +11,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import scene.PlayerSheetPage;
+
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Optional;
 
 public class MarketSubscene extends SubScene {
 
@@ -32,6 +35,8 @@ public class MarketSubscene extends SubScene {
     private YellowButton btnSell;
     private YellowButton btnEquip;
     private YellowButton btnUnequip;
+
+    private ButtonType unicornButton;
 
     private ImageView[] shopListImage;
     private ImageView[] inventoryListImage;
@@ -334,6 +339,18 @@ public class MarketSubscene extends SubScene {
                         dim.customWidth(100), dim.customHeight(100), false, true);
                 inventoryListImage[i].setImage(image);
                 selectFromInventory(inventoryListImage[i], i);
+                //checks to see if player has unicorn and if so, it changes boolean
+                if (Broom.getInstance().getInventory().get(i).getName().equals("Unicorn")) {
+                    Broom.getInstance().setUnicorn(true);
+                    Alert alert = new Alert(Alert.AlertType.NONE,
+                            "CONGRATULATIONS! You obtained the unicorn and won the game!", ButtonType.OK);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        PlayerSheetPage.getInstance().reset();
+                        application.Main.setScene(PlayerSheetPage.getInstance().getMainScene());
+                    }
+
+                }
             } else {
                 Image image = new Image("materials/image/empty.png",
                         dim.customWidth(100), dim.customHeight(100), false, true);
@@ -342,6 +359,9 @@ public class MarketSubscene extends SubScene {
         }
     }
 
+    public ButtonType getUnicornButton() {
+        return unicornButton;
+    }
     public void updateOlivanderMarket() {
         Market.getInstance().updateEquipmentList();
         for (int i = 0; i < Market.getInstance().getEquipmentList().length; i++) {

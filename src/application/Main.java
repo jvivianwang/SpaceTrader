@@ -2,12 +2,15 @@ package application;
 
 
 import component.Broom;
+import component.Market;
 import component.Player;
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import materials.ConfigSkillSubscene;
+import materials.MarketSubscene;
 import scene.ConfigPage;
 import scene.PlayerSheetPage;
 import scene.RegionMapPage;
@@ -28,10 +31,7 @@ import java.io.File;
 public class Main extends Application {
 
     private WelcomePage wp;
-    private ConfigPage cp;
-    private PlayerSheetPage psp;
-    private RegionMapPage rmp;
-    private Stage stage;
+    private static Stage stage;
 
     @Override
     public void start(Stage primaryStage) {
@@ -40,7 +40,8 @@ public class Main extends Application {
         stage.setTitle("Space Trader");
         //All scenes initialized.
         wp = new WelcomePage();
-        cp = new ConfigPage();
+        ConfigPage.getInstance();
+
 
         //set first scene to WelcomePage.
         stage.setScene(wp.getMainScene());
@@ -50,9 +51,9 @@ public class Main extends Application {
         sceneSwitchToCP();
 
         //Switch to player sheet Page.
-        sceneSwitchToPSP(cp.getEasySubScene());
-        sceneSwitchToPSP(cp.getMedSubScene());
-        sceneSwitchToPSP(cp.getHardSubScene());
+//        sceneSwitchToPSP(ConfigPage.getInstance().getEasySubScene());
+//        sceneSwitchToPSP(ConfigPage.getInstance().getMedSubScene());
+//        sceneSwitchToPSP(ConfigPage.getInstance().getHardSubScene());
 
         //Switch to Region Map Page.
         //Call sceneSwitchToRMP() at line 93.
@@ -70,7 +71,7 @@ public class Main extends Application {
             double hPlay = wp.getPlay().getHeight();
             if ((x < wCanvas / 2 + wPlay / 2 && x > wCanvas / 2 - wPlay / 2)
                     && (y < hCanvas / 2 + hPlay  / 2 && y > hCanvas  / 2 - hPlay  / 2)) {
-                stage.setScene(cp.getMainScene());
+                stage.setScene(ConfigPage.getInstance().getMainScene());
             }
         });
     }
@@ -117,19 +118,14 @@ public class Main extends Application {
                 } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("hard")) {
                     Broom.getInstance().setHealth(500);
                 }
-                psp = new PlayerSheetPage();
-                stage.setScene(psp.getMainScene());
-                sceneSwitchToRMP();
+                PlayerSheetPage.getInstance();
+                stage.setScene(PlayerSheetPage.getInstance().getMainScene());
             }
         });
     }
 
-    private void sceneSwitchToRMP() {
-        psp.getBtnNextPage().setOnMouseClicked(e -> {
-            RegionMapPage.getInstance();
-            stage.setScene(RegionMapPage.getInstance().getMainScene());
-        });
-    }
+
+    public static void setScene(Scene newScene){stage.setScene(newScene);}
 
     public void music() {
         File file = new File("src/materials/monsterMusic.mp3");
@@ -137,6 +133,7 @@ public class Main extends Application {
         javafx.scene.media.MediaPlayer mp = new javafx.scene.media.MediaPlayer(music);
         mp.play();
     }
+
 
     public static void main(String[] args) {
         launch(args);
