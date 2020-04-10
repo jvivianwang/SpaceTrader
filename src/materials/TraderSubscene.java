@@ -4,7 +4,6 @@ import component.Creature;
 import component.Player;
 import component.Region;
 import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.SubScene;
 import javafx.scene.control.Alert;
@@ -289,7 +288,8 @@ public class TraderSubscene extends SubScene {
                 if (Broom.getInstance().getInventory().get(i).getName().equals("Unicorn")) {
                     Broom.getInstance().setUnicorn(true);
                     Alert alert = new Alert(Alert.AlertType.NONE,
-                            "CONGRATULATIONS! You obtained the unicorn and won the game!", ButtonType.OK);
+                            "CONGRATULATIONS! You obtained the unicorn "
+                                   + "and won the game!", ButtonType.OK);
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.isPresent() && result.get() == ButtonType.OK) {
                         PlayerSheetPage.getInstance().reset();

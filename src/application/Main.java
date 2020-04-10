@@ -2,7 +2,6 @@ package application;
 
 
 import component.Broom;
-import component.Market;
 import component.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -10,10 +9,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import materials.ConfigSkillSubscene;
-import materials.MarketSubscene;
 import scene.ConfigPage;
 import scene.PlayerSheetPage;
-import scene.RegionMapPage;
 import scene.WelcomePage;
 
 import java.io.File;
@@ -51,12 +48,10 @@ public class Main extends Application {
         sceneSwitchToCP();
 
         //Switch to player sheet Page.
-//        sceneSwitchToPSP(ConfigPage.getInstance().getEasySubScene());
-//        sceneSwitchToPSP(ConfigPage.getInstance().getMedSubScene());
-//        sceneSwitchToPSP(ConfigPage.getInstance().getHardSubScene());
-
-        //Switch to Region Map Page.
-        //Call sceneSwitchToRMP() at line 93.
+        //sceneSwitchToPSP(ConfigPage.getInstance().getEasySubScene());
+        //sceneSwitchToPSP(ConfigPage.getInstance().getMedSubScene());
+        //sceneSwitchToPSP(ConfigPage.getInstance().getHardSubScene());
+        //Switch to Region Map Page.//Call sceneSwitchToRMP() at line 93.
 
         stage.show();
     }
@@ -125,7 +120,9 @@ public class Main extends Application {
     }
 
 
-    public static void setScene(Scene newScene){stage.setScene(newScene);}
+    public static void setScene(Scene newScene) {
+        stage.setScene(newScene);
+    }
 
     public void music() {
         File file = new File("src/materials/monsterMusic.mp3");

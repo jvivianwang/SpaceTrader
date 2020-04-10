@@ -4,7 +4,6 @@ import component.Broom;
 import component.Player;
 import component.Region;
 import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.SubScene;
 import javafx.scene.control.Alert;

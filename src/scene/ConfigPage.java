@@ -141,6 +141,8 @@ public class ConfigPage {
     public void setHardSubScene(ConfigSkillSubscene hardSubScene) {
         this.hardSubScene = hardSubScene;
     }
-    public void reset(){singleInstance = new ConfigPage();}
+    public void reset() {
+        singleInstance = new ConfigPage();
+    }
 
 }

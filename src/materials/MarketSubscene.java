@@ -343,7 +343,8 @@ public class MarketSubscene extends SubScene {
                 if (Broom.getInstance().getInventory().get(i).getName().equals("Unicorn")) {
                     Broom.getInstance().setUnicorn(true);
                     Alert alert = new Alert(Alert.AlertType.NONE,
-                            "CONGRATULATIONS! You obtained the unicorn and won the game!", ButtonType.OK);
+                            "CONGRATULATIONS! You obtained the "
+                                    + "unicorn and won the game!", ButtonType.OK);
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.isPresent() && result.get() == ButtonType.OK) {
                         PlayerSheetPage.getInstance().reset();

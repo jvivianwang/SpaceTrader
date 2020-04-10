@@ -101,7 +101,7 @@ public class Player {
             skills[equipedItem.getIndex()] += equipedItem.calculateSkills();
         }
     }
-    public void reset(){
+    public void reset() {
         singleInstance = new Player();
     };
 }

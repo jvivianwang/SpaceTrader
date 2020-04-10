@@ -78,7 +78,7 @@ public class Broom {
     }
 
     public void repair() {
-        health+=50;
+        health += 50;
     }
 
     public void gainCreature(Creature creature) {

@@ -182,10 +182,13 @@ public class RegionMapPage {
                         a.show();
                         showSubScene(Player.getInstance().getCurrentRegion());
                     } else {
-                        Broom.getInstance().setFuelCapacity(Broom.getInstance().getFuelCapacity() + Player.getInstance().getCredits());
+                        int fuelCapacity = Broom.getInstance().getFuelCapacity();
+                        int creditAmount = Player.getInstance().getCredits();
+                        Broom.getInstance().setFuelCapacity(fuelCapacity + creditAmount);
                         Player.getInstance().setCredits(0);
                         Alert a = new Alert(Alert.AlertType.NONE,
-                                "You've increased your fuel to" + Broom.getInstance().getFuelCapacity() + "!", ButtonType.OK);
+                                "You've increased your fuel to"
+                                        + fuelCapacity + "!", ButtonType.OK);
 
                         a.show();
                         showSubScene(Player.getInstance().getCurrentRegion());
@@ -196,15 +199,15 @@ public class RegionMapPage {
 
                     a.show();
                     showSubScene(Player.getInstance().getCurrentRegion());
-            }
+                }
             }
         });
         subscene.getBtnRepair().setOnMouseClicked(event -> {
             if (Broom.getInstance().getHealth() >= 1000) { //max broom health
                 Alert alert = new Alert(Alert.AlertType.NONE, "Your broom is already"
-                + "at max health!", ButtonType.OK);
+                        + "at max health!", ButtonType.OK);
             } else {
-                int cost = (int) Math.round(100 - Player.getInstance().getSkills()[3]*0.9);
+                int cost = (int) Math.round(100 - Player.getInstance().getSkills()[3] * 0.9);
                 if (Player.getInstance().getCredits() > cost) {
                     Player.getInstance().setCredits(Player.getInstance().getCredits() - cost);
                     Alert a = new Alert(Alert.AlertType.NONE,
@@ -212,7 +215,7 @@ public class RegionMapPage {
                     a.show();
                 } else {
                     Alert a = new Alert(Alert.AlertType.NONE, "You can't afford"
-                    + "this. Broke boiiiiiii!!");
+                        + "this. Broke boiiiiiii!!");
                 }
             }
         });
@@ -390,6 +393,10 @@ public class RegionMapPage {
     public Scene getMainScene() {
         return mainScene;
     }
-    public MarketSubscene getMarketScene() {return marketScene;}
-    public void reset() {singleInstance = new RegionMapPage();}
+    public MarketSubscene getMarketScene() {
+        return marketScene;
+    }
+    public void reset() {
+        singleInstance = new RegionMapPage();
+    }
 }

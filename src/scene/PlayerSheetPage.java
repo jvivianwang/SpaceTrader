@@ -125,8 +125,9 @@ public class PlayerSheetPage {
     }
 
     private void createButton() {
-        if ((Broom.getInstance().getHealth() <= 0)|| Broom.getInstance().getUnicorn()) {
-            System.out.println(Broom.getInstance().getHealth() + "" +Broom.getInstance().getUnicorn());
+        boolean unicorn = Broom.getInstance().getUnicorn();
+        if ((Broom.getInstance().getHealth() <= 0) || unicorn) {
+            System.out.println(Broom.getInstance().getHealth() + "" + unicorn);
             btnNewGame  = new YellowButton("NEW GAME");
             btnNewGame.setLayoutX(dim.customWidth((750)));
             btnNewGame.setLayoutY(dim.customHeight((750)));
@@ -147,7 +148,7 @@ public class PlayerSheetPage {
             });
             mainPane.getChildren().add(btnNewGame);
         } else {
-            System.out.println(Broom.getInstance().getHealth() + "" +Broom.getInstance().getUnicorn());
+            System.out.println(Broom.getInstance().getHealth() + "" + unicorn);
             btnNextPage  = new YellowButton("NEXT PAGE");
             btnNextPage.setLayoutX(dim.customWidth((750)));
             btnNextPage.setLayoutY(dim.customHeight((750)));
@@ -177,5 +178,7 @@ public class PlayerSheetPage {
             myLabel.setFont(Font.font("Verdana", FONTSIZE));
         }
     }
-    public void reset(){singleInstance = new PlayerSheetPage();}
+    public void reset() {
+        singleInstance = new PlayerSheetPage();
+    }
 }

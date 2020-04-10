@@ -166,3 +166,9 @@ Rylie and Vivian 4/9/2020
 Rylie and Vivian and 4/10/2020
 [what we've done]
 -created end game screen
+
+Princeton 4/10/20
+[What I've done]
+-Added button for ship repair
+-Added algo that decreased ship repair cost when engineer skill increased
+-Checkstyle

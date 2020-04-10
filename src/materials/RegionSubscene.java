@@ -12,7 +12,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-import java.text.DecimalFormat;
 
 public class RegionSubscene extends SubScene {
 
