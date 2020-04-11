@@ -11,7 +11,11 @@ public class Broom {
     private String name;
     private int cargoCapacity;
     private int fuelCapacity;
+
+
     private ArrayList<Item> inventory;
+
+
     private int health;
     private boolean unicorn;
 
@@ -85,7 +89,7 @@ public class Broom {
         for (int i = 0; i < inventory.size(); i++) {
             //If we have a same level creature in our inventory we evolve it
             if (inventory.get(i) instanceof Creature) {
-                if (((Creature) inventory.get(i)).getLevel() == creature.getLevel()) {
+                if (inventory.get(i).getLevel() == creature.getLevel()) {
                     inventory.remove(i);
                     inventory.add(new Creature(creature.getLevel() + 1));
                     return;

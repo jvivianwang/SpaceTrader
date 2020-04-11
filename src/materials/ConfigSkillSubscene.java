@@ -161,9 +161,9 @@ public class ConfigSkillSubscene extends SubScene {
                 //create broom
                 Broom.getInstance().reset();
                 if (Player.getInstance().getDifficulty().equalsIgnoreCase("easy")) {
-                    Broom.getInstance().setHealth(2000);
-                } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("medium")) {
                     Broom.getInstance().setHealth(1000);
+                } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("medium")) {
+                    Broom.getInstance().setHealth(800);
                 } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("hard")) {
                     Broom.getInstance().setHealth(500);
                 }

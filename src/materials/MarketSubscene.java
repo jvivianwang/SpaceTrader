@@ -350,7 +350,6 @@ public class MarketSubscene extends SubScene {
                         PlayerSheetPage.getInstance().reset();
                         application.Main.setScene(PlayerSheetPage.getInstance().getMainScene());
                     }
-
                 }
             } else {
                 Image image = new Image("materials/image/empty.png",

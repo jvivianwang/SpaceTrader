@@ -172,3 +172,7 @@ Princeton 4/10/20
 -Added button for ship repair
 -Added algo that decreased ship repair cost when engineer skill increased
 -Checkstyle
+
+Jiawei 4/11/20
+[What I've done]
+-Final demo check before final checkstyle

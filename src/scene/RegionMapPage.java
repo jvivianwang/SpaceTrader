@@ -206,8 +206,10 @@ public class RegionMapPage {
             if (Broom.getInstance().getHealth() >= 1000) { //max broom health
                 Alert alert = new Alert(Alert.AlertType.NONE, "Your broom is already"
                         + "at max health!", ButtonType.OK);
+                alert.show();
             } else {
-                int cost = (int) Math.round(100 - Player.getInstance().getSkills()[3] * 0.9);
+                int cost = (int) Math.floor(100 * Player.getInstance().getCurrentRegion().getTechLevel()
+                        * (1 - 0.01 * (Player.getInstance().getSkills()[3] * 3)));
                 if (Player.getInstance().getCredits() > cost) {
                     Player.getInstance().setCredits(Player.getInstance().getCredits() - cost);
                     Alert a = new Alert(Alert.AlertType.NONE,
@@ -215,7 +217,8 @@ public class RegionMapPage {
                     a.show();
                 } else {
                     Alert a = new Alert(Alert.AlertType.NONE, "You can't afford"
-                        + "this. Broke boiiiiiii!!");
+                        + "this. Broke boiiiiiii!!", ButtonType.OK);
+                    a.show();
                 }
             }
         });
