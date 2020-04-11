@@ -1,16 +1,10 @@
 package application;
 
 
-import component.Broom;
-import component.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import materials.ConfigSkillSubscene;
 import scene.ConfigPage;
-import scene.PlayerSheetPage;
 import scene.WelcomePage;
 
 import java.io.File;

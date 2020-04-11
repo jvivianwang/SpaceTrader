@@ -402,8 +402,9 @@ public class TraderSubscene extends SubScene {
                     if (Broom.getInstance().getInventory().size()
                             >= Broom.getInstance().getCargoCapacity()) {
                         new Alert(Alert.AlertType.NONE,
-                                "Ooops! You don't enough space to carry the item.", ButtonType.OK).show();
-                    }else {
+                                "Ooops! You don't enough space "
+                                        + "to carry the item.", ButtonType.OK).show();
+                    } else {
                         Image image = new Image("materials/image/soldOut.jpg",
                                 dim.customWidth(100), dim.customHeight(100), false, true);
                         creatureListImage[0].setDisable(true);
@@ -412,7 +413,8 @@ public class TraderSubscene extends SubScene {
                         Broom.getInstance().gainCreature(creatureList[0]);
                         creatureSelectedFromList = -1;
                         updateInventory();
-                        resultLabel.setText("Please don't hurt me! I'll give you anything you want!!!");
+                        resultLabel.setText("Please don't hurt me!"
+                                + " I'll give you anything you want!!!");
                     }
                 }
             } else if (Player.getInstance().getDifficulty().equalsIgnoreCase("medium")) {
@@ -434,8 +436,9 @@ public class TraderSubscene extends SubScene {
                 if (Broom.getInstance().getInventory().size()
                         >= Broom.getInstance().getCargoCapacity()) {
                     new Alert(Alert.AlertType.NONE,
-                            "Ooops! You don't enough space to carry the item.", ButtonType.OK).show();
-                }else {
+                            "Ooops! You don't enough"
+                                   + "space to carry the item.", ButtonType.OK).show();
+                } else {
                     Image image = new Image("materials/image/soldOut.jpg",
                             dim.customWidth(100), dim.customHeight(100), false, true);
                     creatureListImage[0].setDisable(true);
@@ -465,7 +468,8 @@ public class TraderSubscene extends SubScene {
                     if (Broom.getInstance().getInventory().size()
                             >= Broom.getInstance().getCargoCapacity()) {
                         new Alert(Alert.AlertType.NONE,
-                                "Ooops! You don't enough space to carry the item.", ButtonType.OK).show();
+                                "Ooops! You don't enough space "
+                                        + "to carry the item.", ButtonType.OK).show();
                     } else {
                         Image image = new Image("materials/image/soldOut.jpg",
                                 dim.customWidth(100), dim.customHeight(100), false, true);
@@ -475,7 +479,8 @@ public class TraderSubscene extends SubScene {
                         Broom.getInstance().gainCreature(creatureList[0]);
                         creatureSelectedFromList = -1;
                         updateInventory();
-                        resultLabel.setText("Please don't hurt me! I'll give you anything you want!!!");
+                        resultLabel.setText("Please don't hurt me! I'll give "
+                              +  "you anything you want!!!");
                     }
                 }
             }

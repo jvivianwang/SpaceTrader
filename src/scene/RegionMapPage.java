@@ -208,7 +208,8 @@ public class RegionMapPage {
                         + "at max health!", ButtonType.OK);
                 alert.show();
             } else {
-                int cost = (int) Math.floor(100 * Player.getInstance().getCurrentRegion().getTechLevel()
+                int level = Player.getInstance().getCurrentRegion().getTechLevel();
+                int cost = (int) Math.floor(100 * level
                         * (1 - 0.01 * (Player.getInstance().getSkills()[3] * 3)));
                 if (Player.getInstance().getCredits() > cost) {
                     Player.getInstance().setCredits(Player.getInstance().getCredits() - cost);
